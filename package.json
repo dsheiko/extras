@@ -1,0 +1,23 @@
+{
+  "name": "extras",
+  "version": "0.0.1",
+  "description": "Type manipulation utility-belt bringing JavaScript/Underscore-lie development experience to PHP",
+  "scripts": {
+    "update": "composer dump-autoload",
+    "test": "./vendor/bin/peridot tests/",
+    "lint": "./vendor/bin/phpcs --standard=PSR2 ./src",
+    "lint:fix": "./vendor/bin/phpcbf --standard=PSR2 ./src",
+    "test:coverage": "./vendor/bin/peridot  tests/ -c peridot.config.php --reporter text-code-coverage",
+    "preversion": "npm run lint && npm test",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [
+    "underscore",
+    "lodash",
+    "utilities",
+    "library",
+    "PHP"
+  ],
+  "author": "",
+  "license": "MIT"
+}
