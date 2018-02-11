@@ -10,7 +10,6 @@ Type manipulation utility-belt bringing JavaScript-like development experience t
 - Easy to guess syntax - JavaScript type methods, in addition Underscore.js methods
 - Performance: package relies on PHP native methods; no `foreach` where a built-in specific function can be used
 
-
 ## Usage
 
 - [Arrays](./wiki/ARRAYS.md)
@@ -20,24 +19,34 @@ Type manipulation utility-belt bringing JavaScript-like development experience t
 
 ## Examples
 
-
+#### None-reference target, callback as a string
 ```php
 <?php
-use \Dsheiko\Extras\{Arrays, Strings};
+use \Dsheiko\Extras\Arrays;
 
+function numToArray($num)
+{
+  return [$num];
+}
+$res = Arrays::map(range(1,3), "numToArray");
+```
 
-$res = Arrays::chain([1, 2, 3])
-    ->map(function($num){ return $num + 1; })
-    ->filter(function($num){ return $num > 1; })
-    ->reduce(function($carry, $num){ return $carry + $num; }, 0)
+#### Chaining
+```php
+<?php
+use \Dsheiko\Extras\Collections;
+
+$res = Collections::chain(new \ArrayObject([1,2,3]))
+    ->toArray() // value is [1,2,3]
+    ->map(function($num){ return [ "num" => $num ]; })
+    // value is [[ "num" => 1, ..]]
+    ->reduce(function($carry, $arr){
+        $carry .= $arr["num"];
+        return $carry;
+
+    }, "") // value is "123"
+    ->replace("/2/", "") // value is "13"
     ->value();
-
-$res = Strings::from( " 12345 " )
-            ->replace("/1/", "5")
-            ->replace("/2/", "5")
-            ->trim()
-            ->substr(1, 3)
-            ->get();
-echo $res; // "534"
+echo $res; // "13"
 
 ```
