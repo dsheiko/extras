@@ -1,7 +1,7 @@
 {
   "name": "extras",
   "version": "0.0.1",
-  "description": "Type manipulation utility-belt bringing JavaScript/Underscore-lie development experience to PHP",
+  "description": "Type manipulation utility-belt bringing JavaScript-like development experience to PHP",
   "scripts": {
     "update": "composer dump-autoload",
     "test": "./vendor/bin/peridot tests/",

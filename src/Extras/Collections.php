@@ -1,8 +1,9 @@
 <?php
-namespace Lib\Collections;
+namespace Dsheiko\Extras;
 
 use Dsheiko\Extras\Lib\AbstractExtras;
 use Dsheiko\Extras\Lib\TraitNormalizeClosure;
+use Dsheiko\Extras\Arrays;
 
 class Collections extends AbstractExtras
 {
@@ -25,5 +26,16 @@ class Collections extends AbstractExtras
                 break;
             }
         }
+    }
+
+    /**
+     * Converts collection into an array
+     *
+     * @param mixed $collection
+     * @return array
+     */
+    public static function toArray($collection): array
+    {
+        return Arrays::from($collection);
     }
 }

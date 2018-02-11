@@ -11,6 +11,13 @@ class ArraysTest
     }
 }
 
+function makeGenearatorArray(): iterable
+{
+    foreach (range(1, 3) as $i) {
+        yield $i;
+    }
+}
+
 describe("\\Dsheiko\\Extras\\Arrays", function() {
 
     describe("::each", function() {
@@ -54,6 +61,11 @@ describe("\\Dsheiko\\Extras\\Arrays", function() {
         it("creates array from Iterator", function() {
             $obj = new \ArrayObject([1,2,3]);
             $res = Arrays::from($obj->getIterator());
+            expect(is_array($res))->to->be->ok;
+        });
+
+        it("creates array from iterable (generator)", function() {
+            $res = Arrays::from(makeGenearatorArray());
             expect(is_array($res))->to->be->ok;
         });
 

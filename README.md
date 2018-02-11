@@ -1,11 +1,14 @@
 # Dsheiko\Extras
 
-Type manipulation utility-belt bringing JavaScript/Underscore-lie development experience to PHP
-
+Type manipulation utility-belt bringing JavaScript-like development experience to PHP
 
 ## Highlights
-- Package relies on PHP native methods; no PHP type juggling, no `foreach` where a built-in specific function can be used
-- Package implements methods in JavaScript style and extension methods of Underscore
+- Fixing PHP:
+  - Consistent syntax for type extras (first goes manipulation target, then callback or other options)
+  - Target always can be as reference as well as type literal
+  - Callback can always be any of callable, closure or fully qualified name as a string
+- Easy to guess syntax - JavaScript type methods, in addition Underscore.js methods
+- Performance: package relies on PHP native methods; no `foreach` where a built-in specific function can be used
 
 
 ## Usage
@@ -13,6 +16,7 @@ Type manipulation utility-belt bringing JavaScript/Underscore-lie development ex
 - [Arrays](./wiki/ARRAYS.md)
 - [Strings](./wiki/STRINGS.md)
 - [Functions](./wiki/FUNCTIONS.md)
+- [Collections](./wiki/COLLECTIONS.md)
 
 ## Examples
 

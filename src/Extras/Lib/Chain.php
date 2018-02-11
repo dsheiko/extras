@@ -1,21 +1,52 @@
 <?php
 namespace Dsheiko\Extras\Lib;
 
+use Dsheiko\Extras\{Arrays, Collections, Strings, Functions};
+
 class Chain
 {
-    private $type;
-    private $data;
+    private $value;
 
-    public function __construct(string $type, $data = [])
+    public function __construct($value = [])
     {
-        $this->type = $type;
-        $this->data = $data;
+        $this->value = $value;
     }
 
-    public function __call($name, array $args)
+    /**
+     * Return Extras class sutable for the last state of chain value
+     * @param mixed $value
+     * @return string
+     * @throws \InvalidArgumentException
+     */
+    private static function guessExtrasClass($value): string
     {
-        $call = $this->type . "::" . $name;
-        $this->data = \call_user_func_array($call, \array_merge([$this->data], $args));
+        switch (true) {
+            case is_array($value):
+                return Arrays::class;
+            case is_string($value):
+                return Strings::class;
+            case $value instanceof \ArrayObject:
+            case $value instanceof \ArrayIterator:
+            case $value instanceof \Traversable:
+                return Collections::class;
+            case is_callable($value):
+                return Functions::class;
+        }
+        throw new \InvalidArgumentException("Cannot find passing collection for given type");
+    }
+
+    /**
+     * Handle request for non-defined method
+     * 
+     * @param string $name
+     * @param array $args
+     * @return \Dsheiko\Extras\Lib\Chain
+     */
+    public function __call(string $name, array $args): Chain
+    {
+        $class = static::guessExtrasClass($this->value);
+        $call = $class . "::" . $name;
+        $this->value = \call_user_func_array($call, \array_merge([$this->value], $args));
         return $this;
     }
 
@@ -25,8 +56,8 @@ class Chain
      * @param int $inx
      * @return mixed
      */
-    public function value(int $inx = null)
+    public function value()
     {
-        return $inx === null ? $this->data : $this->data[$inx];
+        return $this->value;
     }
 }
