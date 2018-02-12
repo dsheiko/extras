@@ -52,9 +52,8 @@ $res = Arrays::chain([1, 2, 3])
   - [difference](#difference)
   - [zip](#zip)
   - [unzip](#unzip)
-	- [chain](#chain)
+  - [chain](#chain)
 - Other methods
-
 	- [replace](#replace)
 	- [sAssocArray](#sAssocArray)
 
