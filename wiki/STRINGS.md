@@ -121,7 +121,7 @@ Determine whether a string begins with the characters of a specified string, ret
 $res = Strings::startsWith("12345", "12");
 ```
 
-### include
+### includes
 * Determine whether one string may be found within another string, returning true or false as appropriate.
 [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes).
 
