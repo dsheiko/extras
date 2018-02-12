@@ -37,6 +37,11 @@ describe("\\Dsheiko\\Extras\\Collections", function() {
             expect($sum)->to->equal(6);
         });
 
+        it("extracts array", function() {
+            $res = Collections::toArray(new \ArrayObject([1,2,3]));
+            expect($res)->to->be->an("array");
+        });
+
     });
 
 

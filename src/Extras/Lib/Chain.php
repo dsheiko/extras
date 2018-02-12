@@ -1,7 +1,10 @@
 <?php
 namespace Dsheiko\Extras\Lib;
 
-use Dsheiko\Extras\{Arrays, Collections, Strings, Functions};
+use Dsheiko\Extras\Arrays;
+use Dsheiko\Extras\Collections;
+use Dsheiko\Extras\Strings;
+use Dsheiko\Extras\Functions;
 
 class Chain
 {
@@ -37,7 +40,7 @@ class Chain
 
     /**
      * Handle request for non-defined method
-     * 
+     *
      * @param string $name
      * @param array $args
      * @return \Dsheiko\Extras\Lib\Chain

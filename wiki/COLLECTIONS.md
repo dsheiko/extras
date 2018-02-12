@@ -1,5 +1,9 @@
 # Collection extras
 
+Following types `iterable`, `ArrayObject`, `Iterator` belong to collections.
+Array extras like `::map`, `::reduce` do not make sense on a live collection,
+one can rather convert the collection to an array (`::toArray`) and then apply array extras.
+
 ## Methods
 
 - [each](#each)

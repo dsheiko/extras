@@ -1,9 +1,6 @@
 # String extras
-> Collection of utilities similar to JavaScript String.prototype
 
-## Objectives
-
-- One can chain multiple functions and avoid temporary variables
+## Overview example
 
 ```php
 <?php

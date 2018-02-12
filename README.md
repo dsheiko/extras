@@ -1,16 +1,19 @@
 # Dsheiko\Extras
 
-Type manipulation utility-belt bringing JavaScript-like development experience to PHP
+Collection of chainable high-order functions to abstract and manipulate PHP types
+
+> The packages takes its name from `Array Extras` referring to the array methods added in ES5 (JavaScript) to abstract generic array manipulation logic
 
 ## Highlights
+- Type transformation chains
 - Fixing PHP:
-  - Consistent syntax for type extras (first goes manipulation target, then callback or other options)
-  - Target always can be as reference as well as type literal
-  - Callback can always be any of callable, closure or fully qualified name as a string
-- Easy to guess syntax - JavaScript type methods, in addition Underscore.js methods
+  - Consistent syntax for type extras (first always goes manipulation target, then callback or other options)
+  - Manipulation target (value) can always be as reference as well as type literal
+  - Callback can always be  `callable` or closure or fully qualified name as a string
+- Familiar syntax: JavaScript Array/Object/String methods, in addition extra methods in [Underscore.js](http://underscorejs.org/)/[Lodash](https://lodash.com/) syntax
 - Performance: package relies on PHP native methods; no `foreach` where a built-in specific function can be used
 
-## Usage
+## Sets
 
 - [Arrays](./wiki/ARRAYS.md)
 - [Strings](./wiki/STRINGS.md)
@@ -24,11 +27,11 @@ Type manipulation utility-belt bringing JavaScript-like development experience t
 <?php
 use \Dsheiko\Extras\Arrays;
 
-function numToArray($num)
+function numToArray(int $num): array
 {
   return [$num];
 }
-$res = Arrays::map(range(1,3), "numToArray");
+$res = Arrays::map(range(1,3), "numToArray"); // [[1],[2],[3]]
 ```
 
 #### Chaining

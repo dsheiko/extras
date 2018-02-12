@@ -1,5 +1,4 @@
 # Function extras
-> Collection of utilities similar to Underscore.js
 
 ## Methods
 

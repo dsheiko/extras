@@ -1,8 +1,14 @@
 {
-  "name": "dsheiko/validate",
+  "name": "dsheiko/extras",
   "type": "library",
-  "description": "Validation library for testing primitive and complex types against a contract",
-  "keywords": ["validate", "DbC", "validation", "library"],
+  "description": "Collection of chainable high-order functions to abstract and manipulate PHP types",
+  "keywords": [
+    "underscore",
+    "lodash",
+    "utilities",
+    "library",
+    "abstract"
+  ],
   "license": "MIT",
   "authors": [
     {

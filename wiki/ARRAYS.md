@@ -1,13 +1,6 @@
 # Array extras
-> Collection of utilities similar to JavaScript array extras
 
-Hereby presented a set of static methods to manipulate arrays. Some are wrappers of PHP respective functions and some extra functions inspired by Underscore library.
-
-## Objectives
-
-- One doesn't need to worry that PHP array function throws "Only variables can be passed by reference" fatal error
-- One doesn't need to worry that PHP array function doesn't accept non-closure callable
-- Most important, one can chain multiple functions and avoid temporary variables
+## Overview examples
 
 ```php
 <?php
