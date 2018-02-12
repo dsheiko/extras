@@ -60,6 +60,16 @@ describe("\\Dsheiko\\Extras\\Functions", function() {
     });
 
 
+    describe('::negate', function() {
+
+        it("returns a new negated version of the predicate function", function() {
+            $func = Functions::negate(function(){ return false; });
+            expect($func())->to->equal(true);
+        });
+
+    });
+
+
 
 });
 

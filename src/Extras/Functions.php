@@ -18,11 +18,11 @@ class Functions extends AbstractExtras
      */
     public static function before($callable, int $count)
     {
-        $function = static::getClosure($callable);
-        return function (...$args) use (&$count, $function) {
+        $closure = static::getClosure($callable);
+        return function (...$args) use (&$count, $closure) {
             static $memo = null;
             if (--$count >= 0) {
-                $memo = call_user_func_array($function, $args);
+                $memo = call_user_func_array($closure, $args);
             }
             return $memo;
         };
@@ -39,12 +39,12 @@ class Functions extends AbstractExtras
      */
     public static function after($callable, int $count)
     {
-        $function = static::getClosure($callable);
-        return function (...$args) use (&$count, $function) {
+        $closure = static::getClosure($callable);
+        return function (...$args) use (&$count, $closure) {
             if (--$count >= 0) {
                 return false;
             }
-            return call_user_func_array($function, $args);
+            return call_user_func_array($closure, $args);
         };
     }
 
@@ -59,8 +59,8 @@ class Functions extends AbstractExtras
      */
     public static function once($callable)
     {
-        $function = static::getClosure($callable);
-        return static::before($function, 1);
+        $closure = static::getClosure($callable);
+        return static::before($closure, 1);
     }
 
     /**
@@ -72,15 +72,36 @@ class Functions extends AbstractExtras
      */
     public static function throttle($callable, int $wait)
     {
-        $function = static::getClosure($callable);
-        return function () use ($function, $wait) {
+        $closure = static::getClosure($callable);
+        return function () use ($closure, $wait) {
             static $pretime = null;
             $curtime = microtime(true);
             if (!$pretime || ($curtime - $pretime) >= ($wait / 1000)) {
                 $pretime = $curtime;
-                return $function();
+                return $closure();
             }
             return false;
         };
     }
+
+    public static function memoize($callable)
+    {
+    }
+
+    /**
+     * Returns a new negated version of the predicate function ($callable).
+     *
+     * @param callable|string|Closure $callable
+     * @return callable
+     */
+    public static function negate($callable): callable
+    {
+        return function (...$args) use ($callable) {
+            return !$callable(...$args);
+        };
+    }
+
+    //debounce
+    //wrap
+    //negate
 }

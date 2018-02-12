@@ -44,9 +44,17 @@ $res = Arrays::chain([1, 2, 3])
 	- [groupBy](#groupBy)
 	- [countBy](#countBy)
 	- [shuffle](#shuffle)
+  - [object](#object)
+  - [pluck](#pluck)
+  - [partition](#partition)
+  - [uniq](#uniq)
+  - [intersection](#intersection)
+  - [difference](#difference)
+  - [zip](#zip)
+  - [unzip](#unzip)
 	- [chain](#chain)
 - Other methods
-	- [toObject](#toObject)
+
 	- [replace](#replace)
 	- [sAssocArray](#sAssocArray)
 
@@ -59,7 +67,7 @@ Iterate over a list of elements, yielding each in turn to an $callable function
 [see also](http://underscorejs.org/#each).
 
 ###### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 
 ###### Syntax
@@ -81,7 +89,7 @@ Produce a new array of values by mapping each value in list through a transforma
 [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce).
 
 ###### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 
 ###### Syntax
@@ -113,7 +121,7 @@ Boil down a list of values into a single value.
 [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce).
 
 ###### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 - `{mixed} $initial` - value to use as the first argument to the first call of the callable. If no initial value is supplied, the first element in the array will be used.
 
@@ -135,7 +143,7 @@ The right-associative version of reduce.
 [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 - `{mixed} $initial` - value to use as the first argument to the first call of the callable. If no initial value is supplied, the first element in the array will be used.
 
@@ -161,7 +169,7 @@ Look through each value in the list, returning an array of all the values that p
 [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 
 ###### Syntax
@@ -180,7 +188,7 @@ Look through each value in the list, returning the first one that passes a truth
 [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 
 ###### Syntax
@@ -199,7 +207,7 @@ Sort an array by values (using a user-defined comparison function when callback 
 [see also](http://php.net/manual/en/function.usort.php).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 
 ###### Syntax
@@ -222,7 +230,7 @@ Return all the values of an array
 [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 
 ###### Syntax
 ```php
@@ -241,7 +249,7 @@ Return all the keys or a subset of the keys of an array
 [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{mixed} $searchValue` - if specified, then only keys containing these values are returned.
 
 ###### Syntax
@@ -285,7 +293,7 @@ Test whether at least one element in the array passes the test implemented by th
 [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 
 ###### Syntax
@@ -304,7 +312,7 @@ Test whether all elements in the array pass the test implemented by the provided
 [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 
 ###### Syntax
@@ -319,7 +327,7 @@ $boolean = Arrays::every([1, 2, 3], function($num){ return $num > 1; });
 ```
 
 ### assign(array $array, ...$sources)
-Copy the values of all properties from one or more source arrays to a target array.
+Copy the values of all properties from one or more target arrays to a target array.
 [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign).
 The method works pretty much like `array_merge` except it treats consistently associative arrays with numeric keys
 
@@ -351,7 +359,7 @@ Then it returns $defaultValue (when `$defaultValue` is a callable then the resul
 [see also](http://underscorejs.org/#first).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{mixed} $defaultValue` - scalar or callable
 
 ###### Syntax
@@ -372,7 +380,7 @@ Get the last value from an array regardless index order and without modifying th
 [see also](http://underscorejs.org/#last).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 
 ###### Syntax
 ```php
@@ -390,7 +398,7 @@ Convert an object into a list of [key, value] pairs.
 [see also](http://underscorejs.org/#pairs).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 
 ###### Syntax
 ```php
@@ -412,7 +420,7 @@ If the value of the named property is a function then invoke it; otherwise, retu
 [see also](http://underscorejs.org/#result).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{string} $prop` - property/key name
 
 ###### Syntax
@@ -437,7 +445,7 @@ Find index of the first element matching the condition in `$callable`
 [see also](http://underscorejs.org/#findIndex).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 
 ###### Syntax
@@ -461,7 +469,7 @@ Look through each value in the list, returning an array of all the values that c
 [see also](http://underscorejs.org/#where).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{array} $conditions` - key-value pairs to match
 
 ###### Syntax
@@ -482,7 +490,7 @@ Split a collection into sets, grouped by the result of running each value throug
 [see also](http://underscorejs.org/#groupBy).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 
 ###### Syntax
@@ -503,7 +511,7 @@ Sort a list into groups and return a count for the number of objects in each gro
 [see also](http://underscorejs.org/#countBy).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 
 ###### Syntax
@@ -526,7 +534,7 @@ Return a shuffled copy of the list
 [see also](http://underscorejs.org/#shuffle).
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 
 ###### Syntax
 ```php
@@ -540,11 +548,231 @@ Return a shuffled copy of the list
 $res = Arrays::shuffle([1, 2, 3]); // [ 2, 1, 3 ]
 ```
 
+
+
+
+
+### partition
+plit array into two arrays: one whose elements all satisfy predicate and one whose elements all do not satisfy predicate.
+[see also](http://underscorejs.org/#partition).
+
+##### Parameters
+- `{array} $array` - target array
+- `callable|string|Closure $callable` - iteratee callback
+
+###### Syntax
+```php
+ partition(array $array, $callable): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::partition([0, 1, 2, 3, 4, 5], function($val) {
+    return $val % 2;
+}); //  [[1, 3, 5], [0, 2, 4]]
+
+```
+
+
+### partition
+plit array into two arrays: one whose elements all satisfy predicate and one whose elements all do not satisfy predicate.
+[see also](http://underscorejs.org/#partition).
+
+##### Parameters
+- `{array} $array` - target array
+- `callable|string|Closure $callable` - iteratee callback
+
+###### Syntax
+```php
+ partition(array $array, $callable): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::partition([0, 1, 2, 3, 4, 5], function($val) {
+    return $val % 2;
+}); //  [[1, 3, 5], [0, 2, 4]]
+
+```
+
+
+
+### uniq
+Produces a duplicate-free version of the array
+[see also](http://underscorejs.org/#uniq).
+
+##### Parameters
+- `{array} $array` - target array
+
+###### Syntax
+```php
+ uniq(array $array): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::uniq([1,2,3,1,1,2]); // [1,2,3]
+```
+
+
+
+### difference
+Returns the values from array that are not present in the other arrays.
+[see also](http://underscorejs.org/#difference).
+
+##### Parameters
+- `{array} $array` - target array
+- `{array} ...$sources` - source arrays
+
+###### Syntax
+```php
+ difference(array $array, ...$sources): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::difference([ 1, 2, 3, 4, 5], [5, 2, 10]); // [1, 3, 4]
+
+$res = Arrays::difference(
+    ["a" => "green", "b" => "brown", "c" => "blue", "red"],
+    ["a" => "green", "yellow", "red"]
+);
+// [ "b" => "brown", "c" => "blue",  "red" ]
+}
+
+```
+
+### intersection
+Computes the list of values that are the intersection of all the arrays. Each value in the result is present in each of the arrays.
+[see also](http://underscorejs.org/#intersection).
+
+##### Parameters
+- `{array} $array` - target array
+- `{array} ...$sources` - source arrays
+
+###### Syntax
+```php
+ intersection(array $array, ...$sources): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::intersection([1, 2, 3], [101, 2, 1, 10], [2, 1]); // [1, 2]
+
+$res = Arrays::intersection(
+    ["a" => "green", "b" => "brown", "c" => "blue", "red"],
+    ["a" => "green", "b" => "yellow", "blue", "red"]
+); // [ "a" => "green" ]
+```
+
+
+### zip
+Merges together the values of each of the arrays with the values at the corresponding position. Useful when you have separate data sources that are coordinated through matching array indexes.
+[see also](http://underscorejs.org/#zip).
+
+##### Parameters
+- `{array} $array` - target array
+- `...$sources` - source arrays
+
+###### Syntax
+```php
+ zip(array $array, ...$sources): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::zip(
+  ["moe", "larry", "curly"],
+  [30, 40, 50],
+  [true, false, false]
+); //  [["moe", 30, true], ["larry", 40, false], ["curly", 50, false]]
+```
+
+### unzip
+The opposite of zip. Given an array of arrays, returns a series of new arrays, the first of which contains all of the first elements in the input arrays, the second of which contains all of the second elements, and so on.
+[see also](http://underscorejs.org/#unzip).
+
+##### Parameters
+- `{array} $array` - target array
+
+###### Syntax
+```php
+ unzip(array $array): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::unzip([["moe", 30, true], ["larry", 40, false], ["curly", 50, false]]);
+//  [["moe", "larry", "curly"], [30, 40, 50], [true, false, false]]
+```
+
+
+### object
+Converts arrays into objects. Pass either a single list of [key, value] pairs, or a list of keys,
+and a list of values. If duplicate keys exist, the last value wins.
+[see also](http://underscorejs.org/#shuffle).
+
+
+##### Parameters
+- `{array} $array` - target array
+- `{array} [$value]` - values array
+
+###### Syntax
+```php
+ toObject(array $array): PlainObject
+```
+
+###### Example #1
+
+```php
+$obj = Arrays::object([ "foo" =>
+            [
+                "bar" => [
+                    "baz" => "BAZ"
+                ]
+            ]
+        ]);
+echo $obj->foo->bar->baz; // BAZ
+```
+
+###### Example #2
+
+```php
+$obj = Arrays::object([["moe", 30], ["larry", 40], ["curly", 50]]);
+echo $obj->moe; // 30
+echo $obj->larry; // 40
+echo $obj->curly; // 50
+```
+
+###### Example #3
+
+```php
+$obj = Arrays::object(["moe", "larry", "curly"], [30, 40, 50]);
+echo $obj->moe; // 30
+echo $obj->larry; // 40
+echo $obj->curly; // 50
+```
+
+
 ### chain
 Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 
 ###### Syntax
 ```php
@@ -562,38 +790,15 @@ $res = Arrays::chain([1, 2, 3])
     ->value();
 ```
 
+
 ## Other methods
-
-### toObject
-Convert array to a plain object.
-
-##### Parameters
-- `{array} $array` - source array
-
-###### Syntax
-```php
- toObject(array $array): PlainObject
-```
-
-###### Example
-
-```php
-$obj = Arrays::toObject([ "foo" =>
-            [
-                "bar" => [
-                    "baz" => "BAZ"
-                ]
-            ]
-        ]);
-echo $obj->foo->bar->baz; // BAZ
-```
 
 ### replace
 Replace (similar to MYSQL REPLACE statement) an element matching the condition in `$callable` with the value
 If no match found, add the value to the end of array
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 - `{callable|string|Closure} $callable` - iteratee callback
 - `{mixed} $element` - element to replace the match
 
@@ -617,7 +822,7 @@ $array = Arrays::replace([
 Test whether array is not sequential, but associative array
 
 ##### Parameters
-- `{array} $array` - source array
+- `{array} $array` - target array
 
 ###### Syntax
 ```php

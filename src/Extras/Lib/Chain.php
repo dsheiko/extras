@@ -5,9 +5,12 @@ use Dsheiko\Extras\Arrays;
 use Dsheiko\Extras\Collections;
 use Dsheiko\Extras\Strings;
 use Dsheiko\Extras\Functions;
+use Dsheiko\Extras\Lib\TraitNormalizeClosure;
 
 class Chain
 {
+    use TraitNormalizeClosure;
+
     private $value;
 
     public function __construct($value = [])
@@ -50,6 +53,19 @@ class Chain
         $class = static::guessExtrasClass($this->value);
         $call = $class . "::" . $name;
         $this->value = \call_user_func_array($call, \array_merge([$this->value], $args));
+        return $this;
+    }
+
+    /**
+     * Bind a middleware function (function transforms the value)
+     *
+     * @param callable|string|Closure $callable $function
+     * @return \Dsheiko\Extras\Lib\Chain
+     */
+    public function middleware($callable): Chain
+    {
+        $function = static::getClosure($callable);
+        $this->value = $function($this->value);
         return $this;
     }
 

@@ -24,6 +24,7 @@ Collection of chainable high-order functions to abstract and manipulate PHP type
 - [Strings](./wiki/STRINGS.md)
 - [Functions](./wiki/FUNCTIONS.md)
 - [Collections](./wiki/COLLECTIONS.md)
+- [Chaining](./wiki/CHAINING.md)
 
 ## Examples
 

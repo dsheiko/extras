@@ -6,6 +6,7 @@
 - [before](#before)
 - [after](#before)
 - [throttle](#throttle)
+- [negate](#negate)
 - [chain](#chain)
 
 
@@ -108,6 +109,26 @@ $func();
 $func();
 usleep(20000);
 $func();
+```
+
+### negate
+Returns a new negated version of the predicate function.
+[see also](http://underscorejs.org/#negate).
+
+
+##### Parameters
+- `{callable|string|Closure} $callable` - source function
+
+###### Syntax
+```php
+negate($callablet): callable
+```
+
+###### Example
+```php
+<?php
+$func = Functions::negate(function(){ return false; });
+$func(): // true
 ```
 
 

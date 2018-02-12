@@ -25,5 +25,18 @@ describe("\\Dsheiko\\Extras\\Lib\\Chain", function() {
     });
 
 
+    describe('->middleware', function() {
+
+        it("transforms chain value", function() {
+            $res = Collections::chain(new \ArrayObject([1,2,3]))
+                ->toArray()
+                ->middleware("json_encode")
+                ->value();
+            expect($res)->to->equal("[1,2,3]");
+        });
+
+    });
+
+
 });
 
