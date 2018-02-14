@@ -23,6 +23,8 @@ Iterate over a list of elements, yielding each in turn to an $callable function
 ###### Example
 ```php
 <?php
+use Dsheiko\Extras\Chain;
+
 // Chain of calls
 $res = Chain::from([1, 2, 3]) // same as Arrays::chain([1, 2, 3])
     ->map(function($num){ return $num + 1; })
@@ -46,7 +48,9 @@ Binds a middleware (transformer) function to the chain
 ###### Example
 ```php
 <?php
- $res = Chain::from(new \ArrayObject([1,2,3))
+use Dsheiko\Extras\Chain;
+
+$res = Chain::from(new \ArrayObject([1,2,3))
         // same as Collections::chain(new \ArrayObject([1,2,3])
         ->toArray()
         ->middleware("json_encode")
