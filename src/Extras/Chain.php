@@ -1,5 +1,5 @@
 <?php
-namespace Dsheiko\Extras\Lib;
+namespace Dsheiko\Extras;
 
 use Dsheiko\Extras\Arrays;
 use Dsheiko\Extras\Collections;
@@ -16,6 +16,16 @@ class Chain
     public function __construct($value = [])
     {
         $this->value = $value;
+    }
+    /**
+     * Factory method
+     *
+     * @param mixed $value
+     * @return \Dsheiko\Extras\Chain
+     */
+    public static function from($value = [])
+    {
+        return new self($value);
     }
 
     /**
@@ -46,7 +56,7 @@ class Chain
      *
      * @param string $name
      * @param array $args
-     * @return \Dsheiko\Extras\Lib\Chain
+     * @return \Dsheiko\Extras\Chain
      */
     public function __call(string $name, array $args): Chain
     {
@@ -60,7 +70,7 @@ class Chain
      * Bind a middleware function (function transforms the value)
      *
      * @param callable|string|Closure $callable $function
-     * @return \Dsheiko\Extras\Lib\Chain
+     * @return \Dsheiko\Extras\Chain
      */
     public function middleware($callable): Chain
     {

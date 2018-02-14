@@ -1,13 +1,13 @@
 <?php
-use Dsheiko\Extras\Collections;
+use Dsheiko\Extras\Chain;
 
-describe("\\Dsheiko\\Extras\\Lib\\Chain", function() {
+describe("\\Dsheiko\\Extras\\Chain", function() {
 
     describe('->__call', function() {
 
         it("forwards value to a passing Extras class depending on value", function() {
                 // collection
-            $res = Collections::chain(new \ArrayObject([1,2,3]))
+            $res = Chain::from(new \ArrayObject([1,2,3]))
                 ->toArray()
                 // array
                 ->map(function($num){ return [ "num" => $num ]; })
@@ -28,7 +28,7 @@ describe("\\Dsheiko\\Extras\\Lib\\Chain", function() {
     describe('->middleware', function() {
 
         it("transforms chain value", function() {
-            $res = Collections::chain(new \ArrayObject([1,2,3]))
+            $res = Chain::from(new \ArrayObject([1,2,3]))
                 ->toArray()
                 ->middleware("json_encode")
                 ->value();

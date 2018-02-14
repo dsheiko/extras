@@ -1,7 +1,7 @@
 <?php
 namespace Dsheiko\Extras\Lib;
 
-use Dsheiko\Extras\Lib\Chain;
+use Dsheiko\Extras\Chain;
 
 abstract class AbstractExtras
 {
