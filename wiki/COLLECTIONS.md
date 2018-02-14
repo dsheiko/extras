@@ -6,10 +6,30 @@ one can rather convert the collection to an array (`::toArray`) and then apply a
 
 ## Methods
 
+- [chain](#chain)
 - [each](#each)
 - [toArray](#toArray)
-- [chain](#chain)
 
+
+### chain
+Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
+
+##### Parameters
+- `{iterable|ArrayObject|Iterator} $collection` - source collection
+
+###### Syntax
+```php
+ chain({iterable|ArrayObject|Iterator} $collection)
+```
+
+###### Example
+```php
+<?php
+$res = $res = Collections::chain(new \ArrayObject([1,2,3]))
+            ->toArray()
+            ->value();
+echo $res; // "534"
+```
 
 ### each
 
@@ -35,7 +55,6 @@ Collections::each($obj->getIterator(), function ($i) use (&$sum){
 });
 ```
 
-
 ### toArray
 
 Convert collectionb to an array
@@ -54,25 +73,4 @@ toArray($collection)
 $sum = 0;
 $obj = new \ArrayObject([1,2,3]);
 $res = Collections::toArray();
-```
-
-
-### chain
-Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
-
-##### Parameters
-- `{iterable|ArrayObject|Iterator} $collection` - source collection
-
-###### Syntax
-```php
- chain({iterable|ArrayObject|Iterator} $collection)
-```
-
-###### Example
-```php
-<?php
-$res = $res = Collections::chain(new \ArrayObject([1,2,3]))
-            ->toArray()
-            ->value();
-echo $res; // "534"
 ```

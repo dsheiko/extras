@@ -103,5 +103,4 @@ class Functions extends AbstractExtras
 
     //debounce
     //wrap
-    //negate
 }

@@ -2,36 +2,35 @@
 
 ## Methods
 
-- [once](#once)
-- [before](#before)
 - [after](#before)
-- [throttle](#throttle)
-- [negate](#negate)
+- [before](#before)
 - [chain](#chain)
+- [negate](#negate)
+- [once](#once)
+- [throttle](#throttle)
 
 
-### once
-Creates a version of the function that can only be called one time.
-Repeated calls to the modified function will have no effect, returning the value
-from the original call. Useful for initialization functions, instead of having to set a boolean flag
-and then check it later.
-[see also](http://underscorejs.org/#once).
+### after
+Creates a version of the function that will only be run after being called count times. Useful for grouping
+asynchronous responses, where you want to be sure that all the async calls have finished, before proceeding.
+[see also](http://underscorejs.org/#after).
 
 
 ##### Parameters
 - `{callable|string|Closure} $callable` - source function
+- `{int} $count` - count
 
 ###### Syntax
 ```php
-once($callable): callable
+after($callable, int $count): callable
 ```
 
 ###### Example
 ```php
 <?php
-$func = Functions::once("myFunc");
-$func(); // 1
-$func(); // 1
+$func = Functions::after("myFunc", 2);
+$func(); // false
+$func(); // false
 $func(); // 1
 ```
 
@@ -60,29 +59,79 @@ $func(); // 2
 ```
 
 
-### after
-Creates a version of the function that will only be run after being called count times. Useful for grouping
-asynchronous responses, where you want to be sure that all the async calls have finished, before proceeding.
-[see also](http://underscorejs.org/#after).
 
+
+
+
+### chain
+Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
 
 ##### Parameters
-- `{callable|string|Closure} $callable` - source function
-- `{int} $count` - count
+- `{string} $value` - source string
 
 ###### Syntax
 ```php
-after($callable, int $count): callable
+ chain(string $value): Strings
 ```
 
 ###### Example
 ```php
 <?php
-$func = Functions::after("myFunc", 2);
-$func(); // false
-$func(); // false
+$res = Strings::chain( " 12345 " )
+            ->replace("/1/", "5")
+            ->replace("/2/", "5")
+            ->trim()
+            ->substr(1, 3)
+            ->value();
+echo $res; // "534"
+```
+
+### negate
+Returns a new negated version of the predicate function.
+[see also](http://underscorejs.org/#negate).
+
+
+##### Parameters
+- `{callable|string|Closure} $callable` - source function
+
+###### Syntax
+```php
+negate($callablet): callable
+```
+
+###### Example
+```php
+<?php
+$func = Functions::negate(function(){ return false; });
+$func(): // true
+```
+
+
+### once
+Creates a version of the function that can only be called one time.
+Repeated calls to the modified function will have no effect, returning the value
+from the original call. Useful for initialization functions, instead of having to set a boolean flag
+and then check it later.
+[see also](http://underscorejs.org/#once).
+
+
+##### Parameters
+- `{callable|string|Closure} $callable` - source function
+
+###### Syntax
+```php
+once($callable): callable
+```
+
+###### Example
+```php
+<?php
+$func = Functions::once("myFunc");
+$func(); // 1
+$func(); // 1
 $func(); // 1
 ```
+
 
 ### throttle
 Creates and returns a new, throttled version of the passed function,
@@ -111,46 +160,4 @@ usleep(20000);
 $func();
 ```
 
-### negate
-Returns a new negated version of the predicate function.
-[see also](http://underscorejs.org/#negate).
 
-
-##### Parameters
-- `{callable|string|Closure} $callable` - source function
-
-###### Syntax
-```php
-negate($callablet): callable
-```
-
-###### Example
-```php
-<?php
-$func = Functions::negate(function(){ return false; });
-$func(): // true
-```
-
-
-### chain
-Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
-
-##### Parameters
-- `{string} $value` - source string
-
-###### Syntax
-```php
- chain(string $value): Strings
-```
-
-###### Example
-```php
-<?php
-$res = Strings::chain( " 12345 " )
-            ->replace("/1/", "5")
-            ->replace("/2/", "5")
-            ->trim()
-            ->substr(1, 3)
-            ->value();
-echo $res; // "534"
-```
