@@ -34,7 +34,7 @@ class Chain
      * @return string
      * @throws \InvalidArgumentException
      */
-    private static function guessExtrasClass($value): string
+    private static function guessExtrasClass(&$value): string
     {
         switch (true) {
             case is_array($value):
@@ -47,6 +47,10 @@ class Chain
                 return Collections::class;
             case is_callable($value):
                 return Functions::class;
+            case is_object($value):
+                $ao = new \ArrayObject($value);
+                $value = $ao->getArrayCopy();
+                return Arrays::class;
         }
         throw new \InvalidArgumentException("Cannot find passing collection for given type");
     }

@@ -20,7 +20,7 @@ Iterate over a list of elements, yielding each in turn to an $callable function
 {Set}::chain($target): Chain
 ```
 
-###### Example
+###### Example #1
 ```php
 <?php
 use Dsheiko\Extras\Chain;
@@ -30,7 +30,23 @@ $res = Chain::from([1, 2, 3]) // same as Arrays::chain([1, 2, 3])
     ->map(function($num){ return $num + 1; })
     ->filter(function($num){ return $num > 1; })
     ->reduce(function($carry, $num){ return $carry + $num; }, 0)
-    ->value();
+    ->value(); // 9
+```
+
+###### Example #2
+```php
+<?php
+use Dsheiko\Extras\Chain;
+
+class MapObject
+{
+    public $foo = "FOO";
+    public $bar = "BAR";
+}
+
+$res = Chain::from(new MapObject)
+  ->keys()
+  ->value(); // ["foo", "bar"]
 ```
 
 ### middleware

@@ -1,6 +1,12 @@
 <?php
 use Dsheiko\Extras\Chain;
 
+class MapObjectFixture
+{
+    public $foo = "FOO";
+    public $bar = "BAR";
+}
+
 describe("\\Dsheiko\\Extras\\Chain", function() {
 
     describe('->__call', function() {
@@ -22,8 +28,13 @@ describe("\\Dsheiko\\Extras\\Chain", function() {
             expect($res)->to->equal("13");
         });
 
+        it("converts object into key-value array", function() {
+            $res = Chain::from(new MapObjectFixture)
+                ->keys()
+                ->value();
+            expect($res)->to->equal(["foo", "bar"]);
+        });
     });
-
 
     describe('->middleware', function() {
 

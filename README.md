@@ -10,9 +10,10 @@ Collection of chainable high-order functions to abstract and manipulate PHP type
 > The packages takes its name from `Array Extras` referring to the array methods added in ES5 (JavaScript) to abstract generic array manipulation logic
 
 ## Highlights
-- Type transformation chains
 - Fixing PHP:
-  - Consistent syntax for type extras (first always goes manipulation target, then callback or other options)
+  - Naming convention: all methods are `camelCase` styles vs PHP built-in functions in `lower_case`
+  - Consistent parameter order (`Chain::from($target)->method(...$options)` or `Helper::method($target, ...$options)`)
+  - Methods are chainable
   - Manipulation target (value) can always be as reference as well as type literal
   - Callback can always be  `callable` or closure or fully qualified name as a string
 - Familiar syntax: JavaScript Array/Object/String methods, in addition extra methods in [Underscore.js](http://underscorejs.org/)/[Lodash](https://lodash.com/) syntax
@@ -44,9 +45,9 @@ $res = Arrays::map(range(1,3), "numToArray"); // [[1],[2],[3]]
 #### Chaining
 ```php
 <?php
-use \Dsheiko\Extras\Collections;
+use \Dsheiko\Extras\Chain;
 
-$res = Collections::chain(new \ArrayObject([1,2,3]))
+$res = Chain::from(new \ArrayObject([1,2,3]))
     ->toArray() // value is [1,2,3]
     ->map(function($num){ return [ "num" => $num ]; })
     // value is [[ "num" => 1, ..]]
