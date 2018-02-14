@@ -21,19 +21,19 @@ $res = Arrays::chain([1, 2, 3])
 ```
 
 - JavaScript-inspired methods
-	- [assign](#assign)
+  - [assign](#assign)
   - [each](#each)
-	- [every](#every)
-	- [filter](#filter)
-	- [find](#find)
-	- [from](#from)
-	- [keys](#keys)
-	- [map](#map)
-	- [reduce](#reduce)
+  - [every](#every)
+  - [filter](#filter)
+  - [find](#find)
+  - [from](#from)
+  - [keys](#keys)
+  - [map](#map)
+  - [reduce](#reduce)
   - [reduceRight](#reduceRight)
-	- [some](#some)
-	- [sort](#sort)
-	- [values](#values)
+  - [some](#some)
+  - [sort](#sort)
+  - [values](#values)
 - Underscore.js-inspired methods
   - [chain](#chain)
   - [countBy](#countBy)
@@ -55,7 +55,7 @@ $res = Arrays::chain([1, 2, 3])
   - [zip](#zip)
 - Other methods
   - [isAssocArray](#isAssocArray)
-	- [replace](#replace)
+  - [replace](#replace)
 
 ## JavaScript-inspired methods
 
