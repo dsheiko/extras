@@ -23,14 +23,15 @@ $res = Arrays::chain([1, 2, 3])
 - JavaScript-inspired methods
   - [assign](#assign)
   - [each](#each)
+  - [entries](#entries) - alias: `pairs`
   - [every](#every)
   - [filter](#filter)
   - [find](#find)
   - [from](#from)
   - [keys](#keys)
   - [map](#map)
-  - [reduce](#reduce)
   - [reduceRight](#reduceRight)
+  - [reduce](#reduce)
   - [some](#some)
   - [sort](#sort)
   - [values](#values)
@@ -44,7 +45,7 @@ $res = Arrays::chain([1, 2, 3])
   - [intersection](#intersection)
   - [last](#last)
   - [object](#object)
-  - [pairs](#pairs)
+  - [pairs](#entries) - alias: `entries`
   - [partition](#partition)
   - [pluck](#pluck)
   - [result](#result)
@@ -62,7 +63,7 @@ $res = Arrays::chain([1, 2, 3])
 
 ### assign(array $array, ...$sources)
 Copy the values of all properties from one or more target arrays to a target array.
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign).
 The method works pretty much like `array_merge` except it treats consistently associative arrays with numeric keys
 
 ##### Parameters
@@ -87,7 +88,7 @@ $res = Arrays::assign([10 => "foo", 20 => "bar"], [20 => "baz"]);
 ### each
 
 Iterate over a list of elements, yielding each in turn to an iteratee function
-[see also](http://underscorejs.org/#each).
+- [see also](http://underscorejs.org/#each).
 
 ###### Parameters
 - `{array} $array` - target array
@@ -107,10 +108,32 @@ Arrays::each([1, 2, 3], function ($val) use(&$sum) {
 });
 ```
 
+### entries / pairs
+Convert an object into a list of [key, value] pairs.
+- [see also](http://underscorejs.org/#pairs)
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries).
+
+##### Parameters
+- `{array} $array` - target array
+
+###### Syntax
+```php
+ pairs(array $array): array
+```
+
+###### Example
+```php
+<?php
+$res = Arrays::pairs([
+            "foo" => "FOO",
+            "bar" => "BAR",
+        ]);
+// [["foo", "FOO"], ["bar", "BAR"]]
+```
 
 ### every
 Test whether all elements in the array pass the test implemented by the provided function.
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -129,7 +152,7 @@ $boolean = Arrays::every([1, 2, 3], function($num){ return $num > 1; });
 
 ### filter
 Look through each value in the list, returning an array of all the values that pass a truth test (predicate).
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -148,7 +171,7 @@ $array = Arrays::filter([1, 2, 3], function($num){ return $num > 1; });
 
 ### find
 Look through each value in the list, returning the first one that passes a truth test (predicate),
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -167,7 +190,7 @@ $value = Arrays::find([1, 2, 3], function($num){ return $num > 1; });
 
 ### from
 Create a new array from an array-like or iterable object
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from).
 
 ##### Parameters
 - `{ArrayObject|\ArrayIterator|Traversable|Object} $collection` - source collection
@@ -189,7 +212,7 @@ $res = Arrays::from($obj->getIterator()); // [1,2,3]
 
 ### keys
 Return all the keys or a subset of the keys of an array
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -212,7 +235,7 @@ $res = Arrays::keys(["foo" => "FOO", "bar" => "BAR"], "BAR"); // ["bar"]
 
 ### map
 Produce a new array of values by mapping each value in list through a transformation function
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce).
 
 ###### Parameters
 - `{array} $array` - target array
@@ -245,7 +268,7 @@ $res = Arrays::chain([
 
 ### reduce
 Boil down a list of values into a single value.
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce).
 
 ###### Parameters
 - `{array} $array` - target array
@@ -267,7 +290,7 @@ $sum = Arrays::reduce([1, 2, 3], function ($carry, $num) { return $carry + $num;
 
 ### reduceRight
 The right-associative version of reduce.
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -294,7 +317,7 @@ $res = Arrays::reduceRight([1,2,3], function(array $carry, int $num){
 
 ### some
 Test whether at least one element in the array passes the test implemented by the provided function
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -315,7 +338,7 @@ $boolean = Arrays::some([1, 2, 3], function($num){ return $num > 1; });
 
 ### sort
 Sort an array by values (using a user-defined comparison function when callback provided)
-[see also](http://php.net/manual/en/function.usort.php).
+- [see also](http://php.net/manual/en/function.usort.php).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -338,7 +361,7 @@ $res = Arrays::sort([3,2,1], function($a, $b){
 
 ### values
 Return all the values of an array
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -386,7 +409,7 @@ $res = Arrays::chain([1, 2, 3])
 
 ### countBy
 Sort a list into groups and return a count for the number of objects in each group.
-[see also](http://underscorejs.org/#countBy).
+- [see also](http://underscorejs.org/#countBy).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -409,7 +432,7 @@ $res = Arrays::countBy([1, 2, 3, 4, 5], function($num) {
 
 ### difference
 Returns the values from array that are not present in the other arrays.
-[see also](http://underscorejs.org/#difference).
+- [see also](http://underscorejs.org/#difference).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -438,7 +461,7 @@ $res = Arrays::difference(
 
 ### findIndex
 Find index of the first element matching the condition in `$callable`
-[see also](http://underscorejs.org/#findIndex).
+- [see also](http://underscorejs.org/#findIndex).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -465,7 +488,7 @@ $inx = Arrays::findIndex([
 Get the first value from an array regardless index order and without modifying the array
 When passed in array has no element, it returns undefined, unless `$defaultValue` is supplied.
 Then it returns $defaultValue (when `$defaultValue` is a callable then the result of its execution)
-[see also](http://underscorejs.org/#first).
+- [see also](http://underscorejs.org/#first).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -490,7 +513,7 @@ $element = Arrays::first($arr, function(){ return 1; });
 
 ### groupBy
 Split a collection into sets, grouped by the result of running each value through iterator
-[see also](http://underscorejs.org/#groupBy).
+- [see also](http://underscorejs.org/#groupBy).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -512,7 +535,7 @@ $res = Arrays::groupBy([1.3, 2.1, 2.4], function($num) { return floor($num); });
 
 ### intersection
 Computes the list of values that are the intersection of all the arrays. Each value in the result is present in each of the arrays.
-[see also](http://underscorejs.org/#intersection).
+- [see also](http://underscorejs.org/#intersection).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -537,7 +560,7 @@ $res = Arrays::intersection(
 
 ### last
 Get the last value from an array regardless index order and without modifying the array
-[see also](http://underscorejs.org/#last).
+- [see also](http://underscorejs.org/#last).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -556,7 +579,7 @@ $element = Arrays::last([1, 2, 3]);
 ### object
 Converts arrays into objects. Pass either a single list of [key, value] pairs, or a list of keys,
 and a list of values. If duplicate keys exist, the last value wins.
-[see also](http://underscorejs.org/#shuffle).
+- [see also](http://underscorejs.org/#shuffle).
 
 
 ##### Parameters
@@ -599,32 +622,9 @@ echo $obj->larry; // 40
 echo $obj->curly; // 50
 ```
 
-### pairs
-Convert an object into a list of [key, value] pairs.
-[see also](http://underscorejs.org/#pairs).
-
-##### Parameters
-- `{array} $array` - target array
-
-###### Syntax
-```php
- pairs(array $array): array
-```
-
-###### Example
-```php
-<?php
-$res = Arrays::pairs([
-            "foo" => "FOO",
-            "bar" => "BAR",
-        ]);
-// [["foo", "FOO"], ["bar", "BAR"]]
-```
-
-
 ### partition
 split array into two arrays: one whose elements all satisfy predicate and one whose elements all do not satisfy predicate.
-[see also](http://underscorejs.org/#partition).
+- [see also](http://underscorejs.org/#partition).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -650,7 +650,7 @@ $res = Arrays::partition([0, 1, 2, 3, 4, 5], function($val) {
 ### pluck
 A convenient version of what is perhaps the most common use-case for map:
 extracting a list of property values.
-[see also](http://underscorejs.org/#pluck).
+- [see also](http://underscorejs.org/#pluck).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -676,7 +676,7 @@ extracting a list of property values.
 
 ### result
 If the value of the named property is a function then invoke it; otherwise, return it.
-[see also](http://underscorejs.org/#result).
+- [see also](http://underscorejs.org/#result).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -701,7 +701,7 @@ If the value of the named property is a function then invoke it; otherwise, retu
 
 ### shuffle
 Return a shuffled copy of the list
-[see also](http://underscorejs.org/#shuffle).
+- [see also](http://underscorejs.org/#shuffle).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -720,7 +720,7 @@ $res = Arrays::shuffle([1, 2, 3]); // [ 2, 1, 3 ]
 
 ### uniq
 Produces a duplicate-free version of the array
-[see also](http://underscorejs.org/#uniq).
+- [see also](http://underscorejs.org/#uniq).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -739,7 +739,7 @@ $res = Arrays::uniq([1,2,3,1,1,2]); // [1,2,3]
 
 ### unzip
 The opposite of zip. Given an array of arrays, returns a series of new arrays, the first of which contains all of the first elements in the input arrays, the second of which contains all of the second elements, and so on.
-[see also](http://underscorejs.org/#unzip).
+- [see also](http://underscorejs.org/#unzip).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -759,7 +759,7 @@ $res = Arrays::unzip([["moe", 30, true], ["larry", 40, false], ["curly", 50, fal
 
 ### where
 Look through each value in the list, returning an array of all the values that contain all of the key-value pairs listed in $conditions
-[see also](http://underscorejs.org/#where).
+- [see also](http://underscorejs.org/#where).
 
 ##### Parameters
 - `{array} $array` - target array
@@ -781,7 +781,7 @@ $res = Arrays::where($arr, ["foo" => "FOO", "bar" => "BAR"]); // ["foo", "bar"]
 
 ### zip
 Merges together the values of each of the arrays with the values at the corresponding position. Useful when you have separate data sources that are coordinated through matching array indexes.
-[see also](http://underscorejs.org/#zip).
+- [see also](http://underscorejs.org/#zip).
 
 ##### Parameters
 - `{array} $array` - target array
