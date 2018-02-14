@@ -221,6 +221,9 @@ class Arrays extends AbstractExtras
         if (is_array($list)) {
             return $list;
         }
+        if ($list instanceof PlainObject) {
+            return $list->toArray();
+        }
         if ($list instanceof \ArrayObject || $list instanceof \ArrayIterator) {
             return $list->getArrayCopy();
         }
@@ -276,7 +279,7 @@ class Arrays extends AbstractExtras
         });
         return $pairs;
     }
-    
+
     /**
      * Alias of entries
      *

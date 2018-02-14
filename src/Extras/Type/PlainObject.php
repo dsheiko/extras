@@ -10,8 +10,18 @@ class PlainObject
 {
     private $array = [];
 
-    public function __construct(array $array = [])
+    /**
+     *
+     * @param array|object $arrayLike
+     */
+    public function __construct($arrayLike = [])
     {
+        if (is_array($arrayLike)) {
+            $array = $arrayLike;
+        } else {
+            $ao = new ArrayObject($arrayLike);
+            $array = $ao->getArrayCopy();
+        }
         $this->array = array_map(function ($value) {
             return is_array($value) ? new self($value) : $value;
         }, $array);
