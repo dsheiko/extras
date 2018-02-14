@@ -50,7 +50,7 @@ echo $res; // "534"
 
 ### endsWith
 Determine whether a string ends with the characters of a specified string, returning true or false as appropriate.
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith)
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith)
 
 ##### Parameters
 - `{string} $value` - source string
@@ -69,7 +69,7 @@ $res = Strings::endsWith("12345", "45");
 
 ### includes
 * Determine whether one string may be found within another string, returning true or false as appropriate.
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes).
 
 ##### Parameters
 - `{string} $value` - source string
@@ -129,7 +129,7 @@ $res = Strings::replace("12345", "/\d/s", "*");
 
 ### startsWith
 Determine whether a string begins with the characters of a specified string, returning true or false as appropriate.
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith).
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith).
 
 ##### Parameters
 - `{string} $value` - source string

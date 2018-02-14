@@ -26,7 +26,7 @@ echo $po->bar; // "BAR"
 
 ### assign
 Copy the values of all properties from one or more source arrays to a target array.
-[see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 
 ##### Parameters
 - `{PlainObject} $target` - target object

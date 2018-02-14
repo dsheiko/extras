@@ -13,7 +13,7 @@
 ### after
 Creates a version of the function that will only be run after being called count times. Useful for grouping
 asynchronous responses, where you want to be sure that all the async calls have finished, before proceeding.
-[see also](http://underscorejs.org/#after).
+- [see also](http://underscorejs.org/#after).
 
 
 ##### Parameters
@@ -37,7 +37,7 @@ $func(); // 1
 ### before
 Creates a version of the function that can be called no more than count times.
 The result of the last function call is memoized and returned when count has been reached.
-[see also](http://underscorejs.org/#before).
+- [see also](http://underscorejs.org/#before).
 
 
 ##### Parameters
@@ -88,7 +88,7 @@ echo $res; // "534"
 
 ### negate
 Returns a new negated version of the predicate function.
-[see also](http://underscorejs.org/#negate).
+- [see also](http://underscorejs.org/#negate).
 
 
 ##### Parameters
@@ -112,7 +112,7 @@ Creates a version of the function that can only be called one time.
 Repeated calls to the modified function will have no effect, returning the value
 from the original call. Useful for initialization functions, instead of having to set a boolean flag
 and then check it later.
-[see also](http://underscorejs.org/#once).
+- [see also](http://underscorejs.org/#once).
 
 
 ##### Parameters
@@ -137,7 +137,7 @@ $func(); // 1
 Creates and returns a new, throttled version of the passed function,
 that, when invoked repeatedly, will only actually call the original function at most once per every
 wait milliseconds. Useful for rate-limiting events that occur faster than you can keep up with.
-[see also](http://underscorejs.org/#throttle).
+- [see also](http://underscorejs.org/#throttle).
 
 
 ##### Parameters

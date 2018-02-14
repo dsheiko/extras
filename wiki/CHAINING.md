@@ -10,7 +10,7 @@
 ### chain
 
 Iterate over a list of elements, yielding each in turn to an $callable function
-[see also](http://underscorejs.org/#each).
+- [see also](http://underscorejs.org/#each).
 
 ###### Parameters
 - `{mixed} $value` - manipulation target

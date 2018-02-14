@@ -34,7 +34,7 @@ echo $res; // "534"
 ### each
 
 Iterate over a list of elements, yielding each in turn to an $callable function
-[see also](http://underscorejs.org/#each).
+- [see also](http://underscorejs.org/#each).
 
 ###### Parameters
 - `{iterable|ArrayObject|Iterator} $collection` - source collection
