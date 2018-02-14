@@ -9,6 +9,7 @@ Object representing an associative array similar to plain object in JavaScript
 use Dsheiko\Extras\Type\PlainObject;
 
 $po = new PlainObject(["foo" => "FOO", "bar" => "BAR"]);
+// $po = new \Dsheiko\Extras\Array::from(["foo" => "FOO", "bar" => "BAR"]);
 echo $po->foo; // "FOO"
 echo $po->bar; // "BAR"
 ```
