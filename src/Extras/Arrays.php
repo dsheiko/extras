@@ -3,7 +3,7 @@ namespace Dsheiko\Extras;
 
 use Dsheiko\Extras\Lib\AbstractExtras;
 use Dsheiko\Extras\Lib\TraitNormalizeClosure;
-use Dsheiko\Extras\Lib\PlainObject;
+use Dsheiko\Extras\Type\PlainObject;
 use Dsheiko\Extras\Functions;
 
 class Arrays extends AbstractExtras
@@ -192,7 +192,7 @@ class Arrays extends AbstractExtras
      * @param array ...$sources - variadic list of source arrays
      * @return array target array
      */
-    public static function assign(array $array, ...$sources)
+    public static function assign(array $array, ...$sources): array
     {
         if (!static::isAssocArray($array)) {
             throw new \InvalidArgumentException("Invalid parameter 1. Must be an key-value array");
@@ -262,19 +262,30 @@ class Arrays extends AbstractExtras
     }
 
     /**
-     * Convert an object into a list of [key, value] pairs.
-     * @see http://underscorejs.org/#pairs
+     * Returns an array of a given object's own enumerable property [key, value] pairs
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
      *
      * @param array $array
      * @return array
      */
-    public static function pairs(array $array): array
+    public static function entries(array $array): array
     {
         $pairs = [];
         static::each($array, function ($val, $key) use (&$pairs) {
             $pairs[] = [$key, $val];
         });
         return $pairs;
+    }
+    
+    /**
+     * Alias of entries
+     *
+     * @param array $array
+     * @return array
+     */
+    public static function pairs(array $array): array
+    {
+        return static::entries($array);
     }
 
     /**

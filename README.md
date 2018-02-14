@@ -25,6 +25,7 @@ Collection of chainable high-order functions to abstract and manipulate PHP type
 - [Functions](./wiki/FUNCTIONS.md)
 - [Collections](./wiki/COLLECTIONS.md)
 - [Chaining](./wiki/CHAINING.md)
+- [Plain Object](./wiki/PLAIN-OBJECT.md)
 
 ## Examples
 
