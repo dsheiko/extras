@@ -14,6 +14,7 @@ Collection of chainable high-order functions to abstract and manipulate PHP type
   - Naming convention: all methods are `camelCase` styles vs PHP built-in functions in `lower_case`
   - Consistent parameter order (`Chain::chain($target)->method(...$options)` or `Helper::method($target, ...$options)`)
   - Methods are chainable
+  - Data structure `PlainObject` similar to JavaScript plain object
   - Manipulation target (value) can always be as reference as well as type literal
   - Callback can always be  `callable` or closure or fully qualified name as a string
 - Familiar syntax: JavaScript Array/Object/String methods, in addition extra methods in [Underscore.js](http://underscorejs.org/)/[Lodash](https://lodash.com/) syntax
@@ -60,4 +61,15 @@ $res = Any::chain(new \ArrayObject([1,2,3]))
     ->value();
 echo $res; // "13"
 
+```
+
+#### Plain object
+```php
+<?php
+use \Dsheiko\Extras\Arrays;
+
+$po = Arrays::object(["foo" => "FOO", "bar" => ["baz" => "BAZ"]]);
+echo $po->foo; // FOO
+echo $po->bar->baz; // BAZ
+var_dump($po->bar->entries()); // [["baz", "BAZ"]]
 ```
