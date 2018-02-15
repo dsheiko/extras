@@ -8,9 +8,12 @@
 
 
 ### chain
+- alias: `Any::chain`
 
 Iterate over a list of elements, yielding each in turn to an $callable function
 - [see also](http://underscorejs.org/#each).
+
+
 
 ###### Parameters
 - `{mixed} $value` - manipulation target
@@ -26,7 +29,7 @@ Iterate over a list of elements, yielding each in turn to an $callable function
 use Dsheiko\Extras\Chain;
 
 // Chain of calls
-$res = Chain::from([1, 2, 3]) // same as Arrays::chain([1, 2, 3])
+$res = Chain::chain([1, 2, 3]) // same as Arrays::chain([1, 2, 3])
     ->map(function($num){ return $num + 1; })
     ->filter(function($num){ return $num > 1; })
     ->reduce(function($carry, $num){ return $carry + $num; }, 0)
@@ -44,7 +47,7 @@ class MapObject
     public $bar = "BAR";
 }
 
-$res = Chain::from(new MapObject)
+$res = Chain::chain(new MapObject)
   ->keys()
   ->value(); // ["foo", "bar"]
 ```
@@ -66,7 +69,7 @@ Binds a middleware (transformer) function to the chain
 <?php
 use Dsheiko\Extras\Chain;
 
-$res = Chain::from(new \ArrayObject([1,2,3))
+$res = Chain::chain(new \ArrayObject([1,2,3))
         // same as Collections::chain(new \ArrayObject([1,2,3])
         ->toArray()
         ->middleware("json_encode")

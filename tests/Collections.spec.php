@@ -44,6 +44,26 @@ describe("\\Dsheiko\\Extras\\Collections", function() {
 
     });
 
+    describe('::chain', function() {
+
+        it("chains different methods", function() {
+           $res = Collections::chain(new \ArrayObject([1,2,3]))
+            ->toArray()
+            ->value();
+            expect($res)->to->equal([1,2,3]);
+        });
+
+        it("throws exception when invalid type given", function() {
+            expect(function() {
+                Collections::chain("string");
+            })->to->throw(
+                \InvalidArgumentException::class,
+                "Target must be a Collection (ArrayObject|ArrayIterator|Traversable); 'string' type given"
+            );
+        });
+
+    });
+
 
 });
 

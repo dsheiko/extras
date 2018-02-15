@@ -12,7 +12,7 @@ Collection of chainable high-order functions to abstract and manipulate PHP type
 ## Highlights
 - Fixing PHP:
   - Naming convention: all methods are `camelCase` styles vs PHP built-in functions in `lower_case`
-  - Consistent parameter order (`Chain::from($target)->method(...$options)` or `Helper::method($target, ...$options)`)
+  - Consistent parameter order (`Chain::chain($target)->method(...$options)` or `Helper::method($target, ...$options)`)
   - Methods are chainable
   - Manipulation target (value) can always be as reference as well as type literal
   - Callback can always be  `callable` or closure or fully qualified name as a string
@@ -45,9 +45,9 @@ $res = Arrays::map(range(1,3), "numToArray"); // [[1],[2],[3]]
 #### Chaining
 ```php
 <?php
-use \Dsheiko\Extras\Chain;
+use \Dsheiko\Extras\Any;
 
-$res = Chain::from(new \ArrayObject([1,2,3]))
+$res = Any::chain(new \ArrayObject([1,2,3]))
     ->toArray() // value is [1,2,3]
     ->map(function($num){ return [ "num" => $num ]; })
     // value is [[ "num" => 1, ..]]

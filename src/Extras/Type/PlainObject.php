@@ -16,12 +16,7 @@ class PlainObject
      */
     public function __construct($arrayLike = [])
     {
-        if (is_array($arrayLike)) {
-            $array = $arrayLike;
-        } else {
-            $ao = new ArrayObject($arrayLike);
-            $array = $ao->getArrayCopy();
-        }
+        $array = is_array($arrayLike) ? $arrayLike : Arrays::from($arrayLike);
         $this->array = array_map(function ($value) {
             return is_array($value) ? new self($value) : $value;
         }, $array);

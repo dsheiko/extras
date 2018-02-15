@@ -1,5 +1,5 @@
 <?php
-namespace Dsheiko\Extras\Lib;
+namespace Dsheiko\Extras;
 
 use Dsheiko\Extras\Chain;
 

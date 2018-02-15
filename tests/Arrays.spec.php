@@ -4,7 +4,7 @@ use Dsheiko\Extras\Arrays;
 
 describe("\\Dsheiko\\Extras\\Arrays", function() {
 
-    
+
     describe('::isAssocArray', function() {
 
         it("returns true for pure associative array", function() {
@@ -56,6 +56,12 @@ describe("\\Dsheiko\\Extras\\Arrays", function() {
             ->map(function($num){ return $num + 1; })
             ->value();
             expect(implode(",", $res))->to->equal("3,4,5");
+        });
+
+        it("throws exception when invalid type given", function() {
+            expect(function() {
+                Arrays::chain("string");
+            })->to->throw(\InvalidArgumentException::class, "Target must be an array; 'string' type given");
         });
 
     });

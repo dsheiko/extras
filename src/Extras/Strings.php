@@ -1,7 +1,7 @@
 <?php
 namespace Dsheiko\Extras;
 
-use Dsheiko\Extras\Lib\AbstractExtras;
+use Dsheiko\Extras\AbstractExtras;
 
 /**
  * String::from("source")
@@ -99,5 +99,31 @@ class Strings extends AbstractExtras
     public static function remove(string $value, string $search): string
     {
         return \str_replace($search, "", $value);
+    }
+
+
+
+    /**
+     * Test if target a string
+     * @param mixed $target
+     * @return bool
+     */
+    public static function isString($target): bool
+    {
+        return is_string($target);
+    }
+
+    /**
+     * Start chain
+     *
+     * @param mixed $target
+     * @return Chain
+     */
+    public static function chain($target)
+    {
+        if (!static::isString($target)) {
+            throw new \InvalidArgumentException("Target must be a string; '" . gettype($target) . "' type given");
+        }
+        return parent::chain($target);
     }
 }

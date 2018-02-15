@@ -108,6 +108,12 @@ describe("\\Dsheiko\\Extras\\Strings", function() {
             expect($res)->to->equal("534");
         });
 
+        it("throws exception when invalid type given", function() {
+            expect(function() {
+                Strings::chain([1,2]);
+            })->to->throw(\InvalidArgumentException::class, "Target must be a string; 'array' type given");
+        });
+
     });
 
 

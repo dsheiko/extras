@@ -1,24 +1,57 @@
 <?php
 namespace Dsheiko\Extras;
 
-use Dsheiko\Extras\Lib\AbstractExtras;
-use Dsheiko\Extras\Lib\TraitNormalizeClosure;
+use Dsheiko\Extras\AbstractExtras;
+use \Closure;
 
 class Functions extends AbstractExtras
 {
-    use TraitNormalizeClosure;
+    /**
+     * Check if a supplied value is a closure
+     * @param string|callable|Closure $target
+     * @return bool
+     */
+    public static function isClosure($target)
+    {
+        return is_object($target) && ($target instanceof Closure);
+    }
+
+    /**
+     * Obtain a closure from callable
+     *
+     * @example
+     * static::getClosure(function() {});
+     * static::getClosure("\var_dump");
+     * static::getClosure([$this, "foo"]);
+     *
+     * @param string|callable|Closure $target
+     * @return Closure
+     */
+    public static function getClosure($target): Closure
+    {
+        try {
+            if (!method_exists("\Closure", "fromCallable")) {
+                return $target;
+            }
+            return static::isClosure($target) ? $target : Closure::fromCallable($target);
+        } catch (\TypeError $e) {
+            throw new \InvalidArgumentException("Target must be an callable|string|Closure; '"
+                . gettype($target) . "' type given");
+        }
+    }
+
     /**
      * Creates a version of the function that can be called no more than count times. The result of the last function
      * call is memoized and returned when count has been reached.
      * @see http://underscorejs.org/#before
      *
-     * @param callable|string|Closure $callable
+     * @param callable|string|Closure $target
      * @param int $count
      * @return mixed
      */
-    public static function before($callable, int $count)
+    public static function before($target, int $count): callable
     {
-        $closure = static::getClosure($callable);
+        $closure = static::getClosure($target);
         return function (...$args) use (&$count, $closure) {
             static $memo = null;
             if (--$count >= 0) {
@@ -33,13 +66,13 @@ class Functions extends AbstractExtras
      * the function shall not receive parameters.
      * @see http://underscorejs.org/#after
      *
-     * @param callable|string|Closure $callable
+     * @param callable|string|Closure $target
      * @param int $count
      * @return callable|null
      */
-    public static function after($callable, int $count)
+    public static function after($target, int $count): callable
     {
-        $closure = static::getClosure($callable);
+        $closure = static::getClosure($target);
         return function (...$args) use (&$count, $closure) {
             if (--$count >= 0) {
                 return false;
@@ -54,12 +87,12 @@ class Functions extends AbstractExtras
      * of having to set a boolean flag and then check it later.
      * @see http://underscorejs.org/#once
      *
-     * @param callable|string|Closure $callable
+     * @param callable|string|Closure $target
      * @return mixed
      */
-    public static function once($callable)
+    public static function once($target): callable
     {
-        $closure = static::getClosure($callable);
+        $closure = static::getClosure($target);
         return static::before($closure, 1);
     }
 
@@ -67,12 +100,12 @@ class Functions extends AbstractExtras
      * Creates and returns a new, throttled version of the passed function, that, when invoked repeatedly,
      * will only actually call the original function at most once per every wait milliseconds.
      *
-     * @param callable|string|Closure $callable
+     * @param callable|string|Closure $target
      * @param int $wait
      */
-    public static function throttle($callable, int $wait)
+    public static function throttle($target, int $wait): callable
     {
-        $closure = static::getClosure($callable);
+        $closure = static::getClosure($target);
         return function () use ($closure, $wait) {
             static $pretime = null;
             $curtime = microtime(true);
@@ -84,23 +117,63 @@ class Functions extends AbstractExtras
         };
     }
 
-    public static function memoize($callable)
-    {
-    }
-
     /**
-     * Returns a new negated version of the predicate function ($callable).
+     * Memoizes a given function by caching the computed result. Useful for speeding up slow-running computations. If passed an optional hashFunction
      *
-     * @param callable|string|Closure $callable
+     * @staticvar array $cache
+     * @param callable|string|Closure $target
+     * @param callable|string|Closure [$hasher]
      * @return callable
      */
-    public static function negate($callable): callable
+    public static function memoize($target, $hasher = null): callable
     {
-        return function (...$args) use ($callable) {
-            return !$callable(...$args);
+        static $cache = [];
+        $closure = static::getClosure($target);
+        $hasher = $hasher ? static::getClosure($hasher) : function($target, array $args) {
+            return md5(serialize($target) . serialize($args));
+        };
+        return function (...$args) use ($closure, $hasher, $target, &$cache) {
+            $hash = $hasher($target, $args);
+            if (!isset($cache[$hash])) {
+                $cache[$hash] = call_user_func_array($closure, $args);
+            }
+            return $cache[$hash];
         };
     }
 
-    //debounce
-    //wrap
+    /**
+     * Returns a new negated version of the predicate function ($target).
+     *
+     * @param callable|string|Closure $target
+     * @return callable
+     */
+    public static function negate($target): callable
+    {
+        return function (...$args) use ($target) {
+            return !$target(...$args);
+        };
+    }
+
+
+    /**
+     * Test if target a string
+     * @param mixed $target
+     * @return bool
+     */
+    public static function isString($target): bool
+    {
+        return is_string($target);
+    }
+
+
+    /**
+     * Start chain
+     *
+     * @param mixed $target
+     * @return Chain
+     */
+    public static function chain($target)
+    {
+        return parent::chain(static::getClosure($target));
+    }
 }

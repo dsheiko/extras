@@ -86,6 +86,36 @@ $res = Strings::chain( " 12345 " )
 echo $res; // "534"
 ```
 
+
+
+
+
+
+### memoize
+Memoizes a given function by caching the computed result. Useful for speeding up slow-running computations.
+If passed an optional hashFunction
+- [see also](http://underscorejs.org/#memoize).
+
+
+##### Parameters
+- `{callable|string|Closure} $callable` - source function
+- `{callable|string|Closure} [$hasher]` - hash generator
+
+###### Syntax
+```php
+memoize($target, $hasher = null): callable
+```
+
+###### Example
+```php
+<?php
+$counter = Functions::memoize("fixtureCounter::increment");
+$counter($foo); // 1
+$counter($foo); // 1
+$counter($bar); // 2
+$counter($baz); // 3
+```
+
 ### negate
 Returns a new negated version of the predicate function.
 - [see also](http://underscorejs.org/#negate).

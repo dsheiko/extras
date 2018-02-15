@@ -1,16 +1,10 @@
 <?php
 namespace Dsheiko\Extras;
 
-use Dsheiko\Extras\Arrays;
-use Dsheiko\Extras\Collections;
-use Dsheiko\Extras\Strings;
-use Dsheiko\Extras\Functions;
-use Dsheiko\Extras\Lib\TraitNormalizeClosure;
+use Dsheiko\Extras\{Arrays, Collections, Strings, Functions};
 
 class Chain
 {
-    use TraitNormalizeClosure;
-
     private $value;
 
     public function __construct($value = [])
@@ -23,7 +17,7 @@ class Chain
      * @param mixed $value
      * @return \Dsheiko\Extras\Chain
      */
-    public static function from($value = [])
+    public static function chain($value = [])
     {
         return new self($value);
     }
@@ -34,25 +28,19 @@ class Chain
      * @return string
      * @throws \InvalidArgumentException
      */
-    private static function guessExtrasClass(&$value): string
+    private static function guessExtrasClass($value): string
     {
         switch (true) {
-            case is_array($value):
+            case Arrays::isArray($value):
                 return Arrays::class;
-            case is_string($value):
+            case Strings::isString($value):
                 return Strings::class;
-            case $value instanceof \ArrayObject:
-            case $value instanceof \ArrayIterator:
-            case $value instanceof \Traversable:
+            case Collections::isCollection($value):
                 return Collections::class;
             case is_callable($value):
                 return Functions::class;
-            case is_object($value):
-                $ao = new \ArrayObject($value);
-                $value = $ao->getArrayCopy();
-                return Arrays::class;
         }
-        throw new \InvalidArgumentException("Cannot find passing collection for given type");
+        return "";
     }
 
     /**
@@ -65,6 +53,15 @@ class Chain
     public function __call(string $name, array $args): Chain
     {
         $class = static::guessExtrasClass($this->value);
+        // Plain object to Arrays
+        if (!$class && is_object($this->value)) {
+            $this->value = Arrays::from($this->value);
+            $class = Arrays::class;
+        }
+        if (!$class) {
+            throw new \InvalidArgumentException("Cannot find passing collection for given type");
+        }
+
         $call = $class . "::" . $name;
         $this->value = \call_user_func_array($call, \array_merge([$this->value], $args));
         return $this;
@@ -78,7 +75,7 @@ class Chain
      */
     public function middleware($callable): Chain
     {
-        $function = static::getClosure($callable);
+        $function = Functions::getClosure($callable);
         $this->value = $function($this->value);
         return $this;
     }

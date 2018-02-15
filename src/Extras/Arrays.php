@@ -1,14 +1,11 @@
 <?php
 namespace Dsheiko\Extras;
 
-use Dsheiko\Extras\Lib\AbstractExtras;
-use Dsheiko\Extras\Lib\TraitNormalizeClosure;
+use Dsheiko\Extras\{AbstractExtras, Functions};
 use Dsheiko\Extras\Type\PlainObject;
-use Dsheiko\Extras\Functions;
 
 class Arrays extends AbstractExtras
 {
-    use TraitNormalizeClosure;
 
     /**
      * JAVASCRIPT INSPIRED METHODS
@@ -31,7 +28,7 @@ class Arrays extends AbstractExtras
      */
     public static function each(array $array, $callable)
     {
-        \array_walk($array, static::getClosure($callable));
+        \array_walk($array, Functions::getClosure($callable));
     }
 
     /**
@@ -44,7 +41,7 @@ class Arrays extends AbstractExtras
      */
     public static function map(array $array, $callable): array
     {
-        return \array_map(static::getClosure($callable), $array);
+        return \array_map(Functions::getClosure($callable), $array);
     }
 
     /**
@@ -58,7 +55,7 @@ class Arrays extends AbstractExtras
      */
     public static function reduce(array $array, $callable, $initial = null)
     {
-        return \array_reduce($array, static::getClosure($callable), $initial);
+        return \array_reduce($array, Functions::getClosure($callable), $initial);
     }
 
     /**
@@ -72,7 +69,7 @@ class Arrays extends AbstractExtras
      */
     public static function reduceRight(array $array, $callable, $initial = null)
     {
-        return \array_reduce(\array_reverse($array), static::getClosure($callable), $initial);
+        return \array_reduce(\array_reverse($array), Functions::getClosure($callable), $initial);
     }
 
     /**
@@ -88,7 +85,7 @@ class Arrays extends AbstractExtras
         if ($callable === null) {
             return \array_filter($array);
         }
-        return \array_filter($array, static::getClosure($callable), \ARRAY_FILTER_USE_BOTH);
+        return \array_filter($array, Functions::getClosure($callable), \ARRAY_FILTER_USE_BOTH);
     }
 
     /**
@@ -106,7 +103,7 @@ class Arrays extends AbstractExtras
         if ($callable === null) {
             \sort($array);
         } else {
-            \usort($array, static::getClosure($callable));
+            \usort($array, Functions::getClosure($callable));
         }
         return $array;
     }
@@ -229,6 +226,10 @@ class Arrays extends AbstractExtras
         }
         if ($list instanceof \Traversable) {
             return iterator_to_array($list, true);
+        }
+        if (is_object($list)) {
+            $ao = new \ArrayObject($list);
+            return $ao->getArrayCopy();
         }
         return (array)$list;
     }
@@ -537,9 +538,36 @@ class Arrays extends AbstractExtras
         return new PlainObject($array);
     }
 
+
+    /**
+     * Start chain
+     *
+     * @param mixed $target
+     * @return Chain
+     */
+    public static function chain($target)
+    {
+        if (!static::isArray($target)) {
+            throw new \InvalidArgumentException("Target must be an array; '" . gettype($target) . "' type given");
+        }
+        return parent::chain($target);
+    }
+
     /**
      * EXTRA METHODS
      */
+
+
+    /**
+     * Test if target an array
+     * @param mixed $target
+     * @return bool
+     */
+    public static function isArray($target): bool
+    {
+        return is_array($target);
+    }
+
 
     /**
      * Replace (similar to MYSQL REPLACE statement) an element matching the condition in $callback with the value

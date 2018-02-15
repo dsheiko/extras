@@ -1,13 +1,11 @@
 <?php
 namespace Dsheiko\Extras;
 
-use Dsheiko\Extras\Lib\AbstractExtras;
-use Dsheiko\Extras\Lib\TraitNormalizeClosure;
-use Dsheiko\Extras\Arrays;
+use Dsheiko\Extras\AbstractExtras;
+use Dsheiko\Extras\{Arrays, Functions};
 
 class Collections extends AbstractExtras
 {
-    use TraitNormalizeClosure;
 
     const BREAKER = "\0\0";
 
@@ -20,7 +18,7 @@ class Collections extends AbstractExtras
      */
     public static function each($collection, $callable)
     {
-        $function = static::getClosure($callable);
+        $function = Functions::getClosure($callable);
         foreach ($collection as $index => $item) {
             if ($function($item, $index, $collection) === static::BREAKER) {
                 break;
@@ -37,5 +35,32 @@ class Collections extends AbstractExtras
     public static function toArray($collection): array
     {
         return Arrays::from($collection);
+    }
+
+    /**
+     * Test if target a collection
+     * @param mixed $target
+     * @return bool
+     */
+    public static function isCollection($target): bool
+    {
+        return $target instanceof \ArrayObject
+            || $target instanceof \ArrayIterator
+            || $target instanceof \Traversable;
+    }
+
+    /**
+     * Start chain
+     *
+     * @param mixed $target
+     * @return Chain
+     */
+    public static function chain($target)
+    {
+        if (!static::isCollection($target)) {
+            throw new \InvalidArgumentException("Target must be a Collection "
+                . "(ArrayObject|ArrayIterator|Traversable); '" . gettype($target) . "' type given");
+        }
+        return parent::chain($target);
     }
 }
