@@ -6,56 +6,102 @@ use \Closure;
 
 class Functions extends AbstractExtras
 {
+
     /**
-     * Check if a supplied value is a closure
-     * @param string|callable|Closure $target
-     * @return bool
+     * JAVASCRIPT INSPIRED METHODS
      */
-    public static function isClosure($target)
+
+    /**
+     * Creates a new function that, when called, has its this keyword set to the provided value,
+     * with a given sequence of arguments preceding any provided when the new function is called
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+     *
+     * @param callable $target
+     * @param object [$context]
+     * @return callable
+     */
+    public static function bind(callable $target, $context = null): callable
     {
-        return is_object($target) && ($target instanceof Closure);
+        return $context === null ? $target: Closure::bind(static::getClosure($target), $context);
+    }
+
+
+    /**
+     * Calls a function with a given $context value and arguments provided individually.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call
+     *
+     * @param callable $target
+     * @param object [$context]
+     * @param array [...$args]
+     * @return mixed
+     */
+    public static function call(callable $target, $context = null, ...$args)
+    {
+        return static::apply($target, $context, $args);
+    }
+
+     /**
+     * Calls a function with a given this value, and arguments provided as an array
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
+     *
+     * @param callable $target
+     * @param object [$context]
+     * @param array [$args]
+     * @return mixed
+     */
+    public static function apply(callable $target, $context = null, array $args = [])
+    {
+        return static::invoke(
+            static::bind($target, $context),
+            $args
+        );
     }
 
     /**
-     * Obtain a closure from callable
+     * Returns a string representing the source code of the function.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/toString
      *
-     * @example
-     * static::getClosure(function() {});
-     * static::getClosure("\var_dump");
-     * static::getClosure([$this, "foo"]);
-     *
-     * @param string|callable|Closure $target
-     * @return Closure
+     * @param callable $target
+     * @return string
      */
-    public static function getClosure($target): Closure
+    public static function toString(callable $target): string
     {
-        try {
-            if (!method_exists("\Closure", "fromCallable")) {
-                return $target;
-            }
-            return static::isClosure($target) ? $target : Closure::fromCallable($target);
-        } catch (\TypeError $e) {
-            throw new \InvalidArgumentException("Target must be an callable|string|Closure; '"
-                . gettype($target) . "' type given");
-        }
+        return \ReflectionFunction::export($target, true);
     }
+
+    /**
+     * Invoke a callable with an array of parameters
+     *
+     * @param callable $callable
+     * @param array $args
+     * @return mixed
+     */
+    public static function invoke(callable $callable, array $args)
+    {
+        return call_user_func_array($callable, $args);
+    }
+
+
+   /**
+    * UNDERSCORE.JS INSPIRED METHODS
+    */
+
 
     /**
      * Creates a version of the function that can be called no more than count times. The result of the last function
      * call is memoized and returned when count has been reached.
      * @see http://underscorejs.org/#before
      *
-     * @param callable|string|Closure $target
+     * @param callable $target
      * @param int $count
      * @return mixed
      */
-    public static function before($target, int $count): callable
+    public static function before(callable $target, int $count): callable
     {
-        $closure = static::getClosure($target);
-        return function (...$args) use (&$count, $closure) {
+        return function (...$args) use (&$count, $target) {
             static $memo = null;
             if (--$count >= 0) {
-                $memo = call_user_func_array($closure, $args);
+                $memo = static::invoke($target, $args);
             }
             return $memo;
         };
@@ -66,18 +112,17 @@ class Functions extends AbstractExtras
      * the function shall not receive parameters.
      * @see http://underscorejs.org/#after
      *
-     * @param callable|string|Closure $target
+     * @param callable $target
      * @param int $count
      * @return callable|null
      */
-    public static function after($target, int $count): callable
+    public static function after(callable $target, int $count): callable
     {
-        $closure = static::getClosure($target);
-        return function (...$args) use (&$count, $closure) {
+        return function (...$args) use (&$count, $target) {
             if (--$count >= 0) {
                 return false;
             }
-            return call_user_func_array($closure, $args);
+            return static::invoke($target, $args);
         };
     }
 
@@ -87,31 +132,29 @@ class Functions extends AbstractExtras
      * of having to set a boolean flag and then check it later.
      * @see http://underscorejs.org/#once
      *
-     * @param callable|string|Closure $target
+     * @param callable $target
      * @return mixed
      */
-    public static function once($target): callable
+    public static function once(callable $target): callable
     {
-        $closure = static::getClosure($target);
-        return static::before($closure, 1);
+        return static::before($target, 1);
     }
 
     /**
      * Creates and returns a new, throttled version of the passed function, that, when invoked repeatedly,
      * will only actually call the original function at most once per every wait milliseconds.
      *
-     * @param callable|string|Closure $target
+     * @param callable $target
      * @param int $wait
      */
-    public static function throttle($target, int $wait): callable
+    public static function throttle(callable $target, int $wait): callable
     {
-        $closure = static::getClosure($target);
-        return function () use ($closure, $wait) {
+        return function () use ($target, $wait) {
             static $pretime = null;
             $curtime = microtime(true);
             if (!$pretime || ($curtime - $pretime) >= ($wait / 1000)) {
                 $pretime = $curtime;
-                return $closure();
+                return $target();
             }
             return false;
         };
@@ -122,21 +165,20 @@ class Functions extends AbstractExtras
      * If passed an optional hashFunction
      *
      * @staticvar array $cache
-     * @param callable|string|Closure $target
-     * @param callable|string|Closure [$hasher]
+     * @param callable $target
+     * @param callable [$hasher]
      * @return callable
      */
-    public static function memoize($target, $hasher = null): callable
+    public static function memoize(callable $target, $hasher = null): callable
     {
         static $cache = [];
-        $closure = static::getClosure($target);
-        $hasher = $hasher ? static::getClosure($hasher) : function ($target, array $args) {
+        $hasher = $hasher ?: function ($target, array $args) {
             return md5(serialize($target) . serialize($args));
         };
-        return function (...$args) use ($closure, $hasher, $target, &$cache) {
+        return function (...$args) use ($target, $hasher, &$cache) {
             $hash = $hasher($target, $args);
             if (!isset($cache[$hash])) {
-                $cache[$hash] = call_user_func_array($closure, $args);
+                $cache[$hash] = static::invoke($target, $args);
             }
             return $cache[$hash];
         };
@@ -145,27 +187,15 @@ class Functions extends AbstractExtras
     /**
      * Returns a new negated version of the predicate function ($target).
      *
-     * @param callable|string|Closure $target
+     * @param callable $target
      * @return callable
      */
-    public static function negate($target): callable
+    public static function negate(callable $target): callable
     {
         return function (...$args) use ($target) {
             return !$target(...$args);
         };
     }
-
-
-    /**
-     * Test if target a string
-     * @param mixed $target
-     * @return bool
-     */
-    public static function isString($target): bool
-    {
-        return is_string($target);
-    }
-
 
     /**
      * Start chain
@@ -175,6 +205,36 @@ class Functions extends AbstractExtras
      */
     public static function chain($target)
     {
-        return parent::chain(static::getClosure($target));
+        if (!static::isFunction($target)) {
+            throw new \InvalidArgumentException("Target must be a callable; '" . gettype($target) . "' type given");
+        }
+        return parent::chain($target);
+    }
+
+    /**
+     * OTHER METHODS
+     */
+
+    /**
+     * Obtain a closure from callable
+
+     * @param callable $target
+     * @return Closure
+     */
+    public static function getClosure(callable $target): Closure
+    {
+        return Closure::fromCallable($target);
+    }
+
+
+
+    /**
+     * Test if target a callable
+     * @param mixed $target
+     * @return bool
+     */
+    public static function isFunction($target)
+    {
+        return is_callable($target);
     }
 }

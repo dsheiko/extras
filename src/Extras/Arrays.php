@@ -25,11 +25,11 @@ class Arrays extends AbstractExtras
      * Can be chained
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      */
-    public static function each(array $array, $callable)
+    public static function each(array $array, callable $callable)
     {
-        \array_walk($array, Functions::getClosure($callable));
+        \array_walk($array, $callable);
     }
 
     /**
@@ -37,12 +37,12 @@ class Arrays extends AbstractExtras
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @return array
      */
-    public static function map(array $array, $callable): array
+    public static function map(array $array, callable $callable): array
     {
-        return \array_map(Functions::getClosure($callable), $array);
+        return \array_map($callable, $array);
     }
 
     /**
@@ -50,13 +50,13 @@ class Arrays extends AbstractExtras
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @param mixed $initial
      * @return mixed
      */
-    public static function reduce(array $array, $callable, $initial = null)
+    public static function reduce(array $array, callable $callable, $initial = null)
     {
-        return \array_reduce($array, Functions::getClosure($callable), $initial);
+        return \array_reduce($array, $callable, $initial);
     }
 
     /**
@@ -68,9 +68,9 @@ class Arrays extends AbstractExtras
      * @param type $initial
      * @return type
      */
-    public static function reduceRight(array $array, $callable, $initial = null)
+    public static function reduceRight(array $array, callable $callable, $initial = null)
     {
-        return \array_reduce(\array_reverse($array), Functions::getClosure($callable), $initial);
+        return \array_reduce(\array_reverse($array), $callable, $initial);
     }
 
     /**
@@ -78,15 +78,15 @@ class Arrays extends AbstractExtras
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
      *
      * @param array $array
-     * @param callable|string|Closure $callable = null
+     * @param callable $callable = null
      * @return array
      */
-    public static function filter(array $array, $callable = null): array
+    public static function filter(array $array, callable $callable = null): array
     {
         if ($callable === null) {
             return \array_filter($array);
         }
-        return \array_filter($array, Functions::getClosure($callable), \ARRAY_FILTER_USE_BOTH);
+        return \array_filter($array, $callable, \ARRAY_FILTER_USE_BOTH);
     }
 
     /**
@@ -96,15 +96,15 @@ class Arrays extends AbstractExtras
      * @see http://php.net/manual/en/function.usort.php
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @return array
      */
-    public static function sort(array $array, $callable = null): array
+    public static function sort(array $array, callable $callable = null): array
     {
         if ($callable === null) {
             \sort($array);
         } else {
-            \usort($array, Functions::getClosure($callable));
+            \usort($array, $callable);
         }
         return $array;
     }
@@ -126,10 +126,10 @@ class Arrays extends AbstractExtras
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @return mixed
      */
-    public static function find(array $array, $callable)
+    public static function find(array $array, callable $callable)
     {
         $res = static::filter($array, $callable);
         return count($res) ? static::first($res) : null;
@@ -140,10 +140,10 @@ class Arrays extends AbstractExtras
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @return boolean
      */
-    public static function some(array $array, $callable): bool
+    public static function some(array $array, callable $callable): bool
     {
         $res = static::filter($array, $callable);
         return count($res) > 0;
@@ -154,10 +154,10 @@ class Arrays extends AbstractExtras
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @return boolean
      */
-    public static function every(array $array, $callable): bool
+    public static function every(array $array, callable $callable): bool
     {
         $res = static::filter($array, $callable);
         return count($res) === count($array);
@@ -329,10 +329,10 @@ class Arrays extends AbstractExtras
      * @see http://underscorejs.org/#findIndex
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @return mixed
      */
-    public static function findIndex(array $array, $callable)
+    public static function findIndex(array $array, callable $callable)
     {
         $el = static::find($array, $callable);
         return array_search($el, $array);
@@ -361,10 +361,10 @@ class Arrays extends AbstractExtras
      * @see http://underscorejs.org/#groupBy
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @param array
      */
-    public static function groupBy(array $array, $callable): array
+    public static function groupBy(array $array, callable $callable): array
     {
         return static::reduce($array, function (array $carry, $item) use ($callable) {
             $carry[$callable($item)][] = $item;
@@ -377,10 +377,10 @@ class Arrays extends AbstractExtras
      * @see http://underscorejs.org/#countBy
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @param array
      */
-    public static function countBy(array $array, $callable): array
+    public static function countBy(array $array, callable $callable): array
     {
          return static::map(static::groupBy($array, $callable), function ($item) {
             return count($item);
@@ -504,10 +504,10 @@ class Arrays extends AbstractExtras
      * @see http://underscorejs.org/#partition
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @return array
      */
-    public static function partition(array $array, $callable): array
+    public static function partition(array $array, callable $callable): array
     {
         return [
             static::filter($array, $callable),
@@ -575,11 +575,11 @@ class Arrays extends AbstractExtras
      * If no match found, add the value to the end of array
      *
      * @param array $array
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @param mixed $element
      * @return array
      */
-    public static function replace(array $array, $callable, $element): array
+    public static function replace(array $array, callable $callable, $element): array
     {
         $inx = count($array);
         foreach ($array as $key => $val) {

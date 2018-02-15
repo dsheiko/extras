@@ -57,7 +57,7 @@ $res = Chain::chain(new MapObject)
 Binds a middleware (transformer) function to the chain
 
 ###### Parameters
-- `{callable|string|Closure} $callable` - middleware function
+- `{callable} $callable` - middleware function
 
 ###### Syntax
 ```php

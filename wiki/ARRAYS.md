@@ -92,11 +92,11 @@ Iterate over a list of elements, yielding each in turn to an iteratee function
 
 ###### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - iteratee callback
+- `{callable} $callable` - iteratee callback
 
 ###### Syntax
 ```php
-each(array $array, $callable)
+each(array $array, callable $callable)
 ```
 
 ###### Example
@@ -137,11 +137,11 @@ Test whether all elements in the array pass the test implemented by the provided
 
 ##### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - predicate callback
+- `{callable} $callable` - predicate callback
 
 ###### Syntax
 ```php
- every(array $array, $callable): bool
+ every(array $array, callable $callable): bool
 ```
 
 ###### Example
@@ -156,11 +156,11 @@ Look through each value in the list, returning an array of all the values that p
 
 ##### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - predicate callback
+- `{callable} $callable` - predicate callback
 
 ###### Syntax
 ```php
- filter(array $array, $callable): array
+ filter(array $array, callable $callable): array
 ```
 
 ###### Example
@@ -175,11 +175,11 @@ Look through each value in the list, returning the first one that passes a truth
 
 ##### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - predicate callback
+- `{callable} $callable` - predicate callback
 
 ###### Syntax
 ```php
- find(array $array, $callable): mixed
+ find(array $array, callable $callable): mixed
 ```
 
 ###### Example
@@ -239,11 +239,11 @@ Produce a new array of values by mapping each value in list through a transforma
 
 ###### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - iteratee callback
+- `{callable} $callable` - iteratee callback
 
 ###### Syntax
 ```php
- map(array $array, $callable): array
+ map(array $array, callable $callable): array
 ```
 
 ###### Example
@@ -272,12 +272,12 @@ Boil down a list of values into a single value.
 
 ###### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - iteratee callback
+- `{callable} $callable` - iteratee callback
 - `{mixed} $initial` - value to use as the first argument to the first call of the callable. If no initial value is supplied, the first element in the array will be used.
 
 ###### Syntax
 ```php
- reduce(array $array, $callable, $initial = null): mixed
+ reduce(array $array, callable $callable, $initial = null): mixed
 ```
 
 ###### Example
@@ -294,13 +294,13 @@ The right-associative version of reduce.
 
 ##### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - iteratee callback
+- `{callable} $callable` - iteratee callback
 - `{mixed} $initial` - value to use as the first argument to the first call of the callable. If no initial value is supplied, the first element in the array will be used.
 
 
 ###### Syntax
 ```php
- reduceRight(array $array, $callable, $initial = null): mixed
+ reduceRight(array $array, callable $callable, $initial = null): mixed
 ```
 
 ###### Example
@@ -321,11 +321,11 @@ Test whether at least one element in the array passes the test implemented by th
 
 ##### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - predicate callback
+- `{callable} $callable` - predicate callback
 
 ###### Syntax
 ```php
- some(array $array, $callable): bool
+ some(array $array, callable $callable): bool
 ```
 
 ###### Example
@@ -342,11 +342,11 @@ Sort an array by values (using a user-defined comparison function when callback 
 
 ##### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - iteratee callback
+- `{callable} $callable` - iteratee callback
 
 ###### Syntax
 ```php
- sort(array $array, $callable = null): array
+ sort(array $array, callable $callable = null): array
 ```
 
 ###### Example
@@ -413,11 +413,11 @@ Sort a list into groups and return a count for the number of objects in each gro
 
 ##### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - iteratee callback
+- `{callable} $callable` - iteratee callback
 
 ###### Syntax
 ```php
- countBy(array $array, $callable): array
+ countBy(array $array, callable $callable): array
 ```
 
 ###### Example
@@ -465,11 +465,11 @@ Find index of the first element matching the condition in `$callable`
 
 ##### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - predicate callback
+- `{callable} $callable` - predicate callback
 
 ###### Syntax
 ```php
- findIndex(array $array, $callable): mixed
+ findIndex(array $array, callable $callable): mixed
 ```
 
 ###### Example
@@ -517,11 +517,11 @@ Split a collection into sets, grouped by the result of running each value throug
 
 ##### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - iteratee callback
+- `{callable} $callable` - iteratee callback
 
 ###### Syntax
 ```php
- groupBy(array $array, $callable): array
+ groupBy(array $array, callable $callable): array
 ```
 
 ###### Example
@@ -632,7 +632,7 @@ split array into two arrays: one whose elements all satisfy predicate and one wh
 
 ###### Syntax
 ```php
- partition(array $array, $callable): array
+ partition(array $array, callable $callable): array
 ```
 
 ###### Example
@@ -818,12 +818,12 @@ If no match found, add the value to the end of array
 
 ##### Parameters
 - `{array} $array` - target array
-- `{callable|string|Closure} $callable` - predicate callback
+- `{callable} $callable` - predicate callback
 - `{mixed} $element` - element to replace the match
 
 ###### Syntax
 ```php
- replace(array $array, $callable, $element): array
+ replace(array $array, callable $callable, $element): array
 ```
 
 ###### Example

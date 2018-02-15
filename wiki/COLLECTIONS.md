@@ -38,11 +38,11 @@ Iterate over a list of elements, yielding each in turn to an $callable function
 
 ###### Parameters
 - `{iterable|ArrayObject|Iterator} $collection` - source collection
-- `{callable|string|Closure} $callable` - iteratee callback
+- `{callable} $callable` - iteratee callback
 
 ###### Syntax
 ```php
-each($collection, $callable)
+each($collection, callable $callable)
 ```
 
 ###### Example

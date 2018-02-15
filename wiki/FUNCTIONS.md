@@ -2,13 +2,125 @@
 
 ## Methods
 
-- [after](#before)
-- [before](#before)
-- [chain](#chain)
-- [negate](#negate)
-- [once](#once)
-- [throttle](#throttle)
+- JavaScript-inspired methods
+  - [apply](#apply)
+  - [bind](#bind)
+  - [call](#call)
+  - [toString](#toString)
 
+- Underscore.js-inspired methods
+  - [after](#before)
+  - [before](#before)
+  - [chain](#chain)
+  - [negate](#negate)
+  - [once](#once)
+  - [throttle](#throttle)
+
+
+## JavaScript-inspired methods
+
+### apply
+Calls a function with a given this value, and arguments provided as an array
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply).
+
+
+##### Parameters
+- `{callable} $target` - target callable
+- `{object} $context` - new $this
+- `{array} $args` - array of arguments
+
+###### Syntax
+```php
+apply(callable $target, $context = null, array $args = [])
+```
+
+###### Example
+```php
+<?php
+$obj = Arrays::object(["foo" => "FOO"]);
+$target = function( $input ){ return $input . "_" . $this->foo; };
+$res = Functions::apply($target, $obj, ["BAR"]); // "BAR_FOO"
+```
+
+
+### bind
+Creates a new function that, when called, has its this keyword set to the provided value,
+with a given sequence of arguments preceding any provided when the new function is called
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind).
+
+
+##### Parameters
+- `{callable} $target` - target callable
+- `{object} $context` - new $this
+
+###### Syntax
+```php
+bind(callable $target, $context = null): callable
+```
+
+###### Example
+```php
+<?php
+$obj = Arrays::object(["foo" => "FOO"]);
+$target = function( $input ){ return $input . "_" . $this->foo; };
+$func = Functions::bind($target, $obj);
+echo $func("BAR"); // "BAR_FOO"
+```
+
+
+### call
+Calls a function with a given $context value and arguments provided individually.
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call).
+
+
+##### Parameters
+- `{callable} $target` - target callable
+- `{object} $context` - new $this
+- `{array} ...$args` - arguments
+
+###### Syntax
+```php
+call(callable $target, $context = null, ...$args)
+```
+
+###### Example
+```php
+<?php
+$obj = Arrays::object(["foo" => "FOO"]);
+$target = function( $input ){ return $input . "_" . $this->foo; };
+$res = Functions::call($target, $obj, "BAR"); // "BAR_FOO"
+```
+
+
+### toString
+Returns a string representing the source code of the function.
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/toString).
+
+
+##### Parameters
+- `{callable} $target` - target callable
+
+###### Syntax
+```php
+toString(callable $target): string
+```
+
+###### Example
+```php
+<?php
+echo Functions::toString("strlen");
+```
+
+```
+string(112) "Function [ <internal:Core> function strlen ] {
+
+  - Parameters [1] {
+    Parameter #0 [ <required> $str ]
+  }
+}
+```
+
+## Underscore.js-inspired methods
 
 ### after
 Creates a version of the function that will only be run after being called count times. Useful for grouping
@@ -17,12 +129,12 @@ asynchronous responses, where you want to be sure that all the async calls have 
 
 
 ##### Parameters
-- `{callable|string|Closure} $callable` - source function
+- `{callable} $target` - source function
 - `{int} $count` - count
 
 ###### Syntax
 ```php
-after($callable, int $count): callable
+after(callable $target, int $count): callable
 ```
 
 ###### Example
@@ -41,12 +153,12 @@ The result of the last function call is memoized and returned when count has bee
 
 
 ##### Parameters
-- `{callable|string|Closure} $callable` - source function
+- `{callable} $target` - source function
 - `{int} $count` - count
 
 ###### Syntax
 ```php
-before($callable, int $count): callable
+before(callable $target, int $count): callable
 ```
 
 ###### Example
@@ -87,10 +199,6 @@ echo $res; // "534"
 ```
 
 
-
-
-
-
 ### memoize
 Memoizes a given function by caching the computed result. Useful for speeding up slow-running computations.
 If passed an optional hashFunction
@@ -98,8 +206,8 @@ If passed an optional hashFunction
 
 
 ##### Parameters
-- `{callable|string|Closure} $callable` - source function
-- `{callable|string|Closure} [$hasher]` - hash generator
+- `{callable} $target` - source function
+- `{callable} [$hasher]` - hash generator
 
 ###### Syntax
 ```php
@@ -122,11 +230,11 @@ Returns a new negated version of the predicate function.
 
 
 ##### Parameters
-- `{callable|string|Closure} $callable` - source function
+- `{callable} $target` - source function
 
 ###### Syntax
 ```php
-negate($callablet): callable
+negate(callable $target): callable
 ```
 
 ###### Example
@@ -146,11 +254,11 @@ and then check it later.
 
 
 ##### Parameters
-- `{callable|string|Closure} $callable` - source function
+- `{callable} $target` - source function
 
 ###### Syntax
 ```php
-once($callable): callable
+once(callable $target): callable
 ```
 
 ###### Example
@@ -171,12 +279,12 @@ wait milliseconds. Useful for rate-limiting events that occur faster than you ca
 
 
 ##### Parameters
-- `{callable|string|Closure} $callable` - source function
+- `{callable} $target` - source function
 - `{int} $wait` - wait time in ms
 
 ###### Syntax
 ```php
-throttle($callable, int $wait)
+throttle(callable $target, int $wait)
 ```
 
 ###### Example

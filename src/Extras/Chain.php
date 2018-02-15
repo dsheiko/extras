@@ -66,7 +66,7 @@ class Chain
         }
 
         $call = $class . "::" . $name;
-        $this->value = \call_user_func_array($call, \array_merge([$this->value], $args));
+        $this->value = Functions::invoke($call, \array_merge([$this->value], $args));
         return $this;
     }
 
@@ -78,8 +78,7 @@ class Chain
      */
     public function middleware($callable): Chain
     {
-        $function = Functions::getClosure($callable);
-        $this->value = $function($this->value);
+        $this->value = Functions::invoke($callable, [$this->value]);
         return $this;
     }
 

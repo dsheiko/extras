@@ -14,14 +14,13 @@ class Collections extends AbstractExtras
      * Iterates over a list of elements, yielding each in turn to an iterator function.
      *
      * @param mixed $collection
-     * @param callable|string|Closure $callable
+     * @param callable $callable
      * @return mixed
      */
-    public static function each($collection, $callable)
+    public static function each($collection, callable $callable)
     {
-        $function = Functions::getClosure($callable);
         foreach ($collection as $index => $item) {
-            if ($function($item, $index, $collection) === static::BREAKER) {
+            if (Functions::invoke($callable, [$item, $index, $collection]) === static::BREAKER) {
                 break;
             }
         }
