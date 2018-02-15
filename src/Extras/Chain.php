@@ -31,7 +31,7 @@ class Chain
      * @return string
      * @throws \InvalidArgumentException
      */
-    private static function guessExtrasClass($value): string
+    private static function guessSet($value): string
     {
         switch (true) {
             case Arrays::isArray($value):
@@ -55,7 +55,7 @@ class Chain
      */
     public function __call(string $name, array $args): Chain
     {
-        $class = static::guessExtrasClass($this->value);
+        $class = static::guessSet($this->value);
         // Plain object to Arrays
         if (!$class && is_object($this->value)) {
             $this->value = Arrays::from($this->value);
