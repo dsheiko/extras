@@ -2,7 +2,8 @@
 namespace Dsheiko\Extras;
 
 use Dsheiko\Extras\AbstractExtras;
-use Dsheiko\Extras\{Arrays, Functions};
+use Dsheiko\Extras\Arrays;
+use Dsheiko\Extras\Functions;
 
 class Collections extends AbstractExtras
 {

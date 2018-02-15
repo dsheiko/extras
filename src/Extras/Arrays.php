@@ -1,7 +1,8 @@
 <?php
 namespace Dsheiko\Extras;
 
-use Dsheiko\Extras\{AbstractExtras, Functions};
+use Dsheiko\Extras\AbstractExtras;
+use Dsheiko\Extras\Functions;
 use Dsheiko\Extras\Type\PlainObject;
 
 class Arrays extends AbstractExtras

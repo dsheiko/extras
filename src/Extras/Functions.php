@@ -118,7 +118,8 @@ class Functions extends AbstractExtras
     }
 
     /**
-     * Memoizes a given function by caching the computed result. Useful for speeding up slow-running computations. If passed an optional hashFunction
+     * Memoizes a given function by caching the computed result. Useful for speeding up slow-running computations.
+     * If passed an optional hashFunction
      *
      * @staticvar array $cache
      * @param callable|string|Closure $target
@@ -129,7 +130,7 @@ class Functions extends AbstractExtras
     {
         static $cache = [];
         $closure = static::getClosure($target);
-        $hasher = $hasher ? static::getClosure($hasher) : function($target, array $args) {
+        $hasher = $hasher ? static::getClosure($hasher) : function ($target, array $args) {
             return md5(serialize($target) . serialize($args));
         };
         return function (...$args) use ($closure, $hasher, $target, &$cache) {
