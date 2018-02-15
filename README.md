@@ -12,11 +12,10 @@ Collection of chainable high-order functions to abstract and manipulate PHP type
 ## Highlights
 - Fixing PHP:
   - Naming convention: all methods are `camelCase` styles vs PHP built-in functions in `lower_case`
-  - Consistent parameter order (`Chain::chain($target)->method(...$options)` or `Helper::method($target, ...$options)`)
+  - Consistent parameter order (`Chain::chain($target)->method(...$options)` or `<Type>::method($target, ...$options)`)
   - Methods are chainable
   - Data structure `PlainObject` similar to JavaScript plain object
   - Manipulation target (value) can always be as reference as well as type literal
-  - Callback can always be  `callable` or closure or fully qualified name as a string
 - Familiar syntax: JavaScript Array/Object/String methods, in addition extra methods in [Underscore.js](http://underscorejs.org/)/[Lodash](https://lodash.com/) syntax
 - Performance: package relies on PHP native methods; no `foreach` where a built-in specific function can be used
 
@@ -31,7 +30,7 @@ Collection of chainable high-order functions to abstract and manipulate PHP type
 
 ## Examples
 
-#### None-reference target, callback as a string
+#### None-reference target
 ```php
 <?php
 use \Dsheiko\Extras\Arrays;
@@ -43,7 +42,7 @@ function numToArray(int $num): array
 $res = Arrays::map(range(1,3), "numToArray"); // [[1],[2],[3]]
 ```
 
-#### Chaining
+#### Chaining methods
 ```php
 <?php
 use \Dsheiko\Extras\Any;
@@ -60,6 +59,20 @@ $res = Any::chain(new \ArrayObject([1,2,3]))
     ->replace("/2/", "") // value is "13"
     ->value();
 echo $res; // "13"
+
+```
+
+#### Accessing methods directly
+```php
+<?php
+use \Dsheiko\Extras\Arrays;
+
+class Foo
+{
+    public $bar = "BAR";
+}
+
+$arr = Arrays::from(new Foo); // ["bar" => "BAR"]
 
 ```
 
