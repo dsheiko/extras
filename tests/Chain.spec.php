@@ -34,6 +34,22 @@ describe("\\Dsheiko\\Extras\\Chain", function() {
                 ->value();
             expect($res)->to->equal(["foo", "bar"]);
         });
+
+        it("throws when unknown type", function() {
+            expect(function(){
+                Chain::chain(NAN)->nonExistingMethod();
+            })->to->throw(\InvalidArgumentException::class, "Do not have methods on given type");
+        });
+
+        it("throws when mehtod not found", function() {
+            expect(function(){
+                Chain::chain("string")->nonExistingMethod();
+                })->to->throw(
+                    \RuntimeException::class,
+                    "'Dsheiko\\Extras\\Strings' does not contain method 'nonExistingMethod'"
+                );
+        });
+
     });
 
     describe('->middleware', function() {

@@ -209,6 +209,12 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore)", function() {
             expect($res)->to->equal("BAR");
         });
 
+        it("throws when property does not exist", function() {
+            expect(function(){
+                Arrays::result([], "foo");
+            })->to->throw(\InvalidArgumentException::class);
+        });
+
     });
 
     describe('::findIndex', function() {

@@ -17,8 +17,13 @@ describe("\\Dsheiko\\Extras\\Arrays", function() {
             expect($res)->to->be->ok;
         });
 
-        it("returns true for pure sequential array", function() {
+        it("returns false for pure sequential array", function() {
             $res = Arrays::isAssocArray([ 1, 2, ]);
+            expect($res)->not->to->be->ok;
+        });
+
+         it("returns false for empty target", function() {
+            $res = Arrays::isAssocArray([]);
             expect($res)->not->to->be->ok;
         });
 

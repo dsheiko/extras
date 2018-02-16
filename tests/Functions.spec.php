@@ -165,7 +165,6 @@ describe("\\Dsheiko\\Extras\\Functions", function() {
 
         it("returns function string representation", function() {
             $res = Functions::toString("strlen");
-            var_dump($res);
             expect($res)->to->contain("Function ");
         });
 

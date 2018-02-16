@@ -3,6 +3,30 @@ use Dsheiko\Extras\Type\PlainObject;
 
 describe("\\Dsheiko\\Extras\\Type\\PlainObject", function() {
 
+
+    describe('->__get', function() {
+
+        it("returns value when found", function() {
+            $po = new PlainObject(["foo" => "FOO", "bar" => "BAR"]);
+            expect($po->foo)->to->equal("FOO");
+        });
+
+        it("returns null when not found", function() {
+            $po = new PlainObject(["foo" => "FOO", "bar" => "BAR"]);
+            expect($po->quiz)->to->equal(null);
+        });
+
+    });
+
+    describe('->__isset', function() {
+
+        it("checks if key exists", function() {
+            $po = new PlainObject(["foo" => "FOO", "bar" => "BAR"]);
+            expect(isset($po->foo))->to->equal(true);
+        });
+
+    });
+
     describe('->toArray', function() {
 
         it("return source array", function() {

@@ -4,7 +4,7 @@ namespace Dsheiko\Extras\Type;
 use Dsheiko\Extras\Arrays;
 
 /**
- * Object representing an associative array similar to plain object in JavaScript
+ * Object represents an associative array similar to plain object in JavaScript
  */
 class PlainObject
 {
@@ -62,7 +62,9 @@ class PlainObject
     /**
      * Copy the values of all properties from one or more source arrays to a target array.
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
-     * The method works pretty much like array_merge except it treats consistently associative arrays with numeric keys
+     *
+     * The method works pretty much like array_merge except it treats consistently
+     * associative arrays with numeric keys
      *
      * @param PlainObject $target - target
      * @param array ...$sources - variadic list of source arrays

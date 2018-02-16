@@ -4,11 +4,7 @@ namespace Dsheiko\Extras;
 use Dsheiko\Extras\AbstractExtras;
 
 /**
- * String::from("source")
- *  ->replace("/s/", "S")
- *  ->replace("/o/", "O")
- *  ->trim()
- *  ->strlen(0, 10)
+ * Class represents type String
  */
 class Strings extends AbstractExtras
 {

@@ -1,11 +1,11 @@
 <?php
 namespace Dsheiko\Extras;
 
-use Dsheiko\Extras\Arrays;
-use Dsheiko\Extras\Collections;
-use Dsheiko\Extras\Strings;
-use Dsheiko\Extras\Functions;
+use Dsheiko\Extras\{Arrays, Collections, Strings, Functions};
 
+/**
+ * Class represents polymorphic chain, exposing manipulation methods specific to current type of chain target value
+ */
 class Chain
 {
     private $value;
@@ -29,7 +29,6 @@ class Chain
      * Return Extras class sutable for the last state of chain value
      * @param mixed $value
      * @return string
-     * @throws \InvalidArgumentException
      */
     private static function guessSet($value): string
     {
@@ -51,6 +50,8 @@ class Chain
      *
      * @param string $name
      * @param array $args
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      * @return \Dsheiko\Extras\Chain
      */
     public function __call(string $name, array $args): Chain
@@ -61,11 +62,16 @@ class Chain
             $this->value = Arrays::from($this->value);
             $class = Arrays::class;
         }
+
         if (!$class) {
-            throw new \InvalidArgumentException("Cannot find passing collection for given type");
+            throw new \InvalidArgumentException("Do not have methods on given type");
         }
 
         $call = $class . "::" . $name;
+
+        if (!method_exists($class, $name)) {
+            throw new \RuntimeException("'{$class}' does not contain method '{$name}'");
+        }
         $this->value = Functions::invoke($call, \array_merge([$this->value], $args));
         return $this;
     }

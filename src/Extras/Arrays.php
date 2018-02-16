@@ -5,12 +5,13 @@ use Dsheiko\Extras\AbstractExtras;
 use Dsheiko\Extras\Functions;
 use Dsheiko\Extras\Type\PlainObject;
 
+/**
+ * Class represents type Array (both sequential and associative arrays)
+ */
 class Arrays extends AbstractExtras
 {
 
-    /**
-     * JAVASCRIPT INSPIRED METHODS
-     */
+    // JAVASCRIPT INSPIRED METHODS
 
     /**
      * Iterate over a list of elements, yielding each in turn to an $callable function
@@ -92,6 +93,7 @@ class Arrays extends AbstractExtras
     /**
      * 1) sort an array
      * @see http://php.net/manual/en/function.sort.php
+     *
      * 2) Sort an array by values using a user-defined comparison function
      * @see http://php.net/manual/en/function.usort.php
      *
@@ -174,9 +176,6 @@ class Arrays extends AbstractExtras
      */
     public static function keys(array $array, $searchValue = null): array
     {
-        if (!static::isAssocArray($array)) {
-            throw new \InvalidArgumentException("Invalid parameter 1. Must be an key-value array");
-        }
         return $searchValue === null ? array_keys($array): array_keys($array, $searchValue);
     }
 
@@ -184,6 +183,7 @@ class Arrays extends AbstractExtras
     /**
      * Copy the values of all properties from one or more source arrays to a target array.
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+     *
      * The method works pretty much like array_merge except it treats consistently associative arrays with numeric keys
      *
      * @param array $array - target array
@@ -236,9 +236,7 @@ class Arrays extends AbstractExtras
     }
 
 
-    /**
-     * UNDERSCORE.JS INSPIRED METHODS
-     */
+    // UNDERSCORE.JS INSPIRED METHODS
 
     /**
      * Get the first value from an array regardless index order and without modifying the array
@@ -343,6 +341,8 @@ class Arrays extends AbstractExtras
      * the key-value pairs listed in $conditions
      * @see http://underscorejs.org/#where
      *
+     * Implemented with array_intersect_assoc
+     *
      * @param array $array
      * @param array $conditions
      * @return array
@@ -350,9 +350,6 @@ class Arrays extends AbstractExtras
      */
     public static function where(array $array, array $conditions): array
     {
-        if (!static::isAssocArray($array) || !static::isAssocArray($conditions)) {
-            throw new \InvalidArgumentException("Both arguments of the method must be key-value arrays");
-        }
         return array_intersect_assoc($array, $conditions);
     }
 
@@ -554,10 +551,7 @@ class Arrays extends AbstractExtras
         return parent::chain($target);
     }
 
-    /**
-     * EXTRA METHODS
-     */
-
+    //  EXTRA METHODS
 
     /**
      * Test if target an array

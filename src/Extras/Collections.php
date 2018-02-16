@@ -5,6 +5,10 @@ use Dsheiko\Extras\AbstractExtras;
 use Dsheiko\Extras\Arrays;
 use Dsheiko\Extras\Functions;
 
+/**
+ * Class represents type Collection
+ * where collection is one of `iterable`, `ArrayObject` or `Iterator`
+ */
 class Collections extends AbstractExtras
 {
 

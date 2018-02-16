@@ -69,18 +69,33 @@ describe("\\Dsheiko\\Extras\\Arrays (JavaScript)", function() {
             expect(is_array($res))->to->be->ok;
         });
 
+        it("creates array from PlainObject", function() {
+            $res = Arrays::from(Arrays::object(["foo" => "FOO"]));
+            expect(is_array($res))->to->be->ok;
+        });
+
+        it("creates array from uncategorized", function() {
+            $res = Arrays::from("123");
+            expect(is_array($res))->to->be->ok;
+        });
+
     });
 
     describe("::keys", function() {
 
-        it("returns all keys", function() {
+        it("returns all keys in assoiative array", function() {
             $res = Arrays::keys(["foo" => "FOO", "bar" => "BAR"]);
-            expect(implode(",", $res))->to->equal("foo,bar");
+            expect($res)->to->equal(["foo", "bar"]);
+        });
+
+        it("returns indices in sequential array", function() {
+            $res = Arrays::keys([2,3,4]);
+            expect($res)->to->equal([0,1,2]);
         });
 
         it("returns subset of keys matching search value", function() {
             $res = Arrays::keys(["foo" => "FOO", "bar" => "BAR"], "BAR");
-            expect(implode(",", $res))->to->equal("bar");
+            expect($res)->to->equal(["bar"]);
         });
 
     });
@@ -180,7 +195,14 @@ describe("\\Dsheiko\\Extras\\Arrays (JavaScript)", function() {
 
         it("filters elements compling callback condition", function() {
             $res = Arrays::filter([1,2,3], function(int $num){ return $num > 1; });
-            expect(implode(",", $res))->to->equal("2,3");
+            sort($res);
+            expect($res)->to->equal([2,3]);
+        });
+
+        it("filters nullable when no callback given", function() {
+            $res = Arrays::filter([1, null, 2, 0, 3]);
+            sort($res);
+            expect($res)->to->equal([1,2,3]);
         });
 
     });

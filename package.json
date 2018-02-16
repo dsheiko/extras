@@ -8,6 +8,8 @@
     "lint": "./vendor/bin/phpcs --standard=PSR2 ./src",
     "lint:fix": "./vendor/bin/phpcbf --standard=PSR2 ./src",
     "test:coverage": "./vendor/bin/peridot  tests/ -c peridot.config.php --reporter text-code-coverage",
+    "test:coverage:html": "./vendor/bin/peridot  tests/ -c peridot.config.php --reporter html-code-coverage",
+    "apigen": "vendor/bin/apigen generate src --destination docs",
     "preversion": "npm run lint && npm test",
     "postversion": "git push && git push --tags"
   },

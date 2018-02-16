@@ -4,12 +4,14 @@ namespace Dsheiko\Extras;
 use Dsheiko\Extras\AbstractExtras;
 use \Closure;
 
+/**
+ * Class represents type Function
+ * where function is a callable
+ */
 class Functions extends AbstractExtras
 {
 
-    /**
-     * JAVASCRIPT INSPIRED METHODS
-     */
+    // JAVASCRIPT INSPIRED METHODS
 
     /**
      * Creates a new function that, when called, has its this keyword set to the provided value,
@@ -82,9 +84,7 @@ class Functions extends AbstractExtras
     }
 
 
-   /**
-    * UNDERSCORE.JS INSPIRED METHODS
-    */
+    // UNDERSCORE.JS INSPIRED METHODS
 
 
     /**
@@ -211,9 +211,7 @@ class Functions extends AbstractExtras
         return parent::chain($target);
     }
 
-    /**
-     * OTHER METHODS
-     */
+    // OTHER METHODS
 
     /**
      * Obtain a closure from callable

@@ -3,6 +3,9 @@ namespace Dsheiko\Extras;
 
 use Dsheiko\Extras\Chain;
 
+/**
+ * Class represents abstract type
+ */
 abstract class AbstractExtras
 {
     /**
