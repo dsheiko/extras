@@ -1,7 +1,10 @@
 <?php
 namespace Dsheiko\Extras;
 
-use Dsheiko\Extras\{Arrays, Collections, Strings, Functions};
+use Dsheiko\Extras\Arrays;
+use Dsheiko\Extras\Collections;
+use Dsheiko\Extras\Strings;
+use Dsheiko\Extras\Functions;
 
 /**
  * Class represents polymorphic chain, exposing manipulation methods specific to current type of chain target value
