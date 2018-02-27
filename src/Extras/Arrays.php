@@ -454,8 +454,9 @@ class Arrays extends AbstractExtras
      */
     public static function pluck(array $array, string $key): array
     {
-        return static::map($array, function (array $pojo) use ($key) {
-            return $pojo[$key] ?? null;
+        return static::map($array, function ($po) use ($key) {
+            $arr = static::from($po);
+            return $arr[$key] ?? null;
         });
     }
 
