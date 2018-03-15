@@ -52,12 +52,12 @@ describe("\\Dsheiko\\Extras\\Chain", function() {
 
     });
 
-    describe('->middleware', function() {
+    describe('->then', function() {
 
         it("transforms chain value", function() {
             $res = Chain::chain(new \ArrayObject([1,2,3]))
                 ->toArray()
-                ->middleware("json_encode")
+                ->then("json_encode")
                 ->value();
             expect($res)->to->equal("[1,2,3]");
         });

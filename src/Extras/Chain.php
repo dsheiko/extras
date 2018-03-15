@@ -80,12 +80,12 @@ class Chain
     }
 
     /**
-     * Bind a middleware function (function transforms the value)
+     * Bind a then function (function transforms the value)
      *
      * @param callable|string|Closure $callable $function
      * @return \Dsheiko\Extras\Chain
      */
-    public function middleware($callable): Chain
+    public function then($callable): Chain
     {
         $this->value = Functions::invoke($callable, [$this->value]);
         return $this;

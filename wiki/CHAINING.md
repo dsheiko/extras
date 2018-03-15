@@ -3,7 +3,7 @@
 ## Methods
 
 - [chain](#chain)
-- [middleware](#middleware)
+- [then](#then)
 - [value](#value)
 
 
@@ -52,16 +52,16 @@ $res = Chain::chain(new MapObject)
   ->value(); // ["foo", "bar"]
 ```
 
-### middleware
+### then
 
-Binds a middleware (transformer) function to the chain
+Binds a then (transformer) function to the chain
 
 ###### Parameters
-- `{callable} $callable` - middleware function
+- `{callable} $callable` - then function
 
 ###### Syntax
 ```php
-{Set}::middleware($function): Chain
+{Set}::then($function): Chain
 ```
 
 ###### Example
@@ -72,7 +72,7 @@ use Dsheiko\Extras\Chain;
 $res = Chain::chain(new \ArrayObject([1,2,3))
         // same as Collections::chain(new \ArrayObject([1,2,3])
         ->toArray()
-        ->middleware("json_encode")
+        ->then("json_encode")
         ->value(); // "[1,2,3]"
 ```
 
