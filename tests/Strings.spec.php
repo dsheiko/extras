@@ -96,6 +96,148 @@ describe("\\Dsheiko\\Extras\\Strings", function() {
 
     });
 
+
+     describe('::fromCharCode', function() {
+
+        it("return string created from char codes", function() {
+            $res = Strings::fromCharCode(65, 66, 67);
+            expect($res)->to->equal("ABC");
+        });
+
+    });
+
+    describe('::charAt', function() {
+
+        it("return char at given position", function() {
+            $res = Strings::charAt("ABC", 0);
+            expect($res)->to->equal("A");
+            $res = Strings::charAt("ABC", 1);
+            expect($res)->to->equal("B");
+        });
+
+        it("return empty string when range overflow", function() {
+            $res = Strings::charAt("ABC", 999);
+            expect($res)->to->equal("");
+        });
+
+    });
+
+    describe('::charCodeAt', function() {
+
+        it("return char code at given position", function() {
+            $res = Strings::charCodeAt("ABC", 0);
+            expect($res)->to->equal(65);
+        });
+
+    });
+
+    describe('::concat', function() {
+
+        it("concatenates the string arguments", function() {
+            $res = Strings::concat("AB", "CD", "EF");
+            expect($res)->to->equal("ABCDEF");
+        });
+
+    });
+
+     describe('::indexOf', function() {
+
+        it("returns the index without offset", function() {
+            $res = Strings::indexOf("ABCD", "BC");
+            expect($res)->to->equal(1);
+        });
+
+        it("returns the index with offset", function() {
+            $res = Strings::indexOf("ABCABC", "BC", 3);
+            expect($res)->to->equal(4);
+        });
+
+        it("returns -1 when not found", function() {
+            $res = Strings::indexOf("ABCABC", "ZBC");
+            expect($res)->to->equal(-1);
+        });
+
+    });
+
+    describe('::lastIndexOf', function() {
+
+        it("returns the index without offset", function() {
+            $res = Strings::lastIndexOf("canal", "a");
+            expect($res)->to->equal(3);
+        });
+
+        it("returns the index with offset", function() {
+            $res = Strings::lastIndexOf("canal", "a", 2);
+            expect($res)->to->equal(1);
+        });
+
+        it("returns -1 when offset 0", function() {
+            $res = Strings::lastIndexOf("canal", "a", 0);
+            expect($res)->to->equal(-1);
+        });
+
+        it("returns -1 when not found", function() {
+            $res = Strings::lastIndexOf("canal", "x");
+            expect($res)->to->equal(-1);
+        });
+
+    });
+
+    describe('::localeCompare', function() {
+
+        it("returns number indicating sort order", function() {
+            \setlocale (LC_COLLATE, 'de_DE');
+            $res = Strings::localeCompare("a", "c");
+            expect($res)->to->equal(-2);
+        });
+
+    });
+
+    describe('::match', function() {
+
+        it("returns array of matches when found", function() {
+            $res = Strings::match("A1B1C1", "/[A-Z]/");
+            expect(count($res))->to->equal(3);
+        });
+
+        it("returns null when not found", function() {
+            $res = Strings::match("A1B1C1", "/zzz/");
+            expect($res)->to->equal(null);
+        });
+
+    });
+
+     describe('::padEnd', function() {
+
+        it("pads without pad string", function() {
+            $res = Strings::padEnd("abc", 10);
+            expect($res)->to->equal("abc       ");
+        });
+
+        it("pads with pad string", function() {
+            $res = Strings::padEnd("abc", 10, "foo");
+            expect($res)->to->equal("abcfoofoof");
+        });
+
+    });
+
+     describe('::padStart', function() {
+
+        it("pads without pad string", function() {
+            $res = Strings::padStart("abc", 10);
+            expect($res)->to->equal("       abc");
+        });
+
+        it("pads with pad string", function() {
+            $res = Strings::padStart("abc", 10, "foo");
+            expect($res)->to->equal("foofoofabc");
+        });
+
+    });
+
+
+
+
     describe('::chain', function() {
 
         it("chains different methods", function() {

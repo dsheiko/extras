@@ -97,8 +97,6 @@ class Strings extends AbstractExtras
         return \str_replace($search, "", $value);
     }
 
-
-
     /**
      * Test if target a string
      * @param mixed $target
@@ -121,5 +119,162 @@ class Strings extends AbstractExtras
             throw new \InvalidArgumentException("Target must be a string; '" . gettype($target) . "' type given");
         }
         return parent::chain($target);
+    }
+
+    /**
+     * Return a string created from the specified sequence of code units.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
+     *
+     * @param array $codes
+     * @return string
+     */
+    public static function fromCharCode(...$codes): string
+    {
+        return \array_reduce($codes, function (string $carry, int $code) {
+            $carry .= \chr($code);
+            return $carry;
+        }, "");
+    }
+
+    /**
+     * Return a new string consisting of the single UTF-16 code unit located at the specified offset into the string.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charAt
+     *
+     * @param string $value
+     * @param int $index
+     * @return string
+     */
+    public static function charAt(string $value, int $index = 0): string
+    {
+        return $value[$index] ?? "";
+    }
+
+    /**
+     * Returns an integer between 0 and 65535 representing the UTF-16 code unit at the given index
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt
+     *
+     * @param string $value
+     * @param int $index
+     * @return string
+     */
+    public static function charCodeAt(string $value, int $index = 0): int
+    {
+        return \ord(static::charAt($value, $index));
+    }
+
+    /**
+     * Concatenates the string arguments to the calling string and returns a new string.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/concat
+     *
+     * @param string $value
+     * @param array $strings
+     * @return string
+     */
+    public static function concat(string $value, ...$strings): string
+    {
+        return \array_reduce($strings, function (string $carry, string $string) {
+            $carry .= $string;
+            return $carry;
+        }, $value);
+    }
+
+    /**
+     * Returns the index of the first occurrence of the specified value
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/indexOf
+     *
+     * @param string $value
+     * @param string $searchStr
+     * @param int $fromIndex (optional)
+     * @return int
+     */
+    public static function indexOf(string $value, string $searchStr, int $fromIndex = 0): int
+    {
+        $pos = \strpos($value, $searchStr, $fromIndex);
+        return $pos === false ? -1 : $pos;
+    }
+
+    /**
+     * Returns the index of the last occurrence of the specified value
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/lastIndexOf     *
+     *
+     * @param string $value
+     * @param string $searchStr
+     * @param int $fromIndex (optional)
+     * @return int
+     */
+    public static function lastIndexOf(string $value, string $searchStr, int $fromIndex = null): int
+    {
+        switch (true) {
+            // nowhwere to search
+            case $fromIndex === 0:
+                $pos = false;
+                break;
+            case $fromIndex === null:
+                $pos = \strrpos($value, $searchStr);
+                break;
+            default:
+                $pos = \strrpos($value, $searchStr, -1 * ( $fromIndex + 1 ));
+                break;
+        }
+        return $pos === false ? -1 : $pos;
+    }
+
+    /**
+     * Returns a number indicating whether a reference string comes before or after or is the same as
+     * the given string in sort order
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare
+     *
+     * @param string $value
+     * @param string $compareStr
+     * @return int
+     */
+    public static function localeCompare(string $value, string $compareStr): int
+    {
+        return \strcoll($value, $compareStr);
+    }
+
+    /**
+     * Retrieves the matches when matching a string against a regular expression.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match
+     *
+     * @param string $value
+     * @param string $regexp
+     * @return null|array
+     */
+    public static function match(string $value, string $regexp)
+    {
+        $res = \preg_match_all($regexp, $value, $matches);
+        if ($res === 0) {
+            return null;
+        }
+        return $matches[0];
+    }
+
+    /**
+     * Pad the current string (to right) with a given string (repeated, if needed) so that the resulting string
+     * reaches a given length
+     *
+     * @param string $value
+     * @param int $length
+     * @param type $padString
+     * @return string
+     */
+    public static function padEnd(string $value, int $length, string $padString = " "): string
+    {
+        return \str_pad($value, $length, $padString, \STR_PAD_RIGHT);
+    }
+
+    /**
+     * Pad the current string (to left) with a given string (repeated, if needed) so that the resulting string
+     * reaches a given length
+     *
+     * @param string $value
+     * @param int $length
+     * @param string $padString
+     * @return string
+     */
+    public static function padStart(string $value, int $length, string $padString = " "): string
+    {
+        return \str_pad($value, $length, $padString, \STR_PAD_LEFT);
     }
 }
