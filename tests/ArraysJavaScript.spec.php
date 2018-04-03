@@ -244,6 +244,194 @@ describe("\\Dsheiko\\Extras\\Arrays (JavaScript)", function() {
 
     });
 
+    describe("::slice", function() {
+
+        it("slices array with both indeces", function() {
+            $src = ["Banana", "Orange", "Lemon", "Apple", "Mango"];
+            $res = Arrays::slice($src, 1, 3);
+            expect($res)->to->equal(["Orange","Lemon"]);
+        });
+
+        it("slices array with only start index", function() {
+            $src = ["Banana", "Orange", "Lemon", "Apple", "Mango"];
+            $res = Arrays::slice($src, 3);
+            expect($res)->to->equal(["Apple", "Mango"]);
+        });
+
+        it("slices array with negative end index", function() {
+            $src = ["Banana", "Orange", "Lemon", "Apple", "Mango"];
+            $res = Arrays::slice($src, 2, -1);
+            expect($res)->to->equal(["Lemon", "Apple"]);
+        });
+
+    });
+
+    describe("::splice", function() {
+
+        it("removes 0 elements from index 2, and insert drum", function() {
+            $src = ["angel", "clown", "mandarin", "sturgeon"];
+            $res = Arrays::splice($src, 2, 0, "drum");
+            expect($res)->to->equal(["angel", "clown", "drum", "mandarin", "sturgeon"]);
+        });
+
+        it("removes 1 element from index 3", function() {
+            $src = ["angel", "clown", "drum", "mandarin", "sturgeon"];
+            $res = Arrays::splice($src, 3, 1);
+            expect($res)->to->equal(["angel", "clown", "drum", "sturgeon"]);
+        });
+
+        it("removes 1 element from index 2, and insert trumpet", function() {
+            $src = ["angel", "clown", "drum", "sturgeon"];
+            $res = Arrays::splice($src, 2, 1, "trumpet");
+            expect($res)->to->equal(["angel", "clown", "trumpet", "sturgeon"]);
+        });
+
+
+        it("removes 2 elements from index 0, and insert parrot, anemone and blue", function() {
+            $src = ["angel", "clown", "trumpet", "sturgeon"];
+            $res = Arrays::splice($src, 0, 2, "parrot", "anemone", "blue");
+            expect($res)->to->equal(["parrot", "anemone", "blue", "trumpet", "sturgeon"]);
+        });
+
+        it("removes 2 elements from index 2", function() {
+            $src = ["angel", "clown", "mandarin", "sturgeon"];
+            $res = Arrays::splice($src, -2, 1);
+            expect($res)->to->equal(["angel", "clown", "sturgeon"]);
+        });
+
+        it("removes all elements after index 2", function() {
+            $src = ["angel", "clown", "mandarin", "sturgeon"];
+            $res = Arrays::splice($src, 2);
+            expect($res)->to->equal(["angel", "clown"]);
+        });
+
+    });
+
+     describe("::includes", function() {
+
+        it("tests when element exists", function() {
+            $res = Arrays::includes([1, 2, 3], 2);
+            expect($res)->to->be->ok;
+        });
+
+        it("tests when element does not exist", function() {
+            $res = Arrays::includes([1, 2, 3], 4);
+            expect($res)->not->to->be->ok;
+        });
+
+        it("tests with offset", function() {
+            $res = Arrays::includes([1, 2, 3, 5, 6, 7], 2, 3);
+            expect($res)->not->to->be->ok;
+        });
+
+
+    });
+
+    describe("::concat", function() {
+
+        it("merges arrays", function() {
+            $res = Arrays::concat([1, 2], [3, 4]);
+            expect($res)->to->equal([1, 2, 3, 4]);
+        });
+
+        it("merges multiple arrays", function() {
+            $res = Arrays::concat([1, 2], [3, 4], [5, 6]);
+            expect($res)->to->equal([1, 2, 3, 4, 5, 6]);
+        });
+
+    });
+
+    describe("::copyWithin", function() {
+
+        it("copies with tartet, begin and end indeces", function() {
+            $res = Arrays::copyWithin([1, 2, 3, 4, 5], 0, 3, 4);
+            expect($res)->to->equal([4, 2, 3, 4, 5]);
+        });
+
+        it("copies with tartet and begin indeces, without end index", function() {
+            $res = Arrays::copyWithin([1, 2, 3, 4, 5], 1, 3);
+            expect($res)->to->equal([1, 4, 5, 4, 5]);
+        });
+
+        it("copies with negative target index", function() {
+            $res = Arrays::copyWithin([1, 2, 3, 4, 5], -2);
+            expect($res)->to->equal([1, 2, 3, 1, 2]);
+        });
+
+
+    });
+
+    describe("::of", function() {
+
+        it("makes an array from argument list", function() {
+            $res = Arrays::of(1, 2, 3);
+            expect($res)->to->equal([1, 2, 3]);
+        });
+
+    });
+
+    describe("::fill", function() {
+
+        it("operates in case #1", function() {
+            $res = Arrays::fill([1, 2, 3], 4);
+            expect($res)->to->equal([4, 4, 4]);
+        });
+
+        it("operates in case #2", function() {
+            $res = Arrays::fill([1, 2, 3], 4, 1);
+            expect($res)->to->equal([1, 4, 4]);
+        });
+
+        it("operates in case #3", function() {
+            $res = Arrays::fill([1, 2, 3], 4, 1, 2);
+            expect($res)->to->equal([1, 4, 3]);
+        });
+
+        it("operates in case #4", function() {
+            $res = Arrays::fill([1, 2, 3], 4, 1, 1);
+            expect($res)->to->equal([1, 2, 3]);
+        });
+
+    });
+
+     describe("::indexOf", function() {
+
+        it("operates in case #1", function() {
+            $src = ["ant", "bison", "camel", "duck", "bison"];
+            $res = Arrays::indexOf($src, "bison");
+            expect($res)->to->equal(1);
+        });
+
+        it("operates in case #2", function() {
+            $src = ["ant", "bison", "camel", "duck", "bison"];
+            $res = Arrays::indexOf($src, "bison", 2);
+            expect($res)->to->equal(4);
+        });
+
+        it("operates in case #3", function() {
+            $src = ["ant", "bison", "camel", "duck", "bison"];
+            $res = Arrays::indexOf($src, "giraffe");
+            expect($res)->to->equal(-1);
+        });
+
+    });
+
+    describe("::join", function() {
+
+        it("joins elements with separator", function() {
+            $src = [1,2,3];
+            $res = Arrays::join($src, ":");
+            expect($res)->to->equal("1:2:3");
+        });
+
+        it("joins elements without separator", function() {
+            $src = [1,2,3];
+            $res = Arrays::join($src);
+            expect($res)->to->equal("1,2,3");
+        });
+
+    });
+
 
 });
 

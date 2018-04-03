@@ -261,6 +261,125 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore)", function() {
     });
 
 
+     describe('::isMatch', function() {
+
+        it("returns true when array and conditions map equal ", function() {
+           $res = Arrays::isMatch([
+                "foo" => "FOO",
+                "bar" => "BAR",
+                "baz" => "BAZ",
+            ], [
+                "foo" => "FOO",
+                "bar" => "BAR",
+                "baz" => "BAZ",
+            ]);
+            expect($res)->to->be->ok;
+        });
+
+        it("returns true when some of array pairs match conditions map", function() {
+           $res = Arrays::isMatch([
+                "foo" => "FOO",
+                "bar" => "BAR",
+                "baz" => "BAZ",
+            ], [
+                "foo" => "FOO",
+            ]);
+            expect($res)->to->be->ok;
+        });
+
+        it("returns false when none of array pairs match conditions map", function() {
+           $res = Arrays::isMatch([
+                "foo" => "FOO",
+                "bar" => "BAR",
+                "baz" => "BAZ",
+            ], [
+                "foo" => "BAZ",
+            ]);
+            expect($res)->not->to->be->ok;
+        });
+
+        it("returns false when at least one of conditions not matched in the array", function() {
+           $res = Arrays::isMatch([
+                "foo" => "FOO",
+                "bar" => "BAR",
+                "baz" => "BAZ",
+            ], [
+                "foo" => "FOO",
+                "bar" => "QUIZ",
+                "baz" => "BAZ",
+            ]);
+            expect($res)->not->to->be->ok;
+        });
+
+
+    });
+
+    describe('::matcher', function() {
+
+        it("returns predicate function", function() {
+            $matcher = Arrays::matcher([
+                "foo" => "FOO",
+                "bar" => "BAR",
+            ]);
+            $src = [
+                [
+                    "foo" => "FOO",
+                    "bar" => "BAR",
+                    "baz" => "BAZ",
+                ],
+                [
+                    "bar" => "BAR",
+                    "baz" => "BAZ",
+                ],
+                [
+                    "baz" => "BAZ",
+                ]
+            ];
+            $res = Arrays::filter($src, $matcher);
+            expect($res[0])->to->equal($src[0]);
+        });
+
+    });
+
+
+    describe('::findWhere', function() {
+
+        it("returns matching pairs", function() {
+            $src = [
+                [
+                    "foo" => "FOO",
+                    "bar" => "BAR",
+                    "baz" => "BAZ",
+                ],
+                [
+                    "bar" => "BAR",
+                    "baz" => "BAZ",
+                ],
+                [
+                    "baz" => "BAZ",
+                ]
+            ];
+            $res = Arrays::findWhere($src, [
+                "foo" => "FOO",
+                "bar" => "BAR",
+            ]);
+            expect($res)->to->equal($src[0]);
+        });
+
+    });
+
+    describe('::reject', function() {
+
+        it("returns not matching pairs", function() {
+            $res = Arrays::reject([1, 2, 3, 4, 5, 6], function ($num){
+                return $num % 2 == 0;
+            });
+            expect($res)->to->equal([1,3,5]);
+        });
+
+    });
+
+
 
 });
 

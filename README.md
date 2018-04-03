@@ -58,6 +58,12 @@ $res = Any::chain(new \ArrayObject([1,2,3]))
 
     }, "") // value is "123"
     ->replace("/2/", "") // value is "13"
+    ->then(function($value){
+      if (empty($value)) {
+        throw new \Exception("Empty value");
+      }
+      return $value;
+    })
     ->value();
 echo $res; // "13"
 

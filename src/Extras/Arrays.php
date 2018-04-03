@@ -84,10 +84,10 @@ class Arrays extends AbstractExtras
      */
     public static function filter(array $array, callable $callable = null): array
     {
-        if ($callable === null) {
-            return \array_filter($array);
-        }
-        return \array_filter($array, $callable, \ARRAY_FILTER_USE_BOTH);
+        $matches =  ($callable === null) ?
+            \array_filter($array) :
+            \array_filter($array, $callable, \ARRAY_FILTER_USE_BOTH);
+        return \array_values($matches);
     }
 
     /**
@@ -233,6 +233,184 @@ class Arrays extends AbstractExtras
             return $ao->getArrayCopy();
         }
         return (array)$list;
+    }
+
+
+     /**
+     * Return a shallow copy of a portion of an array into a new array object selected
+     * from begin to end (end not included). The original array will not be modified.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+     *
+     * @param array $array
+     * @param int $beginIndex
+     * @param int $endIndex (optional)
+     * @return array
+     */
+    public static function slice(array $array, int $beginIndex, int $endIndex = null): array
+    {
+        if ($endIndex === null) {
+            return \array_slice($array, $beginIndex);
+        }
+        if ($endIndex < 0) {
+            return \array_slice($array, $beginIndex, $endIndex);
+        }
+        return \array_slice($array, $beginIndex, $endIndex - $beginIndex);
+    }
+
+    /**
+     * Change the contents of an array by removing existing elements and/or adding new elements.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+     *
+     * @param array $array
+     * @param int $beginIndex
+     * @param int $deleteCount (optional)
+     * @param array ...$items (optional)
+     * @return array
+     */
+    public static function splice(array $array, int $beginIndex, int $deleteCount = null, ...$items): array
+    {
+        if ($deleteCount !== null) {
+            \array_splice($array, $beginIndex, $deleteCount, $items);
+            return $array;
+        }
+        \array_splice($array, $beginIndex);
+        return $array;
+    }
+
+    /**
+     * Determines whether an array includes a certain element, returning true or false as appropriate.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
+     *
+     * @param array $array
+     * @param mixed $searchElement
+     * @param int $fromIndex (optional)
+     * @return bool
+     */
+    public static function includes(array $array, $searchElement, int $fromIndex = null): bool
+    {
+        if ($fromIndex === null) {
+            return \in_array($searchElement, $array);
+        }
+        return \in_array(
+            $searchElement,
+            \array_slice($array, $fromIndex)
+        );
+    }
+
+    /**
+     * Merge two or more arrays
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat
+     *
+     * @param array $array
+     * @param array ...$targets
+     * @return array
+     */
+    public static function concat(array $array, array ...$targets): array
+    {
+        return \call_user_func_array("\\array_merge", \array_merge([$array], $targets));
+    }
+
+    /**
+     * Shallow copy part of an array to another location in the same array and returns it, without modifying its size.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin
+     *
+     * @param array $array
+     * @param int $targetIndex
+     * @param int $beginIndex (optional)
+     * @param int $endIndex (optional)
+     * @return array
+     */
+    public static function copyWithin(
+        array $array,
+        int $targetIndex,
+        int
+        $beginIndex = 0,
+        int $endIndex = null
+    ): array {
+        $length = count($array);
+        $chunk = static::slice($array, $beginIndex, $endIndex === null ? count($array) : $endIndex);
+        return \array_slice(
+            \array_merge(
+                static::slice($array, 0, $targetIndex),
+                $chunk,
+                static::slice($array, $targetIndex + count($chunk))
+            ),
+            0,
+            $length
+        );
+    }
+
+    /**
+     * Creates a new array with a variable number of arguments, regardless of number or type of the arguments.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of
+     *
+     * @param array ...$array
+     * @return array
+     */
+    public static function of(...$args): array
+    {
+        return \array_values($args);
+    }
+
+    /**
+     * Fill all the elements of an array from a start index to an end index with a static value.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill
+     *
+     * @param array $array
+     * @param mixed $value
+     * @param int $beginIndex (optional)
+     * @param int $endIndex (optional)
+     * @return array
+     */
+    public static function fill(array $array, $value, int $beginIndex = 0, int $endIndex = null): array
+    {
+        if ($endIndex === null) {
+            $count = count($array) - $beginIndex;
+        } else {
+            $count = $endIndex - $beginIndex;
+        }
+        $fill = \array_fill(0, $count, $value);
+        return \array_values(
+            \call_user_func_array([self::class, "splice"], \array_merge([$array, $beginIndex, $count], $fill))
+        );
+    }
+
+    /**
+     * Return the first index at which a given element can be found in the array, or -1 if it is not present
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+     *
+     * @param array $array
+     * @param mixed $searchElement
+     * @param int $fromIndex
+     * @return int
+     */
+    public static function indexOf(array $array, $searchElement, int $fromIndex = 0): int
+    {
+        if ($fromIndex !== 0) {
+            $array = \array_slice($array, $fromIndex);
+            $res = \array_search($searchElement, $array);
+            if ($res === false) {
+                return -1;
+            }
+        } else {
+            $res = \array_search($searchElement, $array);
+            if ($res === false) {
+                return -1;
+            }
+        }
+        return $res + $fromIndex;
+    }
+
+    /**
+     * Joins all elements of an array into a string and returns this string.
+     *
+     * @param array $array
+     * @param string $separator
+     * @return array
+     */
+    public static function join(array $array, string $separator = ","): string
+    {
+        return \implode($separator, $array);
     }
 
 
@@ -598,5 +776,81 @@ class Arrays extends AbstractExtras
             return false;
         }
         return array_keys($array) !== range(0, count($array) - 1);
+    }
+
+
+
+    /**
+     * Helper function
+     * @param mixed $value
+     * @param string $name
+     * @throws \InvalidArgumentException
+     */
+    private static function throwWhenNoAssocArray($value, string $name)
+    {
+        if (!static::isAssocArray($value)) {
+            throw new \InvalidArgumentException("Invalid argument '{$name}'. Expecting a key-value array");
+        }
+    }
+
+    /**
+     * Tells you if the keys and values in properties are contained in object.
+     * @see http://underscorejs.org/#isMatch
+     *
+     * @param array $array
+     * @param array $props
+     * @return bool
+     */
+    public static function isMatch(array $array, array $props): bool
+    {
+        if (empty($array)) {
+            return false;
+        }
+        static::throwWhenNoAssocArray($array, "source array");
+        static::throwWhenNoAssocArray($props, "conditions");
+        return count(array_intersect_assoc($array, $props)) === count($props);
+    }
+
+    /**
+     * Return a predicate function that will tell you if a passed in object contains all of
+     * the key/value properties present in attrs.
+     * @see http://underscorejs.org/#matcher
+     *
+     * @param array $props
+     * @return callable
+     */
+    public static function matcher(array $props): callable
+    {
+        return function ($value) use ($props) {
+            return static::isMatch($value, $props);
+        };
+    }
+
+    /**
+     * Looks through the list and returns the first value that matches all of the key-value
+     * pairs listed in properties.
+     * @see http://underscorejs.org/#findWhere
+     *
+     * @param array $array
+     * @param array $props
+     * @return array|null
+     */
+    public static function findWhere(array $array, array $props)
+    {
+        $matcher = static::matcher($props);
+        return static::find($array, $matcher);
+    }
+
+    /**
+     * Return the values in list without the elements that the predicate passes. The opposite of filter.
+     * @see http://underscorejs.org/#reject
+     *
+     * @param array $array
+     * @param callable $predicate
+     * @return array|null
+     */
+    public static function reject(array $array, callable $predicate)
+    {
+        return static::filter($array, Functions::negate($predicate));
     }
 }

@@ -1,4 +1,3 @@
-- Extend Strings with missing String.prototype methods https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/prototype
 - Add missing Underscore methods
 - Create cheatsheet like http://tarantsov.com/underscore-js-cheatsheet/
 - Create gh-pages like http://underscorejs.org/
