@@ -19,7 +19,7 @@ class Strings extends AbstractExtras
      */
     public static function substr(string $value, int $start, int $length = null): string
     {
-        return \substr($value, $start, $length === null ? strlen($value) - $start : $length);
+        return \substr($value, $start, $length === null ? \strlen($value) - $start : $length);
     }
 
     /**
@@ -105,20 +105,6 @@ class Strings extends AbstractExtras
     public static function isString($target): bool
     {
         return is_string($target);
-    }
-
-    /**
-     * Start chain
-     *
-     * @param mixed $target
-     * @return Chain
-     */
-    public static function chain($target)
-    {
-        if (!static::isString($target)) {
-            throw new \InvalidArgumentException("Target must be a string; '" . gettype($target) . "' type given");
-        }
-        return parent::chain($target);
     }
 
     /**
@@ -276,5 +262,115 @@ class Strings extends AbstractExtras
     public static function padStart(string $value, int $length, string $padString = " "): string
     {
         return \str_pad($value, $length, $padString, \STR_PAD_LEFT);
+    }
+
+    /**
+     * Construct and return a new string which contains the specified number
+     * of copies of the string on which it was called, concatenated together.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat
+     *
+     * @param string $value
+     * @param int $count
+     * @return string
+     */
+    public static function repeat(string $value, int $count): string
+    {
+        return \str_repeat($value, $count);
+    }
+
+    /**
+     * Splits a string into an array of strings by separating the string into substrings,
+     * using a specified separator string to determine where to make each split.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
+     *
+     * @param string $value
+     * @param string $delimiter
+     * @return array
+     */
+    public static function split(string $value, string $delimiter): array
+    {
+        return \explode($delimiter, $value);
+    }
+
+    /**
+     * Extract a section of a string and returns it as a new string.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice
+     *
+     * @param string $value
+     * @param int $beginIndex
+     * @param int $endIndex
+     * @return string
+     */
+    public static function slice(string $value, int $beginIndex, int $endIndex = null): string
+    {
+        if ($endIndex === null) {
+            return \substr($value, $beginIndex);
+        }
+        if ($endIndex < 0) {
+            return \substr($value, $beginIndex, \strlen($value) + $endIndex - $beginIndex);
+        }
+        return \substr($value, $beginIndex, $endIndex - $beginIndex);
+    }
+
+    /**
+     * Return the part of the string between the start and end indexes, or to the end of the string.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring
+     *
+     * @param string $value
+     * @param int $beginIndex
+     * @param int $endIndex
+     * @return string
+     */
+    public static function substring(string $value, int $beginIndex, int $endIndex = null): string
+    {
+        if ($endIndex === null) {
+            return \substr($value, $beginIndex);
+        }
+        if ($endIndex < 0) {
+            return \substr($value, $beginIndex, \strlen($value) + $endIndex - $beginIndex);
+        }
+        // If start > stop, then substring will swap those 2 arguments.
+        if ($beginIndex > $endIndex) {
+            list($beginIndex, $endIndex) = [$endIndex, $beginIndex];
+        }
+        return \substr($value, $beginIndex, $endIndex - $beginIndex);
+    }
+
+    /**
+     * Return the calling string value converted to lower case.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase
+     *
+     * @param string $value
+     * @return string
+     */
+    public static function toLowerCase(string $value): string
+    {
+        return \strtolower($value);
+    }
+
+    /**
+     * Return the calling string value converted to upper case.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase
+     *
+     * @param string $value
+     * @return string
+     */
+    public static function toUpperCase(string $value): string
+    {
+        return \strtoupper($value);
+    }
+
+    /**
+     * Start chain
+     *
+     * @param mixed $target
+     * @return Chain
+     */
+    public static function chain($target)
+    {
+        if (!static::isString($target)) {
+            throw new \InvalidArgumentException("Target must be a string; '" . gettype($target) . "' type given");
+        }
+        return parent::chain($target);
     }
 }

@@ -82,7 +82,7 @@ describe("\\Dsheiko\\Extras\\Strings", function() {
 
     });
 
-    describe('::includes', function() {
+    describe('::remove', function() {
 
         it("removes substring from string", function() {
             $res = Strings::remove("12345", "23");
@@ -235,6 +235,107 @@ describe("\\Dsheiko\\Extras\\Strings", function() {
 
     });
 
+
+    describe('::repeat', function() {
+
+        it("repeats string 2 times", function() {
+            $res = Strings::repeat("abc", 2);
+            expect($res)->to->equal("abcabc");
+        });
+
+        it("repeats string 2.5 times", function() {
+            $res = Strings::repeat("abc", 2.5);
+            expect($res)->to->equal("abcabc");
+        });
+
+    });
+
+    describe('::split', function() {
+
+        it("splits string by comma", function() {
+            $res = Strings::split("a,b,c", ",");
+            expect($res)->to->equal(["a", "b", "c"]);
+        });
+
+    });
+
+    describe('::slice', function() {
+
+        it("slices with positive end index", function() {
+            $value = "The morning is upon us.";
+            $res = Strings::slice($value, 1, 8);
+            expect($res)->to->equal("he morn");
+        });
+
+        it("slices with negative end index", function() {
+            $value = "The morning is upon us.";
+            $res = Strings::slice($value, 4, -2);
+            expect($res)->to->equal("morning is upon u");
+        });
+
+        it("slices without end index", function() {
+            $value = "The morning is upon us.";
+            $res = Strings::slice($value, 12);
+            expect($res)->to->equal("is upon us.");
+        });
+
+        it("slices with ut of range end index", function() {
+            $value = "The morning is upon us.";
+            $res = Strings::slice($value, 30);
+            expect($res)->to->equal("");
+        });
+
+    });
+
+    describe('::toLowerCase', function() {
+
+        it("converts to lower case", function() {
+            $res = Strings::toLowerCase("AbC");
+            expect($res)->to->equal("abc");
+        });
+
+    });
+
+    describe('::toUpperCase', function() {
+
+        it("converts to upper case", function() {
+            $res = Strings::toUpperCase("AbC");
+            expect($res)->to->equal("ABC");
+        });
+
+    });
+
+     describe('::substring', function() {
+
+        it("swaps args when indexStart is greater than indexEnd", function() {
+            $value = "Mozilla";
+            $res = Strings::substring($value, 0, 1);
+            expect($res)->to->equal("M");
+            $res = Strings::substring($value, 1, 0);
+            expect($res)->to->equal("M");
+        });
+
+        it("works like substr when positive indexEnd", function() {
+            $value = "Mozilla";
+            $res = Strings::substring($value, 0, 6);
+            expect($res)->to->equal("Mozill");
+        });
+
+        it("works like substr when no indexEnd", function() {
+            $value = "Mozilla";
+            $res = Strings::substring($value, 4);
+            expect($res)->to->equal("lla");
+        });
+
+        it("returns full string when endindex >= length", function() {
+            $value = "Mozilla";
+            $res = Strings::substring($value, 0, 7);
+            expect($res)->to->equal($value);
+            $res = Strings::substring($value, 0, 10);
+            expect($res)->to->equal($value);
+        });
+
+    });
 
 
 

@@ -5,7 +5,8 @@
 [![License](https://poser.pugx.org/dsheiko/extras/license)](https://packagist.org/packages/dsheiko/extras)
 [![Build Status](https://travis-ci.org/dsheiko/extras.png)](https://travis-ci.org/dsheiko/extras)
 
-Collection of chainable high-order functions to abstract and manipulate PHP types
+Collection of chainable high-order functions to abstract and manipulate PHP types.
+The library implements JavaScript and Underscore.js functions in PHP
 
 > The packages takes its name from `Array Extras` referring to the array methods added in ES5 (JavaScript) to abstract generic array manipulation logic
 
