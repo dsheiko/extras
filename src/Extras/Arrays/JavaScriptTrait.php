@@ -496,4 +496,39 @@ trait JavaScriptTrait
     {
         return \array_reverse($array);
     }
+
+    /**
+     * Determine whether two values are the same value.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+     *
+     * @param array $array
+     * @param array $arrayToCompare
+     * @return bool
+     */
+    public static function is(array $array, array $arrayToCompare): bool
+    {
+        return (
+            \is_array($array)
+            && \is_array($arrayToCompare)
+            && \count($array) == \count($arrayToCompare)
+            && empty(\array_diff(
+                \array_map("\serialize", $array),
+                \array_map("\serialize", $arrayToCompare)
+            ))
+        );
+    }
+
+    /**
+     * Return a boolean indicating whether the object has the specified property
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty
+     *
+     * @param array $array
+     * @param string $key
+     * @return bool
+     */
+    public static function hasOwnProperty(array $array, string $key): bool
+    {
+        static::throwWhenNoAssocArray($array, "source array");
+        return \array_key_exists($key, $array);
+    }
 }

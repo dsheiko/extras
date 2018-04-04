@@ -31,8 +31,10 @@ $res = Arrays::chain([1, 2, 3])
   - [filter](#filter)
   - [find](#find)
   - [from](#from)
+  - [hasOwnProperty](#hasOwnProperty)
   - [includes](#includes)
   - [indexOf](#indexOf)
+  - [is](#is)
   - [join](#join)
   - [keys](#keys)
   - [lastIndexOf](#lastIndexOf)
@@ -300,6 +302,25 @@ $obj = new \ArrayObject([1,2,3]);
 $res = Arrays::from($obj->getIterator()); // [1,2,3]
 ```
 
+### hasOwnProperty
+Return a boolean indicating whether the object has the specified property
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty).
+
+##### Parameters
+- `{array} $array` - source array
+- `{string} $key` - the property to test
+
+###### Syntax
+```php
+ hasOwnProperty(array $array, string $key): bool
+```
+
+###### Example
+```php
+<?php
+$res = Arrays::hasOwnProperty(["foo" => "FOO"], "foo");// true
+```
+
 ### includes
 Determine whether an array includes a certain element, returning true or false as appropriate.
 - [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes).
@@ -341,6 +362,32 @@ Return the first index at which a given element can be found in the array, or -1
 $src = ["ant", "bison", "camel", "duck", "bison"];
 $res = Arrays::indexOf($src, "bison"); // 1
 $res = Arrays::indexOf($src, "bison", 2); // 4
+```
+
+### is
+Determine whether two values are the same value.
+- [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is).
+
+##### Parameters
+- `{array} $array` - source array
+- `{array} $arrayToCompare` - source array
+
+###### Syntax
+```php
+ is(array $array, array $arrayToCompare): bool
+```
+
+###### Example
+```php
+<?php
+$a = [1,2,3];
+$b = [1,2,3];
+$res = Arrays::is($a, $b); // true
+
+
+$a = [[["foo" => "FOO", "bar" => "BAR"]]];
+$b = [[["foo" => "FOO", "bar" => "BAR"]]];
+$res = Arrays::is($a, $b); // true
 ```
 
 ### join

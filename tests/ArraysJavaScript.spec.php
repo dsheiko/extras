@@ -519,5 +519,61 @@ describe("\\Dsheiko\\Extras\\Arrays (JavaScript)", function() {
     });
 
 
+    describe("::is", function() {
+
+        it("compare simple sequential arrays #1", function() {
+            $a = [1,2,3];
+            $b = [1,2,3];
+            $res = Arrays::is($a, $b);
+            expect($res)->to->be->ok;
+        });
+
+        it("compare simple sequential arrays #2", function() {
+            $a = [1,2,3];
+            $b = [0,2,3];
+            $res = Arrays::is($a, $b);
+            expect($res)->not->to->be->ok;
+        });
+
+        it("compare simple associative arrays #1", function() {
+            $a = ["foo" => "FOO", "bar" => "BAR"];
+            $b = ["foo" => "FOO", "bar" => "BAR"];
+            $res = Arrays::is($a, $b);
+            expect($res)->to->be->ok;
+        });
+
+        it("compare simple associative arrays #2", function() {
+            $a = ["foo" => "FOO", "bar" => "BAR"];
+            $b = ["foo" => "FOO", "bar" => "B_R"];
+            $res = Arrays::is($a, $b);
+            expect($res)->not->to->be->ok;
+        });
+
+        it("compare complex arrays #1", function() {
+            $a = [[["foo" => "FOO", "bar" => "BAR"]]];
+            $b = [[["foo" => "FOO", "bar" => "BAR"]]];
+            $res = Arrays::is($a, $b);
+            expect($res)->to->be->ok;
+        });
+
+
+    });
+
+     describe("::hasOwnProperty", function() {
+
+        it("returns true if key exists", function() {
+            $res = Arrays::hasOwnProperty(["foo" => "FOO"], "foo");
+            expect($res)->to->be->ok;
+        });
+
+        it("returns false if not", function() {
+            $res = Arrays::hasOwnProperty(["foo" => "FOO"], "baz");
+            expect($res)->not->to->be->ok;
+        });
+
+    });
+
+
+
 });
 
