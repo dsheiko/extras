@@ -52,33 +52,49 @@ $res = Arrays::chain([1, 2, 3])
   - [splice](#splice)
   - [unshift](#unshift)
   - [values](#values)
+
 - Underscore.js-inspired methods
-  - [every](#every)
-  - [chain](#chain)
-  - [countBy](#countBy)
-  - [difference](#difference)
-  - [each](#each)
-  - [filter](#filter)
-  - [find](#find)
-  - [findIndex](#findIndex)
-  - [first](#first)
-  - [groupBy](#groupBy)
-  - [intersection](#intersection)
-  - [last](#last)
-  - [map](#map)
-  - [object](#object)
-  - [pairs](#entries) - alias: `entries`
-  - [partition](#partition)
-  - [pluck](#pluck)
-  - [reduceRight](#reduceRight)
-  - [reduce](#reduce)
-  - [result](#result)
-  - [some](#some)
-  - [shuffle](#shuffle)
-  - [uniq](#uniq)
-  - [unzip](#unzip)
-  - [where](#where)
-  - [zip](#zip)
+  - Collections
+    - [each](#each)
+    - [map](#map)
+    - [reduce](#reduce)
+    - [reduceRight](#reduceRight)
+    - [find](#find)
+    - [filter](#filter)
+    - [where](#where)
+    - [findWhere](#findWhere)
+    - [reject](#reject)
+    - [every](#every)
+    - [some](#some)
+    - [contains](#contains) - alias: [includes](#includes)
+    - [invoke](#invoke)
+    - [pluck](#pluck)
+    - [max](#max)
+    - [min](#min)
+    - [sortBy](#sortBy)
+    - [groupBy](#groupBy)
+    - [indexBy](#indexBy)
+    - [countBy](#countBy)
+    - [shuffle](#shuffle)
+    - [sample](#sample)
+    - [toArray](#toArray) - alias: [from](#from)
+    - [size](#size)
+    - [partition](#partition)
+  - Arrays
+    - [difference](#difference)
+    - [findIndex](#findIndex)
+    - [first](#first)
+    - [intersection](#intersection)
+    - [last](#last)
+    - [object](#object)
+    - [pairs](#entries) - alias: [entries](#entries)
+    - [result](#result)
+    - [uniq](#uniq)
+    - [unzip](#unzip)
+    - [zip](#zip)
+  - Chaining
+    - [chain](#chain)
+
 - Other methods
   - [isAssocArray](#isAssocArray)
   - [replace](#replace)
@@ -175,6 +191,14 @@ each(array $array, callable $callable)
 $sum = 0;
 Arrays::each([1, 2, 3], function ($val) use(&$sum) {
     $sum += $val;
+});
+```
+
+###### Iteratee receive parameters like JavaScript `forEach` method
+```php
+<?php
+Arrays::each([1, 2, 3], function ($value, $index, $array) {
+    //...
 });
 ```
 
@@ -762,10 +786,416 @@ $res = Arrays::values([ 5 => 1, 10 => 2, 100 => 3]); // [1,2,3]
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 ## Underscore.js-inspired methods
+
+### where
+Look through each value in the list, returning an array of all the values that contain all of the key-value pairs listed in $conditions
+- [see also](http://underscorejs.org/#where).
+
+##### Parameters
+- `{array} $array` - source array
+- `{array} $conditions` - key-value pairs to match
+
+###### Syntax
+```php
+ where(array $array, array $conditions): array
+```
+
+###### Example
+
+```php
+<?php
+$arr = ["foo" => "FOO", "bar" => "BAR", "baz" => "BAZ"];
+$res = Arrays::where($arr, ["foo" => "FOO", "bar" => "BAR"]); // ["foo", "bar"]
+```
+
+### findWhere
+Looks through the list and returns the first value that matches all of the key-value
+pairs listed in properties.
+- [see also](http://underscorejs.org/#findWhere).
+
+##### Parameters
+- `{array} $array` - source array
+- `{array} $props` - key-value pairs to match
+
+###### Syntax
+```php
+ findWhere(array $array, array $props)
+```
+
+###### Example
+
+```php
+<?php
+$src = [
+    [
+        "foo" => "FOO",
+        "bar" => "BAR",
+        "baz" => "BAZ",
+    ],
+    [
+        "bar" => "BAR",
+        "baz" => "BAZ",
+    ],
+    [
+        "baz" => "BAZ",
+    ]
+];
+$res = Arrays::findWhere($src, [
+    "foo" => "FOO",
+    "bar" => "BAR",
+]);
+//    [
+//        "foo" => "FOO",
+//        "bar" => "BAR",
+//        "baz" => "BAZ",
+//    ]
+```
+
+### reject
+Return the values in list without the elements that the predicate passes. The opposite of [filter](#filter).
+- [see also](http://underscorejs.org/#reject).
+
+##### Parameters
+- `{array} $array` - source array
+
+###### Syntax
+```php
+ reject(array $array, callable $predicate)
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::reject([1, 2, 3, 4, 5, 6], function ($num){
+    return $num % 2 == 0;
+}); // [1,3,5]
+```
+
+### contains
+Returns true if the value is present in the list.
+- [see also](http://underscorejs.org/#reject).
+- alias: [includes](#includes)
+
+##### Parameters
+- `{array} $array` - source array
+- `{mixed} $searchElement` - the element to search for
+- `{int} $fromIndex` - (optional) the position in this array at which to begin searching for searchElement.
+
+###### Syntax
+```php
+ contains(array $array, $searchElement, int $fromIndex = null): bool
+```
+
+### invoke
+Calls the method named by methodName on each value in the list. Any extra arguments passed
+to invoke will be forwarded on to the method invocation.
+- [see also](http://underscorejs.org/#invoke).
+
+##### Parameters
+- `{array} $array` - source array
+- `{callable} $iteratee` - callback to run on every array element
+- `{array} ...$args` - (optional) extra arguments to pass in the callback
+
+###### Syntax
+```php
+ invoke(array $array, callable $iteratee, ...$args): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::invoke([[5, 1, 7], [3, 2, 1]], [Arrays::class, "sort"]);
+// [ [1, 5, 7], [1, 2, 3] ]
+```
+
+### pluck
+A convenient version of what is perhaps the most common use-case for map:
+extracting a list of property values.
+- [see also](http://underscorejs.org/#pluck).
+
+##### Parameters
+- `{array} $array` - source array
+- `{string} $key` - source property name
+
+###### Syntax
+```php
+ pluck(array $array, string $key): array
+```
+
+###### Example
+
+```php
+<?php
+ $res = Arrays::pluck([
+      ["name" => "moe",   "age" =>  40],
+      ["name" => "larry", "age" =>  50],
+      ["name" => "curly", "age" =>  60],
+  ], "name"); // ["moe, "larry", "curly" ]
+
+
+```
+
+### max
+Returns the maximum value in list. If an iteratee function is provided
+- [see also](http://underscorejs.org/#max).
+
+##### Parameters
+- `{array} $array` - source array
+- `{callable} $iteratee` - (optional) callback to compare array element
+- `{object} $context` - (optional) context to bind to
+
+###### Syntax
+```php
+ max(array $array, callable $iteratee = null, $context = null)
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::max([1,2,3]); // 3
+
+$res = Arrays::max([
+        ["name" => "moe",   "age" =>  40],
+        ["name" => "larry", "age" =>  50],
+        ["name" => "curly", "age" =>  60],
+    ], function($stooge){
+     return $stooge["age"];
+    });
+// ["name" => "curly", "age" =>  60]
+
+```
+
+### min
+Returns the minimum value in list. If an iteratee function is provided
+- [see also](http://underscorejs.org/#min).
+
+##### Parameters
+- `{array} $array` - source array
+- `{callable} $iteratee` - (optional) callback to compare array element
+- `{object} $context` - (optional) context to bind to
+
+###### Syntax
+```php
+ min(array $array, callable $iteratee = null, $context = null)
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::min([1,2,3]); // 1
+
+$res = Arrays::min([
+        ["name" => "moe",   "age" =>  40],
+        ["name" => "larry", "age" =>  50],
+        ["name" => "curly", "age" =>  60],
+    ], function($stooge){
+     return $stooge["age"];
+    });
+// ["name" => "moe",   "age" =>  40]
+
+```
+
+### sortBy
+Return a (stably) sorted copy of list, ranked in ascending order by the results of
+running each value through iteratee. iteratee may also be the string name of the property to sort by
+- [see also](http://underscorejs.org/#sortBy).
+
+##### Parameters
+- `{array} $array` - source array
+- `{callable|string} $callable` - iteratee callback or property
+- `{object} $context` - (optional) context to bind to
+
+###### Syntax
+```php
+ sortBy(array $array, $iteratee, $context = null): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::sortBy([1, 2, 3, 4, 5, 6], function($a){
+    return \sin($a);
+}); // [5, 4, 6, 3, 1, 2]
+
+$res = Arrays::sortBy([
+    ["name" => "moe",   "age" =>  40],
+    ["name" => "larry", "age" =>  50],
+    ["name" => "curly", "age" =>  60],
+], "name");
+// [["name" => "curly", "age" =>  60],...]
+```
+
+### groupBy
+Split a collection into sets, grouped by the result of running each value through iterator
+- [see also](http://underscorejs.org/#groupBy).
+
+##### Parameters
+- `{array} $array` - source array
+- `{callable|string} $callable` - iteratee callback or property
+- `{object} $context` - (optional) context to bind to
+
+###### Syntax
+```php
+ groupBy(array $array, $iteratee, $context = null): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::groupBy([1.3, 2.1, 2.4], function($num) { return floor($num); });
+// [1 => [ 1.3 ], 2 => [ 2.1, 2.4 ]]
+```
+
+### indexBy
+Given a list, and an iteratee function that returns a key for each element in the list
+(or a property name), returns an object with an index of each item.
+Just like groupBy, but for when you know your keys are unique.
+- [see also](http://underscorejs.org/#indexBy).
+
+##### Parameters
+- `{array} $array` - source array
+- `{callable|string} $callable` - iteratee callback or property
+- `{object} $context` - (optional) context to bind to
+
+###### Syntax
+```php
+ indexBy(array $array,  $iteratee, $context = null): array
+```
+
+###### Example
+
+```php
+<?php
+
+$res = Arrays::indexBy([
+    ["name" => "moe",   "age" =>  40],
+    ["name" => "larry", "age" =>  50],
+    ["name" => "curly", "age" =>  60],
+], "name");
+// [ 40 => ["name" => "moe",   "age" =>  40], ...]
+```
+
+### countBy
+Sort a list into groups and return a count for the number of objects in each group.
+- [see also](http://underscorejs.org/#countBy).
+
+##### Parameters
+- `{array} $array` - source array
+- `{callable|string} $callable` - iteratee callback or property
+- `{object} $context` - (optional) context to bind to
+
+###### Syntax
+```php
+ countBy(array $array,  $iteratee, $context = null): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::countBy([1, 2, 3, 4, 5], function($num) {
+    return $num % 2 == 0 ? "even": "odd";
+});
+// [ "odd => 3, "even" => 2 ]
+```
+
+### shuffle
+Return a shuffled copy of the list
+- [see also](http://underscorejs.org/#shuffle).
+
+##### Parameters
+- `{array} $array` - source array
+
+###### Syntax
+```php
+ shuffle(array $array): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::shuffle([1, 2, 3]); // [ 2, 1, 3 ]
+```
+
+### sample
+Produce a random sample from the list. Pass a number to return n random elements from the list.
+Otherwise a single random item will be returned.
+- [see also](http://underscorejs.org/#sample).
+
+##### Parameters
+- `{array} $array` - source array
+- `{int} $count` - (optional) number of random elements
+
+###### Syntax
+```php
+ sample(array $array, int $count = null)
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::sample([1, 2, 3], 3); // [ 2, 1, 3 ]
+```
+
+### toArray
+Creates a real Array from the list
+- [see also](http://underscorejs.org/#toArray).
+- alias: [from](#from).
+
+##### Parameters
+- `{ArrayObject|\ArrayIterator|Traversable|Object} $collection` - source collection
+
+###### Syntax
+```php
+ toArray($collection): array
+```
+
+### size
+Return the number of values in the list.
+- [see also](http://underscorejs.org/#size).
+
+##### Parameters
+- `{array} $array` - source array
+
+###### Syntax
+```php
+ size(array $array): int
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::size([
+    "one" => 1,
+    "two" => 2,
+    "three" => 3
+]); // 3
+```
 
 ### chain
 Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
+- [see also](http://underscorejs.org/#chain).
 
 ##### Parameters
 - `{array} $array` - source array
@@ -786,28 +1216,6 @@ $res = Arrays::chain([1, 2, 3])
     ->value();
 ```
 
-### countBy
-Sort a list into groups and return a count for the number of objects in each group.
-- [see also](http://underscorejs.org/#countBy).
-
-##### Parameters
-- `{array} $array` - source array
-- `{callable} $callable` - iteratee callback
-
-###### Syntax
-```php
- countBy(array $array, callable $callable): array
-```
-
-###### Example
-
-```php
-<?php
-$res = Arrays::countBy([1, 2, 3, 4, 5], function($num) {
-    return $num % 2 == 0 ? "even": "odd";
-});
-// [ "odd => 3, "even" => 2 ]
-```
 
 ### difference
 Returns the values from array that are not present in the other arrays.
@@ -887,31 +1295,6 @@ $element = Arrays::first($arr, function(){ return 1; });
 ```
 
 
-
-
-
-### groupBy
-Split a collection into sets, grouped by the result of running each value through iterator
-- [see also](http://underscorejs.org/#groupBy).
-
-##### Parameters
-- `{array} $array` - source array
-- `{callable} $callable` - iteratee callback
-
-###### Syntax
-```php
- groupBy(array $array, callable $callable): array
-```
-
-###### Example
-
-```php
-<?php
-$res = Arrays::groupBy([1.3, 2.1, 2.4], function($num) { return floor($num); });
-// [1 => [ 1.3 ], 2 => [ 2.1, 2.4 ]]
-```
-
-
 ### intersection
 Computes the list of values that are the intersection of all the arrays. Each value in the result is present in each of the arrays.
 - [see also](http://underscorejs.org/#intersection).
@@ -958,7 +1341,7 @@ $element = Arrays::last([1, 2, 3]);
 ### object
 Converts arrays into objects. Pass either a single list of [key, value] pairs, or a list of keys,
 and a list of values. If duplicate keys exist, the last value wins.
-- [see also](http://underscorejs.org/#shuffle).
+- [see also](http://underscorejs.org/#object).
 
 
 ##### Parameters
@@ -1026,32 +1409,7 @@ $res = Arrays::partition([0, 1, 2, 3, 4, 5], function($val) {
 
 
 
-### pluck
-A convenient version of what is perhaps the most common use-case for map:
-extracting a list of property values.
-- [see also](http://underscorejs.org/#pluck).
 
-##### Parameters
-- `{array} $array` - source array
-- `{string} $key` - source property name
-
-###### Syntax
-```php
- pluck(array $array, string $key): array
-```
-
-###### Example
-
-```php
-<?php
- $res = Arrays::pluck([
-      ["name" => "moe",   "age" =>  40],
-      ["name" => "larry", "age" =>  50],
-      ["name" => "curly", "age" =>  60],
-  ], "name"); // ["moe, "larry", "curly" ]
-
-
-```
 
 ### result
 If the value of the named property is a function then invoke it; otherwise, return it.
@@ -1078,24 +1436,7 @@ If the value of the named property is a function then invoke it; otherwise, retu
   $res = Arrays::result($options, "bar"); // BAR
 ```
 
-### shuffle
-Return a shuffled copy of the list
-- [see also](http://underscorejs.org/#shuffle).
 
-##### Parameters
-- `{array} $array` - source array
-
-###### Syntax
-```php
- shuffle(array $array): array
-```
-
-###### Example
-
-```php
-<?php
-$res = Arrays::shuffle([1, 2, 3]); // [ 2, 1, 3 ]
-```
 
 ### uniq
 Produces a duplicate-free version of the array
@@ -1136,26 +1477,6 @@ $res = Arrays::unzip([["moe", 30, true], ["larry", 40, false], ["curly", 50, fal
 //  [["moe", "larry", "curly"], [30, 40, 50], [true, false, false]]
 ```
 
-### where
-Look through each value in the list, returning an array of all the values that contain all of the key-value pairs listed in $conditions
-- [see also](http://underscorejs.org/#where).
-
-##### Parameters
-- `{array} $array` - source array
-- `{array} $conditions` - key-value pairs to match
-
-###### Syntax
-```php
- where(array $array, array $conditions): array
-```
-
-###### Example
-
-```php
-<?php
-$arr = ["foo" => "FOO", "bar" => "BAR", "baz" => "BAZ"];
-$res = Arrays::where($arr, ["foo" => "FOO", "bar" => "BAR"]); // ["foo", "bar"]
-```
 
 
 ### zip

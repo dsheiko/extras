@@ -25,7 +25,9 @@ trait JavaScriptTrait
      */
     public static function each(array $array, callable $callable)
     {
-        \array_walk($array, $callable);
+        \array_walk($array, function ($value, $inx) use ($array, $callable) {
+            \call_user_func($callable, $value, $inx, $array);
+        });
     }
 
     /**
@@ -38,7 +40,10 @@ trait JavaScriptTrait
      */
     public static function map(array $array, callable $callable): array
     {
-        return \array_map($callable, $array);
+        $inx = 0;
+        return \array_map(function ($value) use ($array, $callable, &$inx) {
+            return \call_user_func($callable, $value, $inx++, $array);
+        }, $array);
     }
 
     /**
@@ -528,7 +533,6 @@ trait JavaScriptTrait
      */
     public static function hasOwnProperty(array $array, string $key): bool
     {
-        static::throwWhenNoAssocArray($array, "source array");
         return \array_key_exists($key, $array);
     }
 }
