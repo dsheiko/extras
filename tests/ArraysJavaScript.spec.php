@@ -416,6 +416,34 @@ describe("\\Dsheiko\\Extras\\Arrays (JavaScript)", function() {
 
     });
 
+    describe("::lastIndexOf", function() {
+
+        it("operates in case #1", function() {
+            $src = [2, 5, 9, 2];
+            $res = Arrays::lastIndexOf($src, 2);
+            expect($res)->to->equal(3);
+        });
+
+        it("operates in case #2", function() {
+            $src = [2, 5, 9, 2];
+            $res = Arrays::lastIndexOf($src, 7);
+            expect($res)->to->equal(-1);
+        });
+
+        it("operates in case #3", function() {
+            $src = [2, 5, 9, 2];
+            $res = Arrays::lastIndexOf($src, 2, 3);
+            expect($res)->to->equal(3);
+        });
+
+        it("operates in case #4", function() {
+            $src = [2, 5, 9, 2];
+            $res = Arrays::lastIndexOf($src, 2, 2);
+            expect($res)->to->equal(0);
+        });
+
+    });
+
     describe("::join", function() {
 
         it("joins elements with separator", function() {
@@ -428,6 +456,64 @@ describe("\\Dsheiko\\Extras\\Arrays (JavaScript)", function() {
             $src = [1,2,3];
             $res = Arrays::join($src);
             expect($res)->to->equal("1,2,3");
+        });
+
+    });
+
+    describe("::pop", function() {
+
+        it("takes element from the tail and changes length", function() {
+            $src = [1, 2, 3];
+            $res = Arrays::pop($src);
+            expect($res)->to->equal(3);
+            expect(count($src))->to->equal(2);
+        });
+
+    });
+
+    describe("::shift", function() {
+
+        it("takes element from the head and changes length", function() {
+            $src = [1, 2, 3];
+            $res = Arrays::shift($src);
+            expect($res)->to->equal(1);
+            expect(count($src))->to->equal(2);
+        });
+
+    });
+
+    describe("::unshift", function() {
+
+        it("prepends a single element", function() {
+            $src = [1, 2];
+            $res = Arrays::unshift($src, 0);
+            expect($res)->to->equal([0, 1, 2]);
+        });
+
+        it("prepends multiple elements", function() {
+            $src = [0, 1, 2];
+            $res = Arrays::unshift($src, -2, -1);
+            expect($res)->to->equal([-2, -1, 0, 1, 2]);
+        });
+
+    });
+
+    describe("::push", function() {
+
+        it("adds element", function() {
+            $src = [1,2,3];
+            $res = Arrays::push($src, 4);
+            expect($res)->to->equal([1, 2, 3, 4]);
+        });
+
+    });
+
+    describe("::reverse", function() {
+
+        it("reverses array", function() {
+            $src = [1,2,3];
+            $res = Arrays::reverse($src);
+            expect($res)->to->equal([3, 2, 1]);
         });
 
     });
