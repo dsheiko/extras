@@ -26,7 +26,7 @@ trait JavaScriptTrait
     public static function each(array $array, callable $callable)
     {
         \array_walk($array, function ($value, $inx) use ($array, $callable) {
-            \call_user_func($callable, $value, $inx, $array);
+            $callable($value, $inx, $array);
         });
     }
 
@@ -42,7 +42,7 @@ trait JavaScriptTrait
     {
         $inx = 0;
         return \array_map(function ($value) use ($array, $callable, &$inx) {
-            return \call_user_func($callable, $value, $inx++, $array);
+            return $callable($value, $inx++, $array);
         }, $array);
     }
 
@@ -57,7 +57,10 @@ trait JavaScriptTrait
      */
     public static function reduce(array $array, callable $callable, $initial = null)
     {
-        return \array_reduce($array, $callable, $initial);
+        $inx = 0;
+        return \array_reduce($array, function ($carry, $value) use ($array, $callable, &$inx) {
+            return $callable($carry, $value, $inx++, $array);
+        }, $initial);
     }
 
     /**
@@ -71,7 +74,10 @@ trait JavaScriptTrait
      */
     public static function reduceRight(array $array, callable $callable, $initial = null)
     {
-        return \array_reduce(\array_reverse($array), $callable, $initial);
+        $inx = 0;
+        return \array_reduce(\array_reverse($array), function ($carry, $value) use ($array, $callable, &$inx) {
+            return $callable($carry, $value, $inx++, $array);
+        }, $initial);
     }
 
     /**

@@ -52,7 +52,6 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Arrays)", function() {
         });
     });
 
-
     describe(":intersection", function() {
 
         it("returns intersection for sequential arrays", function() {
@@ -135,5 +134,143 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Arrays)", function() {
             expect($obj->curly)->to->equal(50);
         });
     });
+
+    describe("::initial", function() {
+
+        it("removes the last element", function() {
+            $res = Arrays::initial([5, 4, 3, 2, 1]);
+            expect($res)->to->equal([5, 4, 3, 2]);
+        });
+
+        it("removes N elements", function() {
+            $res = Arrays::initial([5, 4, 3, 2, 1], 3);
+            expect($res)->to->equal([5, 4]);
+        });
+    });
+
+    describe("::rest", function() {
+
+        it("removes the first element", function() {
+            $res = Arrays::rest([5, 4, 3, 2, 1]);
+            expect($res)->to->equal([4, 3, 2, 1]);
+        });
+
+        it("removes N elements", function() {
+            $res = Arrays::rest([5, 4, 3, 2, 1], 3);
+            expect($res)->to->equal([2, 1]);
+        });
+    });
+
+    describe("::compact", function() {
+
+        it("removes falsy elements", function() {
+            $res = Arrays::compact([0, 1, false, 2, '', 3]);
+            expect($res)->to->equal([1, 2, 3]);
+        });
+
+    });
+
+    describe("::flatten", function() {
+
+        it("flattens without shallow constraint", function() {
+            $res = Arrays::flatten([1, [2], [3, [[4]]]]);
+            expect($res)->to->equal([1, 2, 3, 4]);
+        });
+
+        it("flattens with shallow constraint", function() {
+            $res = Arrays::flatten([1, [2], [3, [[4]]]], true);
+            expect($res)->to->equal([1, 2, 3, [[4]]]);
+        });
+
+    });
+
+    describe("::without", function() {
+
+        it("removes specified values", function() {
+            $res = Arrays::without([1, 2, 1, 0, 3, 1, 4], 0, 1);
+            expect($res)->to->equal([2, 3, 4]);
+        });
+
+    });
+
+    describe("::union", function() {
+
+        it("computes the union", function() {
+            $res = Arrays::union([1, 2, 3], [101, 2, 1, 10], [2, 1]);
+            expect($res)->to->equal([1, 2, 3, 101, 10]);
+        });
+
+    });
+
+    describe("::sortedIndex", function() {
+
+        it("operates in case #1", function() {
+            $res = Arrays::sortedIndex([10, 20, 30, 40, 50], 35);
+            expect($res)->to->equal(3);
+        });
+
+        it("operates in case #2", function() {
+            $res = Arrays::sortedIndex($this->fixtureStooges, ["name" => "larry", "age" => 50], "age");
+            expect($res)->to->equal(1);
+        });
+
+    });
+
+     describe("::range", function() {
+
+        it("operates in case #1", function() {
+            $res = Arrays::range(10);
+            expect($res)->to->equal([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        });
+
+        it("operates in case #2", function() {
+            $res = Arrays::range(1, 11);
+            expect($res)->to->equal([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        });
+
+        it("operates in case #3", function() {
+            $res = Arrays::range(0, 30, 5);
+            expect($res)->to->equal([0, 5, 10, 15, 20, 25]);
+        });
+
+        it("operates in case #4", function() {
+            $res = Arrays::range(0, -10, -1);
+            expect($res)->to->equal([0, -1, -2, -3, -4, -5, -6, -7, -8, -9]);
+        });
+
+    });
+
+     describe("::findLastIndex", function() {
+
+        it("operates in case #1", function() {
+            $src = [
+                [
+                    'id' => 1,
+                    'name' => 'Bob',
+                    'last' => 'Brown',
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Ted',
+                    'last' => 'White',
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Frank',
+                    'last' => 'James',
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Ted',
+                    'last' => 'Jones',
+                ],
+            ];
+            
+            $res = Arrays::findLastIndex($src, [ "name" => "Ted" ]);
+            expect($res)->to->equal(3);
+        });
+
+    });
+
 });
 

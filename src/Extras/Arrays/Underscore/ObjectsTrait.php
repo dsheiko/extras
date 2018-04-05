@@ -8,6 +8,19 @@ namespace Dsheiko\Extras\Arrays\Underscore;
 trait ObjectsTrait
 {
     /**
+     * Does the object contain the given key? Alias of hasOwnProperty
+     * @param array $array
+     * @see http://underscorejs.org/#has
+     *
+     * @param string $key
+     * @return bool
+     */
+    public static function has(array $array, string $key): bool
+    {
+        return static::hasOwnProperty($array, $key);
+    }
+
+    /**
      * Alias of static::entries
      *
      * @param array $array
@@ -50,5 +63,4 @@ trait ObjectsTrait
             return static::isMatch($value, $props);
         };
     }
-
 }

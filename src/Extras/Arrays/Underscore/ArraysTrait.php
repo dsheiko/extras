@@ -48,35 +48,102 @@ trait ArraysTrait
      */
     public static function initial(array $array, int $count = 1): array
     {
-        return static::slice($array, \count($array) - 1);
+        return static::slice($array, 0, \count($array) - $count);
     }
 
     /**
-     * Similar to _.indexOf, returns the first index where the predicate truth test passes;
-     * @see http://underscorejs.org/#findIndex
+     * Returns the rest of the elements in an array. Pass an index to
+     * return the values of the array from that index onward.
+     * @see http://underscorejs.org/#rest
      *
      * @param array $array
-     * @param callable $callable
-     * @return mixed
+     * @param int $count
+     * @return array
      */
-    public static function findIndex(array $array, callable $callable)
+    public static function rest(array $array, int $count = 1): array
     {
-        $el = static::find($array, $callable);
-        return array_search($el, $array);
+        return static::slice($array, $count);
     }
 
+    /**
+     * Returns a copy of the array with all falsy values removed.
+     * @see http://underscorejs.org/#rest
+     *
+     * @param array $array
+     * @return array
+     */
+    public static function compact(array $array): array
+    {
+        return static::filter($array);
+    }
 
     /**
-     * Does the object contain the given key? Alias of hasOwnProperty
-     * @param array $array
-     * @see http://underscorejs.org/#has
+     * Helper: flatten
      *
-     * @param string $key
-     * @return bool
+     * @param array $array
+     * @param bool $shallow
+     * @param bool $strict
+     * @param int $startIndex
+     * @return array
      */
-    public static function has(array $array, string $key): bool
+    protected static function flattening(array $array, bool $shallow, bool $strict, int $startIndex = 0): array
     {
-        return static::hasOwnProperty($array, $key);
+        return static::reduce($array, function ($carry, $value, $i) use ($shallow, $strict, $startIndex) {
+            if ($i < $startIndex) {
+                return $carry;
+            }
+            if (!\is_array($value) && $strict) {
+                return $carry;
+            }
+            if (!\is_array($value) && !$strict) {
+                $carry[] = $value;
+                return $carry;
+            }
+            if (!$shallow) {
+                $value = static::flattening($value, $shallow, $strict);
+            }
+            return \array_merge($carry, $value);
+        }, []);
+    }
+
+    /**
+     * Flattens a nested array (the nesting can be to any depth). If you pass shallow,
+     * the array will only be flattened a single level.
+     * http://underscorejs.org/#flatten
+     *
+     * @param array $array
+     * @param bool $shallow
+     * @return array
+     */
+    public static function flatten(array $array, bool $shallow = false): array
+    {
+        return static::flattening($array, $shallow, false);
+    }
+
+    /**
+     * Returns a copy of the array with all instances of the values removed.
+     * @see http://underscorejs.org/#without
+     *
+     * @param array $array
+     * @param array ...$values
+     * @return array
+     */
+    public static function without(array $array, ...$values): array
+    {
+        return static::difference($array, $values);
+    }
+
+    /**
+     * Computes the union of the passed-in arrays: the list of unique items,
+     * in order, that are present in one or more of the arrays.
+     * @see http://underscorejs.org/#union
+     *
+     * @param array ...$args
+     * @return array
+     */
+    public static function union(...$args): array
+    {
+        return static::uniq(static::flattening($args, true, true));
     }
 
     /**
@@ -92,8 +159,8 @@ trait ArraysTrait
     public static function intersection(array $array, ...$sources): array
     {
         return static::isAssocArray($array)
-            ? array_intersect_assoc($array, ...$sources)
-            : array_intersect($array, ...$sources);
+            ? \array_intersect_assoc($array, ...$sources)
+            : \array_values(\array_intersect($array, ...$sources));
     }
 
     /**
@@ -108,8 +175,8 @@ trait ArraysTrait
     public static function difference(array $array, ...$sources): array
     {
         return static::isAssocArray($array)
-            ? array_diff_assoc($array, ...$sources)
-            : array_diff($array, ...$sources);
+            ? \array_diff_assoc($array, ...$sources)
+            : \array_values(\array_diff($array, ...$sources));
     }
 
     /**
@@ -121,7 +188,8 @@ trait ArraysTrait
      */
     public static function uniq(array $array): array
     {
-        return array_unique($array);
+        $res = \array_unique($array);
+        return static::isAssocArray($array) ? $res : \array_values($res);
     }
 
     /**
@@ -182,4 +250,88 @@ trait ArraysTrait
         return new PlainObject($array);
     }
 
+     /**
+     * Similar to indexOf, returns the first index where the predicate truth test passes;
+     * @see http://underscorejs.org/#findIndex
+     *
+     * @param array $array
+     * @param callable $callable
+     * @return mixed
+     */
+    public static function findIndex(array $array, $iteratee = null, $context = null)
+    {
+        $iterateeNorm = static::cb($iteratee, $context);
+        $el = static::find($array, $iterateeNorm);
+        return array_search($el, $array);
+    }
+
+    /**
+     * Like findIndex but iterates the array in reverse,
+     * returning the index closest to the end where the predicate truth test passes.
+     * @see http://underscorejs.org/#findLastIndex
+     *
+     * @param array $array
+     * @param callable|string $iteratee
+     * @param object $context
+     * @return int
+     */
+    public static function findLastIndex(array $array, $iteratee = null, $context = null): int
+    {
+        $iterateeNorm = static::cb($iteratee, $context);
+        $res = static::filter($array, $iterateeNorm);
+        $el = count($res) ? static::last($res) : null;
+        return array_search($el, $array);
+    }
+
+    /**
+     * Uses a binary search to determine the index at which the value should be inserted into the
+     * list in order to maintain the list's sorted order.
+     * If an iteratee function is provided, it will be used to compute the sort
+     * ranking of each value, including the value you pass.
+     * The iteratee may also be the string name of the property to sort by
+     * @see http://underscorejs.org/#sortedIndex
+     *
+     * @param array $array
+     * @param mixed $rawValue
+     * @param callable|string $iteratee
+     * @param objct $context
+     * @return int
+     */
+    public static function sortedIndex(array $array, $rawValue, $iteratee = null, $context = null): int
+    {
+        $iteratee = static::cb($iteratee, $context);
+        $value = $iteratee($rawValue);
+        $low = 0;
+        $high = \count($array);
+        while ($low < $high) {
+            $mid = \floor(($low + $high) / 2);
+            if ($iteratee($array[$mid]) < $value) {
+                $low = $mid + 1;
+            } else {
+                $high = $mid;
+            }
+        }
+        return $low;
+    }
+
+    /**
+     * A function to create flexibly-numbered lists of integers, handy for each and map loops. start,
+     * if omitted, defaults to 0; step defaults to 1.
+     * Returns a list of integers from start (inclusive) to stop (exclusive), incremented (or decremented)
+     * by step, exclusive. Note that ranges that stop before they start are considered to
+     * be zero-length instead of negative — if you'd like a negative range, use a negative step.
+     * @see http://underscorejs.org/#range
+     *
+     * @param int $start
+     * @param int $end
+     * @param int $step
+     * @return array
+     */
+    public static function range(int $start, int $end = null, int $step = 1): array
+    {
+        if ($end === null) {
+            return \range(0, $start < 0 ? $start + 1 : $start - 1);
+        }
+        return \range($start, $end < 0 ? $end + 1  : $end - 1, $step);
+    }
 }
