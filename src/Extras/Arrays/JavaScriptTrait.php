@@ -208,6 +208,23 @@ trait JavaScriptTrait
     }
 
     /**
+     * Returns an array of a given object's own enumerable property [key, value] pairs
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+     *
+     * @param array $array
+     * @return array
+     */
+    public static function entries(array $array): array
+    {
+        $pairs = [];
+        static::each($array, function ($val, $key) use (&$pairs) {
+            $pairs[] = [$key, $val];
+        });
+        return $pairs;
+    }
+
+
+    /**
      * Create a new array from an array-like or iterable object
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
      *

@@ -3,7 +3,7 @@ namespace Dsheiko\Extras;
 
 use Dsheiko\Extras\AbstractExtras;
 use Dsheiko\Extras\Arrays\JavaScriptTrait;
-use Dsheiko\Extras\Arrays\UnderscoreTrait;
+use Dsheiko\Extras\Arrays\Underscore;
 
 /**
  * Class represents type Array (both sequential and associative arrays)
@@ -12,7 +12,24 @@ class Arrays extends AbstractExtras
 {
 
     use JavaScriptTrait;
-    use UnderscoreTrait;
+    use Underscore\UtilsTrait;
+    use Underscore\ObjectsTrait;
+    use Underscore\CollectionsTrait;
+    use Underscore\ArraysTrait;
+
+    /**
+     * Start chain
+     *
+     * @param mixed $target
+     * @return Chain
+     */
+    public static function chain($target)
+    {
+        if (!static::isArray($target)) {
+            throw new \InvalidArgumentException("Target must be an array; '" . gettype($target) . "' type given");
+        }
+        return parent::chain($target);
+    }
 
     //  EXTRA METHODS
 
