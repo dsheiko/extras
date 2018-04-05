@@ -448,7 +448,7 @@ Return all the keys or a subset of the keys of an array
 
 ##### Parameters
 - `{array} $array` - source array
-- `{mixed} $searchValue` - if specified, then only keys containing these values are returned.
+- `{mixed} $searchValue` - (optional) if specified, then only keys containing these values are returned.
 
 ###### Syntax
 ```php
@@ -1236,7 +1236,7 @@ Then it returns $defaultValue (when `$defaultValue` is a callable then the resul
 
 ##### Parameters
 - `{array} $array` - source array
-- `{mixed} $defaultValue` - scalar or callable
+- `{mixed} $defaultValue` - (optional) scalar or callable
 
 ###### Syntax
 ```php
@@ -1258,7 +1258,7 @@ Pass count to exclude the last count elements from the result.
 
 ##### Parameters
 - `{array} $array` - source array
-- `{int} $count` - number of elements to remove
+- `{int} $count` - (optional) number of elements to remove
 
 ###### Syntax
 ```php
@@ -1298,7 +1298,7 @@ return the values of the array from that index onward.
 
 ##### Parameters
 - `{array} $array` - source array
-- `{int} $count` - number of elements to remove
+- `{int} $count` - (optional) number of elements to remove
 
 ###### Syntax
 ```php
@@ -1338,7 +1338,7 @@ the array will only be flattened a single level.
 
 ##### Parameters
 - `{array} $array` - source array
-- `{bool} $shallow` - when true single level of flattering
+- `{bool} $shallow` - (optional) when true single level of flattering
 
 ###### Syntax
 ```php
@@ -1520,11 +1520,11 @@ and a list of values. If duplicate keys exist, the last value wins.
 
 ##### Parameters
 - `{array} $array` - source array
-- `{array} [$value]` - values array
+- `{array} $value` - (optional) values array
 
 ###### Syntax
 ```php
- toObject(array $array): PlainObject
+ object(array $array, array $values = null): PlainObject
 ```
 
 ###### Example #1
@@ -1747,7 +1747,7 @@ If the value of the named property is a function then invoke it; otherwise, retu
 
 ###### Syntax
 ```php
- result(array $array, string $prop): mixed
+ result(array $array, string $prop)
 ```
 
 ###### Example
