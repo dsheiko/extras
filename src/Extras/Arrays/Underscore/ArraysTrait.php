@@ -67,7 +67,7 @@ trait ArraysTrait
 
     /**
      * Returns a copy of the array with all falsy values removed.
-     * @see http://underscorejs.org/#rest
+     * @see http://underscorejs.org/#compact
      *
      * @param array $array
      * @return array
@@ -283,12 +283,12 @@ trait ArraysTrait
         return array_search($el, $array);
     }
 
-    /**
-     * Uses a binary search to determine the index at which the value should be inserted into the
-     * list in order to maintain the list's sorted order.
-     * If an iteratee function is provided, it will be used to compute the sort
-     * ranking of each value, including the value you pass.
-     * The iteratee may also be the string name of the property to sort by
+    /**s
+     * Uses a binary search to determine the index at which the value should be
+     * inserted into the list in order to maintain the list's sorted order.
+     * If an iteratee function is provided, it will be used to compute the sort ranking of
+     * each value, including the value you pass. The iteratee may also be the string
+     * name of the property to sort by
      * @see http://underscorejs.org/#sortedIndex
      *
      * @param array $array

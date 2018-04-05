@@ -81,17 +81,26 @@ $res = Arrays::chain([1, 2, 3])
     - [size](#size)
     - [partition](#partition)
   - Arrays
-    - [difference](#difference)
-    - [findIndex](#findIndex)
     - [first](#first)
-    - [intersection](#intersection)
+    - [initial](#initial)
     - [last](#last)
-    - [object](#object)
-    - [pairs](#entries) - alias: [entries](#entries)
-    - [result](#result)
+    - [rest](#rest)
+    - [compact](#compact)
+    - [flatten](#flatten)
+    - [without](#without)
+    - [union](#union)
+    - [intersection](#intersection)
+    - [difference](#difference)
     - [uniq](#uniq)
-    - [unzip](#unzip)
     - [zip](#zip)
+    - [unzip](#unzip)
+    - [object](#object)
+    - [indexOf](#indexOf)
+    - [lastIndexOf](#lastIndexOf)
+    - [sortedIndex](#sortedIndex)
+    - [findIndex](#findIndex)
+    - [findLastIndex](#findLastIndex)
+    - [range](#range)
   - Chaining
     - [chain](#chain)
 
@@ -793,11 +802,7 @@ $res = Arrays::values([ 5 => 1, 10 => 2, 100 => 3]); // [1,2,3]
 
 
 
-
-
-
-
-## Underscore.js-inspired methods
+## Underscore.js\Collections methods
 
 ### where
 Look through each value in the list, returning an array of all the values that contain all of the key-value pairs listed in $conditions
@@ -1193,29 +1198,227 @@ $res = Arrays::size([
 ]); // 3
 ```
 
-### chain
-Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
-- [see also](http://underscorejs.org/#chain).
+
+### partition
+split array into two arrays: one whose elements all satisfy predicate and one whose elements all do not satisfy predicate.
+- [see also](http://underscorejs.org/#partition).
 
 ##### Parameters
 - `{array} $array` - source array
+- `callable|string|Closure $callable` - predicate callback
 
 ###### Syntax
 ```php
- chain($array): Arrays
+ partition(array $array, callable $callable): array
 ```
 
 ###### Example
 
 ```php
 <?php
-$res = Arrays::chain([1, 2, 3])
-    ->map(function($num){ return $num + 1; })
-    ->filter(function($num){ return $num > 1; })
-    ->reduce(function($carry, $num){ return $carry + $num; }, 0)
-    ->value();
+$res = Arrays::partition([0, 1, 2, 3, 4, 5], function($val) {
+    return $val % 2;
+}); //  [[1, 3, 5], [0, 2, 4]]
+
 ```
 
+
+
+
+
+## Underscore.js\Arrays methods
+
+### first
+Get the first value from an array regardless index order and without modifying the array
+When passed in array has no element, it returns undefined, unless `$defaultValue` is supplied.
+Then it returns $defaultValue (when `$defaultValue` is a callable then the result of its execution)
+- [see also](http://underscorejs.org/#first).
+
+##### Parameters
+- `{array} $array` - source array
+- `{mixed} $defaultValue` - scalar or callable
+
+###### Syntax
+```php
+ first(array $array, $defaultValue = null): mixed
+```
+
+###### Example
+```php
+<?php
+$element = Arrays::first([1, 2, 3]);
+$element = Arrays::first($arr, 1);
+$element = Arrays::first($arr, function(){ return 1; });
+```
+
+### initial
+Returns everything but the last entry of the array. Especially useful on the arguments object.
+Pass count to exclude the last count elements from the result.
+- [see also](http://underscorejs.org/#initial).
+
+##### Parameters
+- `{array} $array` - source array
+- `{int} $count` - number of elements to remove
+
+###### Syntax
+```php
+ initial(array $array, int $count = 1): array
+```
+
+###### Example
+```php
+<?php
+$res = Arrays::initial([5, 4, 3, 2, 1]); // [5, 4, 3, 2]
+//...
+$res = Arrays::initial([5, 4, 3, 2, 1], 3); // [5, 4]
+```
+
+### last
+Get the last value from an array regardless index order and without modifying the array
+- [see also](http://underscorejs.org/#last).
+
+##### Parameters
+- `{array} $array` - source array
+
+###### Syntax
+```php
+ last(array $array): mixed
+```
+
+###### Example
+```php
+<?php
+$element = Arrays::last([1, 2, 3]);
+```
+
+### rest
+Returns the rest of the elements in an array. Pass an index to
+return the values of the array from that index onward.
+- [see also](http://underscorejs.org/#rest).
+
+##### Parameters
+- `{array} $array` - source array
+- `{int} $count` - number of elements to remove
+
+###### Syntax
+```php
+ rest(array $array, int $count = 1): array
+```
+
+###### Example
+```php
+<?php
+$res = Arrays::rest([5, 4, 3, 2, 1]); // [4, 3, 2, 1]
+//...
+$res = Arrays::rest([5, 4, 3, 2, 1], 3); // [2, 1]
+```
+
+### compact
+Returns a copy of the array with all falsy values removed.
+- [see also](http://underscorejs.org/#compact).
+
+##### Parameters
+- `{array} $array` - source array
+
+###### Syntax
+```php
+ compact(array $array): array
+```
+
+###### Example
+```php
+<?php
+$res = Arrays::compact([0, 1, false, 2, '', 3]); // [1, 2, 3]
+```
+
+### flatten
+Flattens a nested array (the nesting can be to any depth). If you pass shallow,
+the array will only be flattened a single level.
+- [see also](http://underscorejs.org/#flatten).
+
+##### Parameters
+- `{array} $array` - source array
+- `{bool} $shallow` - when true single level of flattering
+
+###### Syntax
+```php
+ flatten(array $array, bool $shallow = false): array
+```
+
+###### Example
+```php
+<?php
+$res = Arrays::flatten([1, [2], [3, [[4]]]]); // [1, 2, 3, 4]
+//...
+$res = Arrays::flatten([1, [2], [3, [[4]]]], true); // [1, 2, 3, [[4]]]
+```
+
+### without
+Returns a copy of the array with all instances of the values removed.
+- [see also](http://underscorejs.org/#without).
+
+##### Parameters
+- `{array} $array` - source array
+- `{array} $values` - values to remove
+
+###### Syntax
+```php
+ without(array $array, ...$values): array
+```
+
+###### Example
+```php
+<?php
+$res = Arrays::without([1, 2, 1, 0, 3, 1, 4], 0, 1); // [2, 3, 4]
+```
+
+### union
+Computes the union of the passed-in arrays: the list of unique items,
+in order, that are present in one or more of the arrays.
+- [see also](http://underscorejs.org/#union).
+
+##### Parameters
+- `{array} ...$args` - arrays to join
+
+###### Syntax
+```php
+ union(...$args): array
+```
+
+###### Example
+```php
+<?php
+$res = Arrays::union(
+    [1, 2, 3],
+    [101, 2, 1, 10],
+    [2, 1]
+); // [1, 2, 3, 101, 10]
+```
+
+### intersection
+Computes the list of values that are the intersection of all the arrays. Each value in the result is present in each of the arrays.
+- [see also](http://underscorejs.org/#intersection).
+
+##### Parameters
+- `{array} $array` - source array
+- `{array} ...$sources` - source arrays
+
+###### Syntax
+```php
+ intersection(array $array, ...$sources): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::intersection([1, 2, 3], [101, 2, 1, 10], [2, 1]); // [1, 2]
+
+$res = Arrays::intersection(
+    ["a" => "green", "b" => "brown", "c" => "blue", "red"],
+    ["a" => "green", "b" => "yellow", "blue", "red"]
+); // [ "a" => "green" ]
+```
 
 ### difference
 Returns the values from array that are not present in the other arrays.
@@ -1246,96 +1449,67 @@ $res = Arrays::difference(
 ```
 
 
-### findIndex
-Find index of the first element matching the condition in `$callable`
-- [see also](http://underscorejs.org/#findIndex).
-
-##### Parameters
-- `{array} $array` - source array
-- `{callable} $callable` - predicate callback
-
-###### Syntax
-```php
- findIndex(array $array, callable $callable): mixed
-```
-
-###### Example
-```php
-<?php
-$inx = Arrays::findIndex([
-            ["val" => "FOO"],
-            ["val" => "BAR"],
-        ], function ($item){
-            return $item["val"] === "BAR";
-        }); // 1
-```
-
-
-### first
-Get the first value from an array regardless index order and without modifying the array
-When passed in array has no element, it returns undefined, unless `$defaultValue` is supplied.
-Then it returns $defaultValue (when `$defaultValue` is a callable then the result of its execution)
-- [see also](http://underscorejs.org/#first).
-
-##### Parameters
-- `{array} $array` - source array
-- `{mixed} $defaultValue` - scalar or callable
-
-###### Syntax
-```php
- first(array $array, $defaultValue = null): mixed
-```
-
-###### Example
-```php
-<?php
-$element = Arrays::first([1, 2, 3]);
-$element = Arrays::first($arr, 1);
-$element = Arrays::first($arr, function(){ return 1; });
-```
-
-
-### intersection
-Computes the list of values that are the intersection of all the arrays. Each value in the result is present in each of the arrays.
-- [see also](http://underscorejs.org/#intersection).
-
-##### Parameters
-- `{array} $array` - source array
-- `{array} ...$sources` - source arrays
-
-###### Syntax
-```php
- intersection(array $array, ...$sources): array
-```
-
-###### Example
-
-```php
-<?php
-$res = Arrays::intersection([1, 2, 3], [101, 2, 1, 10], [2, 1]); // [1, 2]
-
-$res = Arrays::intersection(
-    ["a" => "green", "b" => "brown", "c" => "blue", "red"],
-    ["a" => "green", "b" => "yellow", "blue", "red"]
-); // [ "a" => "green" ]
-```
-
-### last
-Get the last value from an array regardless index order and without modifying the array
-- [see also](http://underscorejs.org/#last).
+### uniq
+Produces a duplicate-free version of the array
+- [see also](http://underscorejs.org/#uniq).
 
 ##### Parameters
 - `{array} $array` - source array
 
 ###### Syntax
 ```php
- last(array $array): mixed
+ uniq(array $array): array
 ```
 
 ###### Example
+
 ```php
 <?php
-$element = Arrays::last([1, 2, 3]);
+$res = Arrays::uniq([1,2,3,1,1,2]); // [1,2,3]
+```
+
+### zip
+Merges together the values of each of the arrays with the values at the corresponding position. Useful when you have separate data sources that are coordinated through matching array indexes.
+- [see also](http://underscorejs.org/#zip).
+
+##### Parameters
+- `{array} $array` - source array
+- `...$sources` - source arrays
+
+###### Syntax
+```php
+ zip(array $array, ...$sources): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::zip(
+  ["moe", "larry", "curly"],
+  [30, 40, 50],
+  [true, false, false]
+); //  [["moe", 30, true], ["larry", 40, false], ["curly", 50, false]]
+```
+
+### unzip
+The opposite of zip. Given an array of arrays, returns a series of new arrays, the first of which contains all of the first elements in the input arrays, the second of which contains all of the second elements, and so on.
+- [see also](http://underscorejs.org/#unzip).
+
+##### Parameters
+- `{array} $array` - source array
+
+###### Syntax
+```php
+ unzip(array $array): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::unzip([["moe", 30, true], ["larry", 40, false], ["curly", 50, false]]);
+//  [["moe", "larry", "curly"], [30, 40, 50], [true, false, false]]
 ```
 
 ### object
@@ -1384,28 +1558,180 @@ echo $obj->larry; // 40
 echo $obj->curly; // 50
 ```
 
-### partition
-split array into two arrays: one whose elements all satisfy predicate and one whose elements all do not satisfy predicate.
-- [see also](http://underscorejs.org/#partition).
+
+### sortedIndex
+Uses a binary search to determine the index at which the value should be inserted into the list in order to
+maintain the list's sorted order. If an iteratee function is provided, it will be used to compute the sort
+ranking of each value, including the value you pass. The iteratee may also be the string
+name of the property to sort by
+- [see also](http://underscorejs.org/#sortedIndex).
 
 ##### Parameters
 - `{array} $array` - source array
-- `callable|string|Closure $callable` - predicate callback
+- `{mixed} $value` - value to insert
+- `{callable|string} $iteratee` - (optional) iteratee callback
+- `{object} $context` - (optional) context to bind to
 
 ###### Syntax
 ```php
- partition(array $array, callable $callable): array
+ sortedIndex(array $array, $value, $iteratee = null, $context = null): int
+```
+
+###### Example #1
+```php
+<?php
+$res = Arrays::sortedIndex([10, 20, 30, 40, 50], 35); // 3
+```
+
+###### Example #2
+```php
+<?php
+$stooges = [
+    ["name" => "moe",   "age" =>  40],
+    ["name" => "larry", "age" =>  50],
+    ["name" => "curly", "age" =>  60],
+];
+$res = Arrays::sortedIndex($stooges, ["name" => "larry", "age" => 50], "age"); // 1
+```
+
+### findIndex
+Find index of the first element matching the condition in `$callable`
+- [see also](http://underscorejs.org/#findIndex).
+
+##### Parameters
+- `{array} $array` - source array
+- `{callable|string} $iteratee` - (optional) iteratee callback
+- `{object} $context` - (optional) context to bind to
+
+###### Syntax
+```php
+ findIndex(array $array, $iteratee = null, $context = null): int
+```
+
+###### Example
+```php
+<?php
+$inx = Arrays::findIndex([
+            ["val" => "FOO"],
+            ["val" => "BAR"],
+        ], function ($item){
+            return $item["val"] === "BAR";
+        }); // 1
+```
+
+### findLastIndex
+Like findIndex but iterates the array in reverse,
+returning the index closest to the end where the predicate truth test passes.
+- [see also](http://underscorejs.org/#findLastIndex).
+
+##### Parameters
+- `{array} $array` - source array
+- `{callable|string} $iteratee` - (optional) iteratee callback
+- `{object} $context` - (optional) context to bind to
+
+###### Syntax
+```php
+ findLastIndex(array $array, $iteratee = null, $context = null): int
+```
+
+###### Example
+```php
+<?php
+$src = [
+    [
+        'id' => 1,
+        'name' => 'Ted',
+        'last' => 'White',
+    ],
+    [
+        'id' => 2,
+        'name' => 'Bob',
+        'last' => 'Brown',
+    ],
+    [
+        'id' => 3,
+        'name' => 'Ted',
+        'last' => 'Jones',
+    ],
+];
+
+$res = Arrays::findLastIndex($src, [ "name" => "Ted" ]); // 2
+```
+
+### range
+A function to create flexibly-numbered lists of integers, handy for each and map loops. start, if omitted, defaults to 0; step defaults to 1. Returns a list of integers from start (inclusive) to stop (exclusive), incremented (or decremented) by step, exclusive. Note that ranges that stop before they start are considered to be zero-length instead of negative — if you'd like a negative range, use a negative step.
+- [see also](http://underscorejs.org/#range).
+
+##### Parameters
+- `{int} $start` - start value
+- `{int} $end` - (optional) end value
+- `{int} $step` - (optional) step value
+
+###### Syntax
+```php
+ range(int $start, int $end = null, int $step = 1): array
+```
+
+###### Example #1
+```php
+<?php
+$res = Arrays::range(10); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+###### Example #2
+```php
+<?php
+$res = Arrays::range(1, 11); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+```
+###### Example #3
+```php
+<?php
+$res = Arrays::range(0, 30, 5); // [0, 5, 10, 15, 20, 25]
+```
+###### Example #4
+```php
+<?php
+$res = Arrays::range(0, -10, -1);
+// [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]
+```
+
+
+## Underscore.js\Chaining methods
+
+
+### chain
+Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
+- [see also](http://underscorejs.org/#chain).
+
+##### Parameters
+- `{array} $array` - source array
+
+###### Syntax
+```php
+ chain($array): Arrays
 ```
 
 ###### Example
 
 ```php
 <?php
-$res = Arrays::partition([0, 1, 2, 3, 4, 5], function($val) {
-    return $val % 2;
-}); //  [[1, 3, 5], [0, 2, 4]]
-
+$res = Arrays::chain([1, 2, 3])
+    ->map(function($num){ return $num + 1; })
+    ->filter(function($num){ return $num > 1; })
+    ->reduce(function($carry, $num){ return $carry + $num; }, 0)
+    ->value();
 ```
+
+
+
+
+
+
+
+## Underscore.js\Objects methods
+
+
+
+
 
 
 
@@ -1438,70 +1764,6 @@ If the value of the named property is a function then invoke it; otherwise, retu
 
 
 
-### uniq
-Produces a duplicate-free version of the array
-- [see also](http://underscorejs.org/#uniq).
-
-##### Parameters
-- `{array} $array` - source array
-
-###### Syntax
-```php
- uniq(array $array): array
-```
-
-###### Example
-
-```php
-<?php
-$res = Arrays::uniq([1,2,3,1,1,2]); // [1,2,3]
-```
-
-### unzip
-The opposite of zip. Given an array of arrays, returns a series of new arrays, the first of which contains all of the first elements in the input arrays, the second of which contains all of the second elements, and so on.
-- [see also](http://underscorejs.org/#unzip).
-
-##### Parameters
-- `{array} $array` - source array
-
-###### Syntax
-```php
- unzip(array $array): array
-```
-
-###### Example
-
-```php
-<?php
-$res = Arrays::unzip([["moe", 30, true], ["larry", 40, false], ["curly", 50, false]]);
-//  [["moe", "larry", "curly"], [30, 40, 50], [true, false, false]]
-```
-
-
-
-### zip
-Merges together the values of each of the arrays with the values at the corresponding position. Useful when you have separate data sources that are coordinated through matching array indexes.
-- [see also](http://underscorejs.org/#zip).
-
-##### Parameters
-- `{array} $array` - source array
-- `...$sources` - source arrays
-
-###### Syntax
-```php
- zip(array $array, ...$sources): array
-```
-
-###### Example
-
-```php
-<?php
-$res = Arrays::zip(
-  ["moe", "larry", "curly"],
-  [30, 40, 50],
-  [true, false, false]
-); //  [["moe", 30, true], ["larry", 40, false], ["curly", 50, false]]
-```
 
 
 
