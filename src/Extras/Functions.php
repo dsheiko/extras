@@ -2,6 +2,7 @@
 namespace Dsheiko\Extras;
 
 use Dsheiko\Extras\AbstractExtras;
+use Dsheiko\Extras\Arrays;
 use \Closure;
 
 /**
@@ -18,13 +19,13 @@ class Functions extends AbstractExtras
      * with a given sequence of arguments preceding any provided when the new function is called
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
      *
-     * @param callable $target
+     * @param callable $source
      * @param object [$context]
      * @return callable
      */
-    public static function bind(callable $target, $context = null): callable
+    public static function bind(callable $source, $context = null): callable
     {
-        return $context === null ? $target: Closure::bind(static::getClosure($target), $context);
+        return $context === null ? $source: Closure::bind(static::getClosure($source), $context);
     }
 
 
@@ -32,29 +33,29 @@ class Functions extends AbstractExtras
      * Calls a function with a given $context value and arguments provided individually.
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call
      *
-     * @param callable $target
+     * @param callable $source
      * @param object [$context]
      * @param array [...$args]
      * @return mixed
      */
-    public static function call(callable $target, $context = null, ...$args)
+    public static function call(callable $source, $context = null, ...$args)
     {
-        return static::apply($target, $context, $args);
+        return static::apply($source, $context, $args);
     }
 
      /**
      * Calls a function with a given this value, and arguments provided as an array
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
      *
-     * @param callable $target
+     * @param callable $source
      * @param object [$context]
      * @param array [$args]
      * @return mixed
      */
-    public static function apply(callable $target, $context = null, array $args = [])
+    public static function apply(callable $source, $context = null, array $args = [])
     {
         return static::invoke(
-            static::bind($target, $context),
+            static::bind($source, $context),
             $args
         );
     }
@@ -63,48 +64,167 @@ class Functions extends AbstractExtras
      * Returns a string representing the source code of the function.
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/toString
      *
-     * @param callable $target
+     * @param callable $source
      * @return string
      */
-    public static function toString(callable $target): string
+    public static function toString(callable $source): string
     {
-        return \ReflectionFunction::export($target, true);
+        return \ReflectionFunction::export($source, true);
     }
 
     /**
      * Invoke a callable with an array of parameters
      *
-     * @param callable $callable
+     * @param callable $source
      * @param array $args
      * @return mixed
      */
-    public static function invoke(callable $callable, array $args)
+    public static function invoke(callable $source, array $args)
     {
-        return call_user_func_array($callable, $args);
+        return call_user_func_array($source, $args);
     }
 
 
     // UNDERSCORE.JS INSPIRED METHODS
 
+    /**
+     * Binds a number of methods on the object, specified by methodNames, to be run in
+     * the context of that object whenever they are invoked. Very handy for binding functions that
+     * are going to be used as event handlers, which would otherwise be invoked
+     * with a fairly useless this. methodNames are required.
+     * @see http://underscorejs.org/#bindAll
+     *
+     * @param type $obj
+     * @param type $methods
+     * @return type
+     */
+    public static function bindAll($obj, ...$methods)
+    {
+        return Arrays::each($methods, function ($method) use ($obj) {
+            $obj->$method = static::bind($obj->$method, $obj);
+        });
+    }
 
     /**
-     * Creates a version of the function that can be called no more than count times. The result of the last function
-     * call is memoized and returned when count has been reached.
-     * @see http://underscorejs.org/#before
+     * Partially apply a function by filling in any number of its arguments
+     * @see http://underscorejs.org/#partial
      *
-     * @param callable $target
-     * @param int $count
+     * @param callable $source
+     * @param array ...$boundArgs
+     * @return type
+     */
+    public static function partial(callable $source, ...$boundArgs): callable
+    {
+        return function (...$args) use ($boundArgs, $source) {
+            $newArgs = \array_merge($boundArgs, $args);
+            return \call_user_func_array($source, $newArgs);
+        };
+    }
+
+    /**
+     * Memoizes a given function by caching the computed result. Useful for speeding up slow-running computations.
+     * If passed an optional hashFunction
+     *
+     * @staticvar array $cache
+     * @param callable $source
+     * @param callable [$hasher]
+     * @return callable
+     */
+    public static function memoize(callable $source, $hasher = null): callable
+    {
+        static $cache = [];
+        $hasher = $hasher ?: function ($target, array $args) {
+            return md5(serialize($target) . serialize($args));
+        };
+        return function (...$args) use ($source, $hasher, &$cache) {
+            $hash = $hasher($source, $args);
+            if (!isset($cache[$hash])) {
+                $cache[$hash] = static::invoke($source, $args);
+            }
+            return $cache[$hash];
+        };
+    }
+
+    /**
+     * Invokes function after wait milliseconds.
+     * If you pass the optional arguments, they will be forwarded on to the function when it is invoked.
+     * @see http://underscorejs.org/#delay
+     *
+     * @param callable $source
+     * @param int $wait in milliseconds
+     * @param array ...$args
      * @return mixed
      */
-    public static function before(callable $target, int $count): callable
+    public static function delay(callable $source, int $wait, ...$args)
     {
-        return function (...$args) use (&$count, $target) {
-            static $memo = null;
-            if (--$count >= 0) {
-                $memo = static::invoke($target, $args);
+        \usleep($wait * 1000);
+        return \call_user_func_array($source, $args);
+    }
+
+     /**
+     * Creates and returns a new, throttled version of the passed function, that, when invoked repeatedly,
+     * will only actually call the original function at most once per every wait milliseconds.
+     *
+     * @param callable $target
+     * @param int $wait
+     */
+    public static function throttle(callable $target, int $wait): callable
+    {
+
+        return function () use ($target, $wait) {
+            static $pretime = null;
+            if ($wait === 0) {
+                return $target();
             }
-            return $memo;
+            $curtime = microtime(true);
+            if (!$pretime || ($curtime - $pretime) >= ($wait / 1000)) {
+                $pretime = $curtime;
+                return $target();
+            }
+            return false;
         };
+    }
+
+    /**
+     * Creates and returns a new debounced version of the passed function which will postpone its execution
+     * until after wait milliseconds have elapsed since the last time it was invoked. Useful for
+     * implementing behavior that should only happen after the input has stopped arriving.
+     * @see http://underscorejs.org/#debounce
+     *
+     * @param callable $target
+     * @param int $wait
+     * @return callable
+     */
+    public static function debounce(callable $target, int $wait): callable
+    {
+        $ipretime = microtime(true);
+        return function () use ($target, $wait, $ipretime) {
+            static $pretime = null;
+            if ($wait === 0) {
+                return $target();
+            }
+            $pretime = $pretime === null ? $ipretime : $pretime;
+            $curtime = microtime(true);
+            if (($curtime - $pretime) >= ($wait / 1000)) {
+                $pretime = $curtime;
+                return $target();
+            }
+            return false;
+        };
+    }
+
+    /**
+     * Creates a version of the function that can only be called one time. Repeated calls to the modified function
+     * will have no effect, returning the value from the original call. Useful for initialization functions, instead
+     * of having to set a boolean flag and then check it later.
+     * @see http://underscorejs.org/#once
+     *
+     * @param callable $target
+     * @return mixed
+     */
+    public static function once(callable $target): callable
+    {
+        return static::before($target, 1);
     }
 
     /**
@@ -127,64 +247,41 @@ class Functions extends AbstractExtras
     }
 
     /**
-     * Creates a version of the function that can only be called one time. Repeated calls to the modified function
-     * will have no effect, returning the value from the original call. Useful for initialization functions, instead
-     * of having to set a boolean flag and then check it later.
-     * @see http://underscorejs.org/#once
+     * Creates a version of the function that can be called no more than count times. The result of the last function
+     * call is memoized and returned when count has been reached.
+     * @see http://underscorejs.org/#before
      *
      * @param callable $target
+     * @param int $count
      * @return mixed
      */
-    public static function once(callable $target): callable
+    public static function before(callable $target, int $count): callable
     {
-        return static::before($target, 1);
-    }
-
-    /**
-     * Creates and returns a new, throttled version of the passed function, that, when invoked repeatedly,
-     * will only actually call the original function at most once per every wait milliseconds.
-     *
-     * @param callable $target
-     * @param int $wait
-     */
-    public static function throttle(callable $target, int $wait): callable
-    {
-        return function () use ($target, $wait) {
-            static $pretime = null;
-            $curtime = microtime(true);
-            if (!$pretime || ($curtime - $pretime) >= ($wait / 1000)) {
-                $pretime = $curtime;
-                return $target();
+        return function (...$args) use (&$count, $target) {
+            static $memo = null;
+            if (--$count >= 0) {
+                $memo = static::invoke($target, $args);
             }
-            return false;
+            return $memo;
         };
     }
 
     /**
-     * Memoizes a given function by caching the computed result. Useful for speeding up slow-running computations.
-     * If passed an optional hashFunction
+     * Wraps the first function inside of the wrapper function, passing it as the first
+     * argument. This allows the wrapper to execute code before and after the function runs,
+     * adjust the arguments, and execute it conditionally.
+     * @see http://underscorejs.org/#wrap
      *
-     * @staticvar array $cache
-     * @param callable $target
-     * @param callable [$hasher]
-     * @return callable
+     * @param callable $source
+     * @param callable $transformer
+     * @return type
      */
-    public static function memoize(callable $target, $hasher = null): callable
+    public static function wrap(callable $source, callable $transformer)
     {
-        static $cache = [];
-        $hasher = $hasher ?: function ($target, array $args) {
-            return md5(serialize($target) . serialize($args));
-        };
-        return function (...$args) use ($target, $hasher, &$cache) {
-            $hash = $hasher($target, $args);
-            if (!isset($cache[$hash])) {
-                $cache[$hash] = static::invoke($target, $args);
-            }
-            return $cache[$hash];
-        };
+        return static::partial($transformer, $source);
     }
 
-    /**
+     /**
      * Returns a new negated version of the predicate function ($target).
      *
      * @param callable $target
@@ -196,6 +293,27 @@ class Functions extends AbstractExtras
             return !$target(...$args);
         };
     }
+
+    /**
+     * Returns the composition of a list of functions, where each function consumes the return value of
+     * the function that follows. In math terms,
+     * composing the functions f(), g(), and h() produces f(g(h())).
+     * @see http://underscorejs.org/#compose
+     *
+     * @param arrays ...$functions
+     * @return callable
+     */
+    public static function compose(...$functions): callable
+    {
+        return function (...$args) use ($functions) {
+            $result = \call_user_func_array(\array_pop($functions), $args);
+            return Arrays::reduce(\array_reverse($functions), function ($result, $func) {
+                return $func($result);
+            }, $result);
+        };
+    }
+
+
 
     /**
      * Start chain

@@ -33,6 +33,80 @@ describe("\\Dsheiko\\Extras\\Functions", function() {
         FixtureCounter::reset();
     });
 
+    describe('::bindAll', function() {
+
+        it("binds speicified methods to the object", function() {
+            $foo = (object)[
+                "value" => 1,
+                "increment" => function(){
+                    $this->value++;
+                },
+                "reset" => function(){
+                    $this->value = 0;
+                }
+            ];
+            Functions::bindAll($foo, "increment", "reset");
+
+            ($foo->increment)();
+            expect($foo->value)->to->equal(2);
+
+            ($foo->reset)();
+            expect($foo->value)->to->equal(0);
+        });
+
+    });
+
+    describe('::partial', function() {
+
+        it("creates a closure that accepts rest arguments", function() {
+            $subtract = function($a, $b) { return $b - $a; };
+            $sub5 = Functions::partial($subtract, 5);
+            $res = $sub5(20);
+            expect($res)->to->equal(15);
+        });
+
+    });
+
+    describe('::delay', function() {
+
+        it("calls function with delay 1mss", function() {
+            $subtract = function($a, $b) { return $b - $a; };
+            $res = Functions::delay($subtract, 1, 5, 20);
+            expect($res)->to->equal(15);
+        });
+
+    });
+
+    describe('::throttle', function() {
+
+        it("creates throttled version of function, when called repeatedly invokes origin once in 20 ms", function() {
+            $func = Functions::throttle("FixtureCounter::increment", 20);
+            expect($func())->to->equal(1);
+            expect($func())->to->equal(false);
+            expect($func())->to->equal(false);
+            expect($func())->to->equal(false);
+            usleep(20000);
+            expect($func())->to->equal(2);
+            expect($func())->to->equal(false);
+        });
+
+    });
+
+    describe('::debounce', function() {
+
+        it("creates debounced version of function, when called repeatedly invokes origin once in 20 ms", function() {
+            $func = Functions::debounce("FixtureCounter::increment", 20);
+            expect($func())->to->equal(false);
+            expect($func())->to->equal(false);
+            expect($func())->to->equal(false);
+            usleep(20000);
+            expect($func())->to->equal(1);
+            expect($func())->to->equal(false);
+        });
+
+    });
+
+
     describe('::once', function() {
 
         it("creates function that executes only once", function() {
@@ -69,19 +143,29 @@ describe("\\Dsheiko\\Extras\\Functions", function() {
 
     });
 
-    describe('::throttle', function() {
 
-        it("creates throttled version of function, when called repeatedly invokes origin once in 20 ms", function() {
-            $func = Functions::throttle("FixtureCounter::increment", 20);
-            expect($func())->to->equal(1);
-            expect($func())->to->equal(false);
-            expect($func())->to->equal(false);
-            expect($func())->to->equal(false);
-            usleep(20000);
-            expect($func())->to->equal(2);
+    describe('::wrap', function() {
+
+        it("wraps function with a closure", function() {
+            $func = Functions::wrap("FixtureCounter::increment", function($func){
+                return 10 + $func();
+            });
+            expect($func())->to->equal(11);
         });
 
     });
+
+    describe('::compose', function() {
+
+        it("returns composition of supplied functions", function() {
+            $greet = function(string $name){ return "hi: " . $name; };
+            $exclaim = function(string $statement){ return strtoupper($statement) . "!"; };
+            $welcome = Functions::compose($greet, $exclaim);
+            expect($welcome("moe"))->to->equal("hi: MOE!");
+        });
+
+    });
+
 
     describe('::bind', function() {
 

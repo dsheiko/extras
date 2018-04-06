@@ -1,4 +1,4 @@
-fevery# Array extras
+# Array extras
 
 ## Overview examples
 
@@ -25,7 +25,7 @@ $res = Arrays::chain([1, 2, 3])
   - [concat](#concat)
   - [copyWithin](#copyWithin)
   - [each](#each)
-  - [entries](#entries) - alias: `pairs`
+  - [entries](#entries) - alias: [pairs](#pairs)
   - [every](#every)
   - [fill](#fill)
   - [filter](#filter)
