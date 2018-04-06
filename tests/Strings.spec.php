@@ -338,6 +338,25 @@ describe("\\Dsheiko\\Extras\\Strings", function() {
     });
 
 
+    describe('::escape', function() {
+
+        it("escapes special characters", function() {
+            $res = Strings::escape("Curly, Larry & Moe");
+            expect($res)->to->equal("Curly, Larry &amp; Moe");
+        });
+
+    });
+
+    describe('::unescape', function() {
+
+        it("restores escaped string", function() {
+            $res = Strings::unescape("Curly, Larry &amp; Moe");
+            expect($res)->to->equal("Curly, Larry & Moe");
+        });
+
+    });
+
+
 
     describe('::chain', function() {
 
@@ -355,6 +374,22 @@ describe("\\Dsheiko\\Extras\\Strings", function() {
             expect(function() {
                 Strings::chain([1,2]);
             })->to->throw(\InvalidArgumentException::class, "Target must be a string; 'array' type given");
+        });
+
+    });
+
+
+    describe('->uniqueId', function() {
+
+        it("returns a string", function(){
+            $res = Strings::uniqueId();
+            expect(\is_string($res))->to->be->ok;
+        });
+
+        it("returns string begining from prefix", function(){
+            $pref = "contact_";
+            $res = Strings::uniqueId($pref);
+            expect(Strings::startsWith($res, $pref))->to->be->ok;
         });
 
     });

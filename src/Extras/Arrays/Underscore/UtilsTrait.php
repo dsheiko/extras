@@ -39,6 +39,13 @@ trait UtilsTrait
         return $val;
     }
 
+    /**
+     * Returns the same value that is used as the argument. In math: f(x) = x
+     * This function looks useless, but is used throughout Underscore as a default iteratee.
+     * @see http://underscorejs.org/#identity
+     *
+     * @return callable
+     */
     public static function identity(): callable
     {
         return function ($value) {
@@ -46,12 +53,7 @@ trait UtilsTrait
         };
     }
 
-    public static function property(string $prop): callable
-    {
-        return function (array $array) use ($prop) {
-            return $array[$prop];
-        };
-    }
+
 
     /**
      * Helper: bind to a context when it's not null

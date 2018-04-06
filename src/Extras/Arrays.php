@@ -33,15 +33,7 @@ class Arrays extends AbstractExtras
 
     //  EXTRA METHODS
 
-    /**
-     * Test if target an array
-     * @param mixed $target
-     * @return bool
-     */
-    public static function isArray($target): bool
-    {
-        return is_array($target);
-    }
+    
 
 
     /**

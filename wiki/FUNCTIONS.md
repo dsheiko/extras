@@ -24,6 +24,7 @@
   - [compose](#compose)
   - [chain](#chain)
 
+> Method `_.defer` is not implemented as it doesn't make much sense in the context of PHP
 
 ## JavaScript-inspired methods
 
@@ -33,13 +34,13 @@ Calls a function with a given this value, and arguments provided as an array
 
 
 ##### Parameters
-- `{callable} $source` - source callable
+- `{mixed} $source` - source mixed
 - `{object} $context` - new $this
 - `{array} $args` - array of arguments
 
 ###### Syntax
 ```php
-apply(callable $source, $context = null, array $args = [])
+apply(mixed $source, $context = null, array $args = [])
 ```
 
 ###### Example
@@ -58,12 +59,12 @@ with a given sequence of arguments preceding any provided when the new function 
 
 
 ##### Parameters
-- `{callable} $source` - source callable
+- `{mixed} $source` - source mixed
 - `{object} $context` - new $this
 
 ###### Syntax
 ```php
-bind(callable $source, $context = null): callable
+bind(mixed $source, $context = null): mixed
 ```
 
 ###### Example
@@ -82,13 +83,13 @@ Calls a function with a given $context value and arguments provided individually
 
 
 ##### Parameters
-- `{callable} $source` - source callable
+- `{mixed} $source` - source mixed
 - `{object} $context` - new $this
 - `{array} ...$args` - arguments
 
 ###### Syntax
 ```php
-call(callable $source, $context = null, ...$args)
+call(mixed $source, $context = null, ...$args)
 ```
 
 ###### Example
@@ -101,16 +102,16 @@ $res = Functions::call($source, $obj, "BAR"); // "BAR_FOO"
 
 
 ### toString
-Returns a string representing the source code of the function.
+Returns a mixed representing the source code of the function.
 - [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/toString).
 
 
 ##### Parameters
-- `{callable} $source` - source callable
+- `{mixed} $source` - source mixed
 
 ###### Syntax
 ```php
-toString(callable $source): string
+toString(mixed $source): mixed
 ```
 
 ###### Example
@@ -120,7 +121,7 @@ echo Functions::toString("strlen");
 ```
 
 ```
-string(112) "Function [ <internal:Core> function strlen ] {
+mixed(112) "Function [ <internal:Core> function strlen ] {
 
   - Parameters [1] {
     Parameter #0 [ <required> $str ]
@@ -171,12 +172,12 @@ Partially apply a function by filling in any number of its arguments
 
 
 ##### Parameters
-- `{callable} $source` - source function
+- `{mixed} $source` - source function
 - `{array} $boundArgs` - arguments to bind
 
 ###### Syntax
 ```php
- partial(callable $source, ...$boundArgs): callable
+ partial(mixed $source, ...$boundArgs): mixed
 ```
 
 ###### Example
@@ -194,12 +195,12 @@ If passed an optional hashFunction
 
 
 ##### Parameters
-- `{callable} $source` - source function
-- `{callable} $hasher` - (optional) hash generator
+- `{mixed} $source` - source function
+- `{mixed} $hasher` - (optional) hash generator
 
 ###### Syntax
 ```php
-memoize($source, $hasher = null): callable
+memoize($source, $hasher = null): mixed
 ```
 
 ###### Example
@@ -218,13 +219,13 @@ Much like setTimeout, invokes function after wait milliseconds. If you pass the 
 
 
 ##### Parameters
-- `{callable} $source` - source function
+- `{mixed} $source` - source function
 - `{int} $wait` - wait time in ms
 - `{array} $args` - (optional) arguments to pass into produced function
 
 ###### Syntax
 ```php
- delay(callable $source, int $wait, ...$args)
+ delay(mixed $source, int $wait, ...$args)
 ```
 
 ###### Example
@@ -245,12 +246,12 @@ wait milliseconds. Useful for rate-limiting events that occur faster than you ca
 
 
 ##### Parameters
-- `{callable} $source` - source function
+- `{mixed} $source` - source function
 - `{int} $wait` - wait time in ms
 
 ###### Syntax
 ```php
- throttle(callable $source, int $wait)
+ throttle(mixed $source, int $wait)
 ```
 
 ###### Example
@@ -276,12 +277,12 @@ Creates and returns a new debounced version of the passed function which will po
 
 
 ##### Parameters
-- `{callable} $source` - source function
+- `{mixed} $source` - source function
 - `{int} $wait` - wait time in ms
 
 ###### Syntax
 ```php
- debounce(callable $source, int $wait)
+ debounce(mixed $source, int $wait)
 ```
 
 ###### Example
@@ -309,11 +310,11 @@ and then check it later.
 
 
 ##### Parameters
-- `{callable} $source` - source function
+- `{mixed} $source` - source function
 
 ###### Syntax
 ```php
- once(callable $source): callable
+ once(mixed $source): mixed
 ```
 
 ###### Example
@@ -337,12 +338,12 @@ asynchronous responses, where you want to be sure that all the async calls have 
 
 
 ##### Parameters
-- `{callable} $source` - source function
+- `{mixed} $source` - source function
 - `{int} $count` - count
 
 ###### Syntax
 ```php
- after(callable $source, int $count): callable
+ after(mixed $source, int $count): mixed
 ```
 
 ###### Example
@@ -366,12 +367,12 @@ The result of the last function call is memoized and returned when count has bee
 
 
 ##### Parameters
-- `{callable} $source` - source function
+- `{mixed} $source` - source function
 - `{int} $count` - count
 
 ###### Syntax
 ```php
- before(callable $source, int $count): callable
+ before(mixed $source, int $count): mixed
 ```
 
 ###### Example
@@ -397,12 +398,12 @@ This allows the transforming function to execute code before and after the funct
 
 
 ##### Parameters
-- `{callable} $source` - source function
-- `{callable} $transformer` - transforming function
+- `{mixed} $source` - source function
+- `{mixed} $transformer` - transforming function
 
 ###### Syntax
 ```php
- wrap(callable $source, callable $transformer)
+ wrap(mixed $source, mixed $transformer)
 ```
 
 ###### Example
@@ -425,11 +426,11 @@ Returns a new negated version of the predicate function.
 
 
 ##### Parameters
-- `{callable} $source` - source function
+- `{mixed} $source` - source function
 
 ###### Syntax
 ```php
-negate(callable $source): callable
+negate(mixed $source): mixed
 ```
 
 ###### Example
@@ -447,18 +448,18 @@ composing the functions `f()`, `g()`, and `h()` produces `f(g(h()))`.
 
 
 ##### Parameters
-- `{array} $functions` - list of callables to compose
+- `{array} $functions` - list of mixeds to compose
 
 ###### Syntax
 ```php
- compose(...$functions): callable
+ compose(...$functions): mixed
 ```
 
 ###### Example
 ```php
 <?php
-$greet = function(string $name){ return "hi: " . $name; };
-$exclaim = function(string $statement){ return strtoupper($statement) . "!"; };
+$greet = function(mixed $name){ return "hi: " . $name; };
+$exclaim = function(mixed $statement){ return strtoupper($statement) . "!"; };
 $welcome = Functions::compose($greet, $exclaim);
 $welcome("moe"); // "hi: MOE!"
 ```
@@ -468,11 +469,11 @@ $welcome("moe"); // "hi: MOE!"
 Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
 
 ##### Parameters
-- `{string} $value` - source string
+- `{mixed} $value` - source mixed
 
 ###### Syntax
 ```php
- chain(string $value): Strings
+ chain(mixed $value): Strings
 ```
 
 ###### Example

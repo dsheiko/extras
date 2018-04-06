@@ -101,12 +101,25 @@ $res = Arrays::chain([1, 2, 3])
     - [findIndex](#findIndex)
     - [findLastIndex](#findLastIndex)
     - [range](#range)
+  - Objects
+    - [keys](#keys)
+    - [values](#values)
   - Chaining
     - [chain](#chain)
 
 - Other methods
   - [isAssocArray](#isAssocArray)
   - [replace](#replace)
+
+
+> Methods `_.functions`, `_.extendOwn`, `_.clone` are not implemented. Given we consider here JavaScript object as associative array, they are not relevant.
+
+> Method `_.isElement` depends on DOM and therefore is not applicable in PHP context.
+
+> Methods `_.isArguments`, `_.isRegExp`, `_.isUndefined` are not relevant in PHP context
+
+> Methods `_.isFunction`, `_.isString`, `_.isNumber`, `_.isFinite`, `_.isNaN`, `_.isBoolean`, `_.isDate`, `_.isError`, `_.isNull` belong to the corresponded classes `Dsheiko\Extras\Functions`, `Dsheiko\Extras\Strings`, `Dsheiko\Extras\Numbers`, `Dsheiko\Extras\Booleans`, `Dsheiko\Extras\Any`
+
 
 ## JavaScript-inspired methods
 
@@ -187,11 +200,16 @@ Iterate over a list of elements, yielding each in turn to an iteratee function
 
 ###### Parameters
 - `{array} $array` - source array
-- `{callable} $callable` - iteratee callback
+- `{mixed} $mixed` - iteratee callback
+
+###### Callback arguments
+- `{mixed} $value` - element value
+- `{int} $index` - zero-based element index
+- `{array} $array` - source array
 
 ###### Syntax
 ```php
-each(array $array, callable $callable)
+each(array $array, mixed $mixed)
 ```
 
 ###### Example
@@ -200,14 +218,6 @@ each(array $array, callable $callable)
 $sum = 0;
 Arrays::each([1, 2, 3], function ($val) use(&$sum) {
     $sum += $val;
-});
-```
-
-###### Iteratee receive parameters like JavaScript `forEach` method
-```php
-<?php
-Arrays::each([1, 2, 3], function ($value, $index, $array) {
-    //...
 });
 ```
 
@@ -240,11 +250,16 @@ Test whether all elements in the array pass the test implemented by the provided
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable} $callable` - predicate callback
+- `{mixed} $mixed` - predicate callback
+
+###### Callback arguments
+- `{mixed} $value` - element value
+- `{int} $index` - zero-based element index
+- `{array} $array` - source array
 
 ###### Syntax
 ```php
- every(array $array, callable $callable): bool
+ every(array $array, mixed $mixed): bool
 ```
 
 ###### Example
@@ -281,11 +296,16 @@ Look through each value in the list, returning an array of all the values that p
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable} $callable` - predicate callback
+- `{mixed} $mixed` - predicate callback
+
+###### Callback arguments
+- `{mixed} $value` - element value
+- `{int} $index` - zero-based element index
+- `{array} $array` - source array
 
 ###### Syntax
 ```php
- filter(array $array, callable $callable): array
+ filter(array $array, mixed $mixed): array
 ```
 
 ###### Example
@@ -300,11 +320,16 @@ Look through each value in the list, returning the first one that passes a truth
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable} $callable` - predicate callback
+- `{mixed} $mixed` - predicate callback
+
+###### Callback arguments
+- `{mixed} $value` - element value
+- `{int} $index` - zero-based element index
+- `{array} $array` - source array
 
 ###### Syntax
 ```php
- find(array $array, callable $callable): mixed
+ find(array $array, mixed $mixed): mixed
 ```
 
 ###### Example
@@ -341,11 +366,11 @@ Return a boolean indicating whether the object has the specified property
 
 ##### Parameters
 - `{array} $array` - source array
-- `{string} $key` - the property to test
+- `{mixed} $key` - the property to test
 
 ###### Syntax
 ```php
- hasOwnProperty(array $array, string $key): bool
+ hasOwnProperty(array $array, mixed $key): bool
 ```
 
 ###### Example
@@ -424,16 +449,16 @@ $res = Arrays::is($a, $b); // true
 ```
 
 ### join
-Join all elements of an array into a string and returns this string.
+Join all elements of an array into a mixed and returns this mixed.
 - [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join).
 
 ##### Parameters
 - `{array} $array` - source array
-- `{string} $separator` - (optional) Specifies a string to separate each pair of adjacent elements of the array. The separator is converted to a string if necessary. If omitted, the array elements are separated with a comma (",").
+- `{mixed} $separator` - (optional) Specifies a mixed to separate each pair of adjacent elements of the array. The separator is converted to a mixed if necessary. If omitted, the array elements are separated with a comma (",").
 
 ###### Syntax
 ```php
- join(array $array, string $separator = ","): string
+ join(array $array, mixed $separator = ","): mixed
 ```
 
 ###### Example
@@ -492,11 +517,16 @@ Produce a new array of values by mapping each value in list through a transforma
 
 ###### Parameters
 - `{array} $array` - source array
-- `{callable} $callable` - iteratee callback
+- `{mixed} $mixed` - iteratee callback
+
+###### Callback arguments
+- `{mixed} $value` - element value
+- `{int} $index` - zero-based element index
+- `{array} $array` - source array
 
 ###### Syntax
 ```php
- map(array $array, callable $callable): array
+ map(array $array, mixed $mixed): array
 ```
 
 ###### Example
@@ -581,13 +611,17 @@ The right-associative version of reduce.
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable} $callable` - iteratee callback
-- `{mixed} $initial` - value to use as the first argument to the first call of the callable. If no initial value is supplied, the first element in the array will be used.
+- `{mixed} $mixed` - iteratee callback
+- `{mixed} $initial` - value to use as the first argument to the first call of the mixed. If no initial value is supplied, the first element in the array will be used.
 
+###### Callback arguments
+- `{mixed} $value` - element value
+- `{int} $index` - zero-based element index
+- `{array} $array` - source array
 
 ###### Syntax
 ```php
- reduceRight(array $array, callable $callable, $initial = null): mixed
+ reduceRight(array $array, mixed $mixed, $initial = null): mixed
 ```
 
 ###### Example
@@ -607,12 +641,17 @@ Boil down a list of values into a single value.
 
 ###### Parameters
 - `{array} $array` - source array
-- `{callable} $callable` - iteratee callback
-- `{mixed} $initial` - value to use as the first argument to the first call of the callable. If no initial value is supplied, the first element in the array will be used.
+- `{mixed} $mixed` - iteratee callback
+- `{mixed} $initial` - value to use as the first argument to the first call of the mixed. If no initial value is supplied, the first element in the array will be used.
+
+###### Callback arguments
+- `{mixed} $value` - element value
+- `{int} $index` - zero-based element index
+- `{array} $array` - source array
 
 ###### Syntax
 ```php
- reduce(array $array, callable $callable, $initial = null): mixed
+ reduce(array $array, mixed $mixed, $initial = null): mixed
 ```
 
 ###### Example
@@ -691,11 +730,16 @@ Test whether at least one element in the array passes the test implemented by th
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable} $callable` - predicate callback
+- `{mixed} $mixed` - predicate callback
+
+###### Callback arguments
+- `{mixed} $value` - element value
+- `{int} $index` - zero-based element index
+- `{array} $array` - source array
 
 ###### Syntax
 ```php
- some(array $array, callable $callable): bool
+ some(array $array, mixed $mixed): bool
 ```
 
 ###### Example
@@ -712,11 +756,11 @@ Sort an array by values (using a user-defined comparison function when callback 
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable} $callable` - iteratee callback
+- `{mixed} $mixed` - iteratee callback
 
 ###### Syntax
 ```php
- sort(array $array, callable $callable = null): array
+ sort(array $array, mixed $mixed = null): array
 ```
 
 ###### Example
@@ -877,7 +921,7 @@ Return the values in list without the elements that the predicate passes. The op
 
 ###### Syntax
 ```php
- reject(array $array, callable $predicate)
+ reject(array $array, mixed $predicate)
 ```
 
 ###### Example
@@ -911,12 +955,12 @@ to invoke will be forwarded on to the method invocation.
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable} $iteratee` - callback to run on every array element
+- `{mixed} $iteratee` - callback to run on every array element
 - `{array} ...$args` - (optional) extra arguments to pass in the callback
 
 ###### Syntax
 ```php
- invoke(array $array, callable $iteratee, ...$args): array
+ invoke(array $array, mixed $iteratee, ...$args): array
 ```
 
 ###### Example
@@ -934,11 +978,11 @@ extracting a list of property values.
 
 ##### Parameters
 - `{array} $array` - source array
-- `{string} $key` - source property name
+- `{mixed} $key` - source property name
 
 ###### Syntax
 ```php
- pluck(array $array, string $key): array
+ pluck(array $array, mixed $key): array
 ```
 
 ###### Example
@@ -960,12 +1004,12 @@ Returns the maximum value in list. If an iteratee function is provided
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable} $iteratee` - (optional) callback to compare array element
+- `{mixed} $iteratee` - (optional) callback to compare array element
 - `{object} $context` - (optional) context to bind to
 
 ###### Syntax
 ```php
- max(array $array, callable $iteratee = null, $context = null)
+ max(array $array, mixed $iteratee = null, $context = null)
 ```
 
 ###### Example
@@ -991,12 +1035,12 @@ Returns the minimum value in list. If an iteratee function is provided
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable} $iteratee` - (optional) callback to compare array element
+- `{mixed} $iteratee` - (optional) callback to compare array element
 - `{object} $context` - (optional) context to bind to
 
 ###### Syntax
 ```php
- min(array $array, callable $iteratee = null, $context = null)
+ min(array $array, mixed $iteratee = null, $context = null)
 ```
 
 ###### Example
@@ -1018,12 +1062,12 @@ $res = Arrays::min([
 
 ### sortBy
 Return a (stably) sorted copy of list, ranked in ascending order by the results of
-running each value through iteratee. iteratee may also be the string name of the property to sort by
+running each value through iteratee. iteratee may also be the mixed name of the property to sort by
 - [see also](http://underscorejs.org/#sortBy).
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable|string} $callable` - iteratee callback or property
+- `{mixed|mixed} $mixed` - iteratee callback or property
 - `{object} $context` - (optional) context to bind to
 
 ###### Syntax
@@ -1053,7 +1097,7 @@ Split a collection into sets, grouped by the result of running each value throug
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable|string} $callable` - iteratee callback or property
+- `{mixed|mixed} $mixed` - iteratee callback or property
 - `{object} $context` - (optional) context to bind to
 
 ###### Syntax
@@ -1077,7 +1121,7 @@ Just like groupBy, but for when you know your keys are unique.
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable|string} $callable` - iteratee callback or property
+- `{mixed|mixed} $mixed` - iteratee callback or property
 - `{object} $context` - (optional) context to bind to
 
 ###### Syntax
@@ -1104,7 +1148,7 @@ Sort a list into groups and return a count for the number of objects in each gro
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable|string} $callable` - iteratee callback or property
+- `{mixed|mixed} $mixed` - iteratee callback or property
 - `{object} $context` - (optional) context to bind to
 
 ###### Syntax
@@ -1205,11 +1249,11 @@ split array into two arrays: one whose elements all satisfy predicate and one wh
 
 ##### Parameters
 - `{array} $array` - source array
-- `callable|string|Closure $callable` - predicate callback
+- `mixed|mixed|Closure $mixed` - predicate callback
 
 ###### Syntax
 ```php
- partition(array $array, callable $callable): array
+ partition(array $array, mixed $mixed): array
 ```
 
 ###### Example
@@ -1231,12 +1275,12 @@ $res = Arrays::partition([0, 1, 2, 3, 4, 5], function($val) {
 ### first
 Get the first value from an array regardless index order and without modifying the array
 When passed in array has no element, it returns undefined, unless `$defaultValue` is supplied.
-Then it returns $defaultValue (when `$defaultValue` is a callable then the result of its execution)
+Then it returns $defaultValue (when `$defaultValue` is a mixed then the result of its execution)
 - [see also](http://underscorejs.org/#first).
 
 ##### Parameters
 - `{array} $array` - source array
-- `{mixed} $defaultValue` - (optional) scalar or callable
+- `{mixed} $defaultValue` - (optional) scalar or mixed
 
 ###### Syntax
 ```php
@@ -1562,14 +1606,14 @@ echo $obj->curly; // 50
 ### sortedIndex
 Uses a binary search to determine the index at which the value should be inserted into the list in order to
 maintain the list's sorted order. If an iteratee function is provided, it will be used to compute the sort
-ranking of each value, including the value you pass. The iteratee may also be the string
+ranking of each value, including the value you pass. The iteratee may also be the mixed
 name of the property to sort by
 - [see also](http://underscorejs.org/#sortedIndex).
 
 ##### Parameters
 - `{array} $array` - source array
 - `{mixed} $value` - value to insert
-- `{callable|string} $iteratee` - (optional) iteratee callback
+- `{mixed|mixed} $iteratee` - (optional) iteratee callback
 - `{object} $context` - (optional) context to bind to
 
 ###### Syntax
@@ -1595,12 +1639,12 @@ $res = Arrays::sortedIndex($stooges, ["name" => "larry", "age" => 50], "age"); /
 ```
 
 ### findIndex
-Find index of the first element matching the condition in `$callable`
+Find index of the first element matching the condition in `$mixed`
 - [see also](http://underscorejs.org/#findIndex).
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable|string} $iteratee` - (optional) iteratee callback
+- `{mixed|mixed} $iteratee` - (optional) iteratee callback
 - `{object} $context` - (optional) context to bind to
 
 ###### Syntax
@@ -1626,7 +1670,7 @@ returning the index closest to the end where the predicate truth test passes.
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable|string} $iteratee` - (optional) iteratee callback
+- `{mixed|mixed} $iteratee` - (optional) iteratee callback
 - `{object} $context` - (optional) context to bind to
 
 ###### Syntax
@@ -1743,11 +1787,11 @@ If the value of the named property is a function then invoke it; otherwise, retu
 
 ##### Parameters
 - `{array} $array` - source array
-- `{string} $prop` - property/key name
+- `{mixed} $prop` - property/key name
 
 ###### Syntax
 ```php
- result(array $array, string $prop)
+ result(array $array, mixed $prop)
 ```
 
 ###### Example
@@ -1780,12 +1824,12 @@ If no match found, add the value to the end of array
 
 ##### Parameters
 - `{array} $array` - source array
-- `{callable} $callable` - predicate callback
+- `{mixed} $mixed` - predicate callback
 - `{mixed} $element` - element to replace the match
 
 ###### Syntax
 ```php
- replace(array $array, callable $callable, $element): array
+ replace(array $array, mixed $mixed, $element): array
 ```
 
 ###### Example

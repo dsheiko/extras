@@ -90,9 +90,12 @@ trait JavaScriptTrait
      */
     public static function filter(array $array, callable $callable = null): array
     {
+        $inx = 0;
         $matches =  ($callable === null) ?
             \array_filter($array) :
-            \array_filter($array, $callable, \ARRAY_FILTER_USE_BOTH);
+            \array_filter($array, function ($value) use ($array, $callable, &$inx) {
+                return $callable($value, $inx++, $array);
+            }, \ARRAY_FILTER_USE_BOTH);
         return \array_values($matches);
     }
 

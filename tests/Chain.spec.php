@@ -37,7 +37,7 @@ describe("\\Dsheiko\\Extras\\Chain", function() {
 
         it("throws when unknown type", function() {
             expect(function(){
-                Chain::chain(NAN)->nonExistingMethod();
+                Chain::chain(\NAN)->nonExistingMethod();
             })->to->throw(\InvalidArgumentException::class, "Do not have methods on given type");
         });
 
@@ -58,6 +58,18 @@ describe("\\Dsheiko\\Extras\\Chain", function() {
             $res = Chain::chain(new \ArrayObject([1,2,3]))
                 ->toArray()
                 ->then("json_encode")
+                ->value();
+            expect($res)->to->equal("[1,2,3]");
+        });
+
+    });
+
+    describe('->tap', function() {
+
+        it("transforms chain value", function() {
+            $res = Chain::chain(new \ArrayObject([1,2,3]))
+                ->toArray()
+                ->tap("json_encode")
                 ->value();
             expect($res)->to->equal("[1,2,3]");
         });

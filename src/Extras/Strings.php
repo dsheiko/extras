@@ -373,4 +373,40 @@ class Strings extends AbstractExtras
         }
         return parent::chain($target);
     }
+
+    /**
+     * Escapes a string for insertion into HTML, replacing &, <, >, ", `, and ' characters.
+     * @see http://underscorejs.org/#escape
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function escape(string $string): string
+    {
+        return \htmlentities($string);
+    }
+
+    /**
+     * The opposite of escape, replaces &amp;, &lt;, &gt;, &quot;, &#96; and &#x27;
+     * with their unescaped counterparts.
+     * @see http://underscorejs.org/#unescape
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function unescape(string $string): string
+    {
+        return \html_entity_decode($string);
+    }
+
+    /**
+     * Generate a globally-unique id for client-side models or DOM elements that need one. If prefix is passed, the id will be appended to it.
+     *
+     * @param string $prefix
+     * @return bool
+     */
+    public static function uniqueId(string $prefix = null): string
+    {
+        return $prefix === null ? \uniqid() : \uniqid($prefix);
+    }
 }
