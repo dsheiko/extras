@@ -100,6 +100,18 @@ describe("\\Dsheiko\\Extras\\Arrays (JavaScript)", function() {
 
     });
 
+
+    describe("::entries", function() {
+
+        it("extracts pairs", function() {
+            $src = ["foo" => "FOO", "bar" => "BAR"];
+            $res = Arrays::entries($src);
+            expect($res[0])->to->equal(["foo", "FOO"]);
+            expect($res[1])->to->equal(["bar", "BAR"]);
+        });
+
+    });
+
     describe("::reduce", function() {
 
         it("reduces array to a single value", function() {

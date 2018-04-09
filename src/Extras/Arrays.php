@@ -12,7 +12,6 @@ class Arrays extends AbstractExtras
 {
 
     use JavaScriptTrait;
-    use Underscore\UtilsTrait;
     use Underscore\ObjectsTrait;
     use Underscore\CollectionsTrait;
     use Underscore\ArraysTrait;
@@ -33,7 +32,7 @@ class Arrays extends AbstractExtras
 
     //  EXTRA METHODS
 
-    
+
 
 
     /**

@@ -4,7 +4,7 @@
   "description": "Collection of chainable high-order functions to abstract and manipulate PHP types",
   "scripts": {
     "update": "composer dump-autoload",
-    "test": "./vendor/bin/peridot tests/",
+    "test": "./vendor/bin/peridot tests/ -c peridot.config.php",
     "lint": "./vendor/bin/phpcs --standard=PSR2 ./src",
     "lint:fix": "./vendor/bin/phpcbf --standard=PSR2 ./src",
     "test:coverage": "./vendor/bin/peridot  tests/ -c peridot.config.php --reporter text-code-coverage",

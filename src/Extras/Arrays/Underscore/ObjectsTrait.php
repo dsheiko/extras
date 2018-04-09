@@ -2,6 +2,7 @@
 namespace Dsheiko\Extras\Arrays\Underscore;
 
 use Dsheiko\Extras\Functions;
+use Dsheiko\Extras\Utils;
 
 /**
  * UNDERSCORE.JS INSPIRED METHODS
@@ -28,13 +29,15 @@ trait ObjectsTrait
      * @see http://underscorejs.org/#mapObject
      *
      * @param array $array
-     * @param callable $callable
+     * @param callable $iteratee
+     * @param obj $context - (optional)
      * @return array
      */
-    public static function mapObject(array $array, callable $callable): array
+    public static function mapObject(array $array, callable $iteratee, $context = null): array
     {
-        return \array_reduce(static::keys($array), function ($carry, $key) use ($array, $callable) {
-            $carry[$key] = $callable($array[$key], $key, $array);
+        $iteratee = Utils::iteratee($iteratee, $context);
+        return \array_reduce(static::keys($array), function ($carry, $key) use ($array, $iteratee) {
+            $carry[$key] = $iteratee($array[$key], $key, $array);
             return $carry;
         }, []);
     }
@@ -103,7 +106,7 @@ trait ObjectsTrait
             return $array;
         }
         $iteratee = Functions::isFunction($keys[0])
-            ? static::cb($keys[0], $keys[1] ?? null)
+            ? Utils::iteratee($keys[0], $keys[1] ?? null)
             : function ($value, $key, $array) use ($keys) {
                 return static::has($array, $key) && \in_array($key, $keys);
             };
@@ -130,9 +133,9 @@ trait ObjectsTrait
             return $array;
         }
         $iteratee = Functions::isFunction($keys[0])
-            ? static::cb($keys[0], $keys[1] ?? null)
+            ? Utils::iteratee($keys[0], $keys[1] ?? null)
             : function ($value, $key, $array) use ($keys) {
-                return static::has($array, $key) && !\in_array($key, $keys);
+                return static::has($array, $key) && \in_array($key, $keys);
             };
         return \array_reduce(\array_keys($array), function ($carry, $key) use ($array, $iteratee) {
             if (!$iteratee($array[$key], $key, $array)) {
@@ -203,13 +206,13 @@ trait ObjectsTrait
      * the key/value properties present in attrs.
      * @see http://underscorejs.org/#matcher
      *
-     * @param array $props
+     * @param array $attrs
      * @return callable
      */
-    public static function matcher(array $props): callable
+    public static function matcher(array $attrs): callable
     {
-        return function ($value) use ($props) {
-            return static::isMatch($value, $props);
+        return function ($value) use ($attrs) {
+            return static::isMatch($value, $attrs);
         };
     }
 
@@ -218,17 +221,17 @@ trait ObjectsTrait
      * @see http://underscorejs.org/#isMatch
      *
      * @param array $array
-     * @param array $props
+     * @param array $attrs
      * @return bool
      */
-    public static function isMatch(array $array, array $props): bool
+    public static function isMatch(array $array, array $attrs): bool
     {
         if (empty($array)) {
             return false;
         }
         static::throwWhenNoAssocArray($array, "source array");
-        static::throwWhenNoAssocArray($props, "properties");
-        return count(\array_intersect_assoc($array, $props)) === \count($props);
+        static::throwWhenNoAssocArray($attrs, "properties");
+        return count(\array_intersect_assoc($array, $attrs)) === \count($attrs);
     }
 
     /**

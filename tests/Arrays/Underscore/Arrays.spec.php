@@ -42,6 +42,14 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Arrays)", function() {
             $res = Arrays::last($arr);
             expect($res)->to->equal(3);
         });
+
+        it("returns default value produced by given function when source array empty", function() {
+            $arr = [];
+            $res = Arrays::last($arr, function() {
+                    return 9;
+                });
+            expect($res)->to->equal(9);
+        });
     });
 
     describe("::uniq", function() {
@@ -265,7 +273,7 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Arrays)", function() {
                     'last' => 'Jones',
                 ],
             ];
-            
+
             $res = Arrays::findLastIndex($src, [ "name" => "Ted" ]);
             expect($res)->to->equal(3);
         });

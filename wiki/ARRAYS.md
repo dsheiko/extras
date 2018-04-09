@@ -103,7 +103,26 @@ $res = Arrays::chain([1, 2, 3])
     - [range](#range)
   - Objects
     - [keys](#keys)
+    - [allKeys](#allKeys)
     - [values](#values)
+    - [mapObject](#mapObject)
+    - [pairs](#pairs)
+    - [invert](#invert)
+    - [findKey](#findKey)
+    - [extend](#extend)
+    - [pick](#pick)
+    - [omit](#omit)
+    - [defaults](#defaults)
+    - [tap](./CHAINING.md#tap)
+    - [has](#has)
+    - [property](#property)
+    - [propertyOf](#propertyOf)
+    - [matcher](#matcher)
+    - [isEqual](#isEqual)
+    - [isMatch](#isMatch)
+    - [isEmpty](#isEmpty)
+    - [isArray](#isArray)
+    - [isObject](#isObject)
   - Chaining
     - [chain](#chain)
 
@@ -836,10 +855,6 @@ Return all the values of an array
 <?php
 $res = Arrays::values([ 5 => 1, 10 => 2, 100 => 3]); // [1,2,3]
 ```
-
-
-
-
 
 
 
@@ -1775,46 +1790,475 @@ $res = Arrays::chain([1, 2, 3])
 
 
 
-
-
-
-
-
-
-### result
-If the value of the named property is a function then invoke it; otherwise, return it.
-- [see also](http://underscorejs.org/#result).
+### allKeys
+Retrieve all the names of object's own and inherited properties.
+Given we consider here JavaScript object as associative array, it is an alias of [keys](#keys]
+- [see also](http://underscorejs.org/#allKeys).
 
 ##### Parameters
 - `{array} $array` - source array
-- `{mixed} $prop` - property/key name
 
 ###### Syntax
 ```php
- result(array $array, mixed $prop)
+ allKeys(array $array): array
+```
+
+### mapObject
+Like map, but for associative arrays. Transform the value of each property in turn.
+- [see also](http://underscorejs.org/#mapObject).
+
+##### Parameters
+- `{array} $array` - source array
+- `{callable} $iteratee` - iteratee function
+- `{object} $context` - (optional) context object to bind to
+
+###### Syntax
+```php
+ mapObject(array $array, callable $iteratee, $context = null): array
 ```
 
 ###### Example
 
 ```php
 <?php
- $options = [
-      "foo" => "FOO",
-      "bar" => function(){ return "BAR"; },
-  ];
-  $res = Arrays::result($options, "foo"); // FOO
-  $res = Arrays::result($options, "bar"); // BAR
+$res = Arrays::mapObject([
+    "start" => 5,
+    "end" => 12,
+], function($val){
+    return $val + 5;
+}); // [ "start" => 10, "end" => 17, ]
+
+```
+
+### pairs
+Convert an object into a list of [key, value] pairs. Alias of [entries](#entries)
+- [see also](http://underscorejs.org/#pairs).
+
+##### Parameters
+- `{array} $array` - source array
+
+###### Syntax
+```php
+ pairs(array $array): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::pairs(["foo" => "FOO", "bar" => "BAR"]); // [["foo", "FOO"], ["bar", "BAR"]]
+
+```
+
+### invert
+Returns a copy of the object where the keys have become the values and the values the keys. For this to work, all of your object's values should be unique and string serializable.
+- [see also](http://underscorejs.org/#invert).
+
+##### Parameters
+- `{array} $array` - source array
+
+###### Syntax
+```php
+ invert(array $array): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::invert([
+    "Moe" => "Moses",
+    "Larry" => "Louis",
+    "Curly" => "Jerome",
+]);
+// [
+//    "Moses" => "Moe",
+//    "Louis" => "Larry",
+//    "Jerome" => "Curly",
+// ]
+
+```
+
+### findKey
+Similar to [findIndex](#findIndex), but for keys in objects. Returns the key where the predicate truth test passes or undefined
+- [see also](http://underscorejs.org/#findKey).
+
+##### Parameters
+- `{array} $array` - source array
+- `{callable} $iteratee` - iteratee function
+- `{object} $context` - (optional) context object to bind to
+
+###### Syntax
+```php
+ findKey(array $array, $iteratee = null, $context = null): string
+```
+
+###### Example
+
+```php
+<?php
+$src = [
+    "foo" => [
+        'name' => 'Ted',
+        'last' => 'White',
+    ],
+    "bar" => [
+        'name' => 'Frank',
+        'last' => 'James',
+    ],
+    "baz" => [
+        'name' => 'Ted',
+        'last' => 'Jones',
+    ],
+];
+$res = Arrays::findKey($src, [ "name" => "Ted" ]); // foo
+
+```
+
+### extend
+Shallowly copy all of the properties in the source objects over to the destination object, and return the destination object. Any nested objects or arrays will be copied by reference
+Given we consider here JavaScript object as associative array, it's an alias of [assign](#assign)
+- [see also](http://underscorejs.org/#extend).
+
+##### Parameters
+- `{array} ...$arrays` - arrays to merge
+
+
+###### Syntax
+```php
+ extend(... $arrays): array
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::extend(["foo" => 1, "bar" => 2], ["bar" => 3], ["foo" => 4], ["baz" => 5]);
+// ["foo" => 4, "bar" => 3, "baz" => 5]
+
+```
+
+### pick
+Return a copy of the object, filtered to only have values for the whitelisted keys (or array of valid keys). Alternatively accepts a predicate indicating which keys to pick.
+- [see also](http://underscorejs.org/#pick).
+
+##### Parameters
+- `{array} $array` - source array
+- `{array} ...$keys` - keys or iteratee function
+
+###### Syntax
+```php
+ pick(array $array, ...$keys): array
+```
+
+###### Example #1
+
+```php
+<?php
+$res = Arrays::pick([
+    'name' => 'moe',
+    'age' => 50,
+    'userid' => 'moe1',
+  ], 'name', 'age');
+// ['name' => 'moe', 'age' => 50, ]
+
+```
+
+###### Example #2
+
+```php
+<?php
+$res = Arrays::pick([
+    'name' => 'moe',
+    'age' => 50,
+    'userid' => 'moe1',
+], function($value){
+    return is_int($value);
+});
+// ['age' => 50 ]
+
+```
+
+### omit
+Return a copy of the object, filtered to omit the blacklisted keys (or array of keys). Alternatively accepts a predicate indicating which keys to omit.
+- [see also](http://underscorejs.org/#omit).
+
+##### Parameters
+- `{array} $array` - source array
+- `{array} ...$keys` - keys or iteratee function
+
+###### Syntax
+```php
+ omit(array $array, ...$keys): array
+```
+
+###### Example #1
+
+```php
+<?php
+$res = Arrays::omit([
+    'name' => 'moe',
+    'age' => 50,
+    'userid' => 'moe1',
+  ], 'userid');
+// ['name' => 'moe', 'age' => 50, ]
+
+```
+
+###### Example #2
+
+```php
+<?php
+$res = Arrays::omit([
+    'name' => 'moe',
+    'age' => 50,
+    'userid' => 'moe1',
+], function($value){
+    return is_int($value);
+});
+// ['name' => 'moe', 'userid' => 'moe1', ]
+
 ```
 
 
+### defaults
+Fill in undefined properties in object with the first value present in the following list of defaults objects.
+- [see also](http://underscorejs.org/#defaults).
 
+##### Parameters
+- `{array} $array` - source array
+- `{array} $defaults` - key-value array of defaults
 
+###### Syntax
+```php
+ defaults(array $array, array $defaults): array
+```
 
+###### Example
 
+```php
+<?php
+$res = Arrays::defaults([
+    "flavor" => "chocolate"
+ ], [
+     "flavor" => "vanilla",
+     "sprinkles" => "lots",
+ ]); //["flavor" => "chocolate", "sprinkles" => "lots", ]
 
+```
 
+### has
+Does the object contain the given key? Identical to object.hasOwnProperty(key), but uses a safe reference to the hasOwnProperty function, in case it's been overridden accidentally.
+- [see also](http://underscorejs.org/#has).
 
+##### Parameters
+- `{array} $array` - source array
+- `{string} $key` - key to look for
 
+###### Syntax
+```php
+ has(array $array, string $key): bool
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::has([
+     "flavor" => "vanilla",
+     "sprinkles" => "lots",
+ ], "flavor"); // true
+
+```
+
+### property
+Returns a function that will itself return the key property of any passed-in object.
+- [see also](http://underscorejs.org/#property).
+
+##### Parameters
+- `{string} $prop` - property name
+
+###### Syntax
+```php
+ property(string $prop): callable
+```
+
+###### Example
+
+```php
+<?php
+$stooge = [ "name" => "moe" ];
+$res = Arrays::property("name")($stooge); // "moe"
+
+```
+
+### propertyOf
+Inverse of [property](#property). Takes an object and returns a function which will return the value of a provided property.
+- [see also](http://underscorejs.org/#propertyOf).
+
+##### Parameters
+- `{array} $array` - source key-value array
+
+###### Syntax
+```php
+ propertyOf(array $array): callable
+```
+
+###### Example
+
+```php
+<?php
+$stooge = [ "name" => "moe" ];
+$res = Arrays::propertyOf($stooge)("name"); // "moe"
+
+```
+
+### matcher
+Returns a predicate function that will tell you if a passed in object contains all of the key/value properties present in attrs.
+- [see also](http://underscorejs.org/#matcher).
+
+##### Parameters
+- `{array} $attrs` - attributes to check
+
+###### Syntax
+```php
+ matcher(array $attrs): callable
+```
+
+###### Example
+
+```php
+<?php
+$src = [
+    [
+        "foo" => "FOO",
+        "bar" => "BAR",
+    ],
+    [
+        "bar" => "BAR",
+        "baz" => "BAZ",
+    ]
+];
+$matcher = Arrays::matcher([
+        "foo" => "FOO",
+        "bar" => "BAR",
+]);
+$res = Arrays::filter($src, $matcher);
+// [[ "foo" => "FOO", "bar" => "BAR", ]]
+
+```
+
+### isEmpty
+Returns true if an enumerable object contains no values (no enumerable own-properties).
+- [see also](http://underscorejs.org/#isEmpty).
+
+##### Parameters
+- `{array} $array` - source array
+
+###### Syntax
+```php
+ isEmpty(array $array): bool
+```
+
+###### Example
+
+```php
+<?php
+  $res = Arrays::isEmpty([]); // true
+```
+
+### isEqual
+Performs an optimized deep comparison between the two objects, to determine if they should be considered equal.
+- [see also](http://underscorejs.org/#isEqual).
+
+##### Parameters
+- `{array} $array` - source array
+- `{array} $target` - array to compare with
+
+###### Syntax
+```php
+ isEqual(array $array, array $target): bool
+```
+
+###### Example
+
+```php
+<?php
+$res = Arrays::isEqual([
+        "name" => "moe",
+        "luckyNumbers" => [13, 27, 34],
+        ], [
+        "name" => "moe",
+        "luckyNumbers" => [13, 27, 34],
+]); // true
+```
+
+### isMatch
+Tells you if the keys and values in properties are contained in object.
+- [see also](http://underscorejs.org/#isMatch).
+
+##### Parameters
+- `{array} $array` - source key-value array
+- `{array} $attrs` - attributes to check
+
+###### Syntax
+```php
+ isMatch(array $array, array $attrs): bool
+```
+
+###### Example
+
+```php
+<?php
+ $res = Arrays::isMatch([
+        "foo" => "FOO",
+        "bar" => "BAR",
+        "baz" => "BAZ",
+    ],
+    [
+        "foo" => "BAZ",
+    ]); // false
+
+```
+
+### isArray
+Returns true if source is an array.
+- [see also](http://underscorejs.org/#isArray).
+
+##### Parameters
+- `{array} $array` - source array
+
+###### Syntax
+```php
+ isArray(array $array): bool
+```
+
+###### Example
+
+```php
+<?php
+   $res = Arrays::isArray([ 1, 2, 3 ]); // true
+```
+
+### isObject
+Returns true if value is an Object. Given we consider here JavaScript object as associative array,
+it is an alias of [isAssocArray](#isAssocArray)
+- [see also](http://underscorejs.org/#isObject).
+
+##### Parameters
+- `{mixed} $source` - source
+
+###### Syntax
+```php
+ isObject($source): bool
+```
+
+###### Example
+
+```php
+<?php
+   $res = Arrays::isObject([ "foo" => 1, "bar" => 1, ]); // true
+```
 
 ## Other methods
 
@@ -1859,3 +2303,4 @@ Test whether array is not sequential, but associative array
 <?php
 $bool = Arrays::isAssocArray([1, 2, 3]); // false
 ```
+

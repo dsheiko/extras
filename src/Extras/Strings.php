@@ -399,14 +399,4 @@ class Strings extends AbstractExtras
         return \html_entity_decode($string);
     }
 
-    /**
-     * Generate a globally-unique id for client-side models or DOM elements that need one. If prefix is passed, the id will be appended to it.
-     *
-     * @param string $prefix
-     * @return bool
-     */
-    public static function uniqueId(string $prefix = null): string
-    {
-        return $prefix === null ? \uniqid() : \uniqid($prefix);
-    }
 }

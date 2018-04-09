@@ -24,10 +24,13 @@ The library implements JavaScript and Underscore.js functions in PHP
 
 - [Arrays](./wiki/ARRAYS.md)
 - [Strings](./wiki/STRINGS.md)
+- [Numbers](./wiki/NUMBERS.md)
 - [Functions](./wiki/FUNCTIONS.md)
 - [Collections](./wiki/COLLECTIONS.md)
-- [Chaining](./wiki/CHAINING.md)
 - [Plain Object](./wiki/PLAIN-OBJECT.md)
+- [Any](./wiki/ANY.md)
+- [Chaining](./wiki/CHAINING.md)
+- [Utilities](./wiki/UTILITIES.md)
 
 ## Examples
 

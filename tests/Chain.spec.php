@@ -1,6 +1,8 @@
 <?php
 use Dsheiko\Extras\Chain;
 
+use Dsheiko\Extras\{Collections, Numbers, Strings, Arrays, Booleans, Functions};
+
 class MapObjectFixture
 {
     public $foo = "FOO";
@@ -72,6 +74,65 @@ describe("\\Dsheiko\\Extras\\Chain", function() {
                 ->tap("json_encode")
                 ->value();
             expect($res)->to->equal("[1,2,3]");
+        });
+
+    });
+
+    describe('->guessSet', function() {
+
+        it("guesses Collection", function() {
+            $method = reflectStaticMethod(Chain::class, "guessSet");
+            $res = $method(new \ArrayObject([1,2,3]));
+            expect($res)->to->equal(Collections::class);
+        });
+
+        it("guesses String", function() {
+            $method = reflectStaticMethod(Chain::class, "guessSet");
+            $res = $method("string");
+            expect($res)->to->equal(Strings::class);
+        });
+
+        it("guesses Arrays", function() {
+            $method = reflectStaticMethod(Chain::class, "guessSet");
+            $res = $method([1,2,3]);
+            expect($res)->to->equal(Arrays::class);
+        });
+
+        it("guesses Number", function() {
+            $method = reflectStaticMethod(Chain::class, "guessSet");
+            $res = $method(123);
+            expect($res)->to->equal(Numbers::class);
+        });
+
+        it("guesses Number from double", function() {
+            $method = reflectStaticMethod(Chain::class, "guessSet");
+            $res = $method(123.5);
+            expect($res)->to->equal(Numbers::class);
+        });
+
+
+        it("guesses Function", function() {
+            $method = reflectStaticMethod(Chain::class, "guessSet");
+            $res = $method(function(){});
+            expect($res)->to->equal(Functions::class);
+        });
+
+        it("guesses Boolean", function() {
+            $method = reflectStaticMethod(Chain::class, "guessSet");
+            $res = $method(true);
+            expect($res)->to->equal(Booleans::class);
+        });
+
+        it("guesses Boolean (false)", function() {
+            $method = reflectStaticMethod(Chain::class, "guessSet");
+            $res = $method(false);
+            expect($res)->to->equal(Booleans::class);
+        });
+
+        it("guesses Other", function() {
+            $method = reflectStaticMethod(Chain::class, "guessSet");
+            $res = $method(\NAN);
+            expect($res)->to->equal("");
         });
 
     });

@@ -22,9 +22,10 @@
   - [wrap](#wrap)
   - [negate](#negate)
   - [compose](#compose)
+  - [times](#times)
   - [chain](#chain)
 
-> Method `_.defer` is not implemented as it doesn't make much sense in the context of PHP
+> Method `_.defer` is not relevant in in the context of PHP
 
 ## JavaScript-inspired methods
 
@@ -465,6 +466,30 @@ $welcome("moe"); // "hi: MOE!"
 ```
 
 
+### times
+Invokes the given iteratee function n times. Each invocation of iteratee is called with an index argument. Produces an array of the returned values.
+- [see also](http://underscorejs.org/#times).
+
+
+##### Parameters
+- `{array} $source` - source function
+- `{int} $n` - (optional) invoke function N times
+- `{object} $context` - (optional) context object to bind to
+
+###### Syntax
+```php
+ times(callable $source, int $n = 1, $context = null)
+```
+
+###### Example
+```php
+<?php
+$counter = 0;
+Functions::times(function($value) use(&$counter){
+    $counter += $value;
+}, 5); // 15
+```
+
 ### chain
 Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
 
@@ -487,13 +512,3 @@ $res = Strings::chain( " 12345 " )
             ->value();
 echo $res; // "534"
 ```
-
-
-
-
-
-
-
-
-
-

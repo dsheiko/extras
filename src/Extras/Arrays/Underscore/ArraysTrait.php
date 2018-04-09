@@ -2,6 +2,7 @@
 namespace Dsheiko\Extras\Arrays\Underscore;
 
 use Dsheiko\Extras\Type\PlainObject;
+use Dsheiko\Extras\Utils;
 
 /**
  * UNDERSCORE.JS INSPIRED METHODS
@@ -15,13 +16,13 @@ trait ArraysTrait
      * @see http://underscorejs.org/#first
      *
      * @param array $array
-     * @param mixed|callbale $defaultValue = null
+     * @param mixed|callbale $defaultValue - (optional)
      * @return mixed
      */
     public static function first(array $array, $defaultValue = null)
     {
         $val = \array_shift($array);
-        return $defaultValue === null ? $val : ($val ?: static::resultOf($defaultValue));
+        return $defaultValue === null ? $val : ($val ?: Utils::resultOf($defaultValue));
     }
 
     /**
@@ -29,11 +30,13 @@ trait ArraysTrait
      * @see http://underscorejs.org/#last
      *
      * @param array $array
+     * @param mixed|callbale $defaultValue - (optional)
      * @return mixed
      */
-    public static function last(array $array)
+    public static function last(array $array, $defaultValue = null)
     {
-        return \array_pop($array);
+        $val = \array_pop($array);
+        return $defaultValue === null ? $val : ($val ?: Utils::resultOf($defaultValue));
     }
 
 
@@ -260,7 +263,7 @@ trait ArraysTrait
      */
     public static function findIndex(array $array, $iteratee = null, $context = null)
     {
-        $iterateeNorm = static::cb($iteratee, $context);
+        $iterateeNorm = Utils::iteratee($iteratee, $context);
         $el = static::find($array, $iterateeNorm);
         return array_search($el, $array);
     }
@@ -277,7 +280,7 @@ trait ArraysTrait
      */
     public static function findLastIndex(array $array, $iteratee = null, $context = null): int
     {
-        $iterateeNorm = static::cb($iteratee, $context);
+        $iterateeNorm = Utils::iteratee($iteratee, $context);
         $res = static::filter($array, $iterateeNorm);
         $el = count($res) ? static::last($res) : null;
         return array_search($el, $array);
@@ -299,7 +302,7 @@ trait ArraysTrait
      */
     public static function sortedIndex(array $array, $rawValue, $iteratee = null, $context = null): int
     {
-        $iteratee = static::cb($iteratee, $context);
+        $iteratee = Utils::iteratee($iteratee, $context);
         $value = $iteratee($rawValue);
         $low = 0;
         $high = \count($array);

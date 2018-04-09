@@ -1,6 +1,5 @@
 <?php
 use Dsheiko\Extras\Any;
-use Dsheiko\Extras\Strings;
 
 describe("\\Dsheiko\\Extras\\Any", function() {
 
@@ -74,14 +73,7 @@ describe("\\Dsheiko\\Extras\\Any", function() {
 
     });
 
-    describe('->noop', function() {
 
-        it("returns null", function(){
-            $res = Any::noop(1,2,3);
-            expect($res)->to->equal(null);
-        });
-
-    });
 
 });
 

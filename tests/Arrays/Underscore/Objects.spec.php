@@ -36,6 +36,17 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Objects)", function() {
         });
     });
 
+    describe("::pairs", function() {
+
+        it("extracts pairs", function() {
+            $src = ["foo" => "FOO", "bar" => "BAR"];
+            $res = Arrays::pairs($src);
+            expect($res[0])->to->equal(["foo", "FOO"]);
+            expect($res[1])->to->equal(["bar", "BAR"]);
+        });
+
+    });
+
     describe("::invert", function() {
 
         it("swaps keys and values", function() {
@@ -105,6 +116,11 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Objects)", function() {
 
     describe("::pick", function() {
 
+        it("returns as is when empty", function() {
+            $res = Arrays::pick([], 'name', 'age');
+            expect($res)->to->equal([]);
+        });
+
         it("filters array by key list", function() {
             $res = Arrays::pick([
                 'name' => 'moe',
@@ -128,12 +144,17 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Objects)", function() {
 
     describe("::omit", function() {
 
+        it("returns as is when empty", function() {
+            $res = Arrays::omit([], 'name', 'age');
+            expect($res)->to->equal([]);
+        });
+
         it("filters array by key list", function() {
             $res = Arrays::omit([
                 'name' => 'moe',
                 'age' => 50,
                 'userid' => 'moe1',
-              ], 'name', 'age');
+              ], 'userid');
             expect(json_encode($res))->to->equal('{"name":"moe","age":50}');
         });
 
@@ -194,6 +215,11 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Objects)", function() {
     });
 
     describe('::isMatch', function() {
+
+        it("returns false empty", function() {
+            $res = Arrays::isMatch([], []);
+            expect($res)->to->equal(false);
+        });
 
         it("returns true when array and conditions map equal ", function() {
             $res = Arrays::isMatch([
@@ -267,6 +293,7 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Objects)", function() {
             ];
             $res = Arrays::filter($src, $matcher);
             expect($res[0])->to->equal($src[0]);
+            expect(count($res))->to->equal(1);
         });
     });
 
@@ -319,6 +346,25 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Objects)", function() {
         it("returns true for pure associative array", function() {
             $res = Arrays::isObject([ "foo" => 1, "bar" => 1, ]);
             expect($res)->to->be->ok;
+        });
+
+    });
+
+    describe('::isArray', function() {
+
+        it("returns true for assoc. array", function() {
+            $res = Arrays::isArray([ "foo" => 1, "bar" => 1, ]);
+            expect($res)->to->be->ok;
+        });
+
+        it("returns true for seq. array", function() {
+            $res = Arrays::isArray([ 1, 2, 3 ]);
+            expect($res)->to->be->ok;
+        });
+
+        it("returns false for string", function() {
+            $res = Arrays::isArray("..");
+            expect($res)->not->to->be->ok;
         });
 
     });

@@ -15,54 +15,35 @@ echo $res; // "534"
 
 ## Methods
 
-- [chain](#chain)
-- [charAt](#charAt)
-- [charCodeAt](#charCodeAt)
-- [concat](#concat)
-- [endsWith](#endsWith)
-- [fromCharCode](#fromCharCode)
-- [includes](#includes)
-- [indexOf](#indexOf)
-- [lastIndexOf](#lastIndexOf)
-- [localeCompare](#localeCompare)
-- [match](#match)
-- [padEnd](#padEnd)
-- [padStart](#padStart)
-- [remove](#remove)
-- [repeat](#repeat)
-- [replace](#replace)
-- [slice](#slice)
-- [split](#split)
-- [startsWith](#startsWith)
-- [substr](#substr)
-- [substring](#substring)
-- [toLowerCase](#toLowerCase)
-- [toUpperCase](#toUpperCase)
-- [trim](#trim)
+- JavaScript-inspired methods
+    - [charAt](#charAt)
+    - [charCodeAt](#charCodeAt)
+    - [concat](#concat)
+    - [endsWith](#endsWith)
+    - [fromCharCode](#fromCharCode)
+    - [includes](#includes)
+    - [indexOf](#indexOf)
+    - [lastIndexOf](#lastIndexOf)
+    - [localeCompare](#localeCompare)
+    - [match](#match)
+    - [padEnd](#padEnd)
+    - [padStart](#padStart)
+    - [remove](#remove)
+    - [repeat](#repeat)
+    - [replace](#replace)
+    - [slice](#slice)
+    - [split](#split)
+    - [startsWith](#startsWith)
+    - [substr](#substr)
+    - [substring](#substring)
+    - [toLowerCase](#toLowerCase)
+    - [toUpperCase](#toUpperCase)
+    - [trim](#trim)
+- Underscore.js-inspired methods
+    - [escape](#escape)
+    - [unescape](#unescape)
+    - [chain](#chain)
 
-
-### chain
-Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
-
-##### Parameters
-- `{string} $value` - source string
-
-###### Syntax
-```php
- chain(string $value): Strings
-```
-
-###### Example
-```php
-<?php
-$res = Strings::chain( " 12345 " )
-            ->replace("/1/", "5")
-            ->replace("/2/", "5")
-            ->trim()
-            ->substr(1, 3)
-            ->value();
-echo $res; // "534"
-```
 
 ### charAt
 Return a new string consisting of the single UTF-16 code unit located at the specified offset into the string.
@@ -523,6 +504,63 @@ $res = Strings::trim("  12345   "); // "12345"
 
 
 
+### escape
+Escapes a string for insertion into HTML
+- [see also](http://underscorejs.org/#escape).
+
+##### Parameters
+- `{string} $value` - source string
+
+###### Syntax
+```php
+ escape(string $string): string
+```
+
+###### Example
+```php
+<?php
+$res = Strings::escape("Curly, Larry & Moe"); // "Curly, Larry &amp; Moe"
+```
 
 
+### unescape
+The opposite of [escape](#escape)
+- [see also](http://underscorejs.org/#unescape).
 
+##### Parameters
+- `{string} $value` - source string
+
+###### Syntax
+```php
+ unescape(string $string): string
+```
+
+###### Example
+```php
+<?php
+$res = Strings::unescape("Curly, Larry &amp; Moe"); // "Curly, Larry & Moe"
+```
+
+
+### chain
+Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.
+
+##### Parameters
+- `{string} $value` - source string
+
+###### Syntax
+```php
+ chain(string $value): Strings
+```
+
+###### Example
+```php
+<?php
+$res = Strings::chain( " 12345 " )
+            ->replace("/1/", "5")
+            ->replace("/2/", "5")
+            ->trim()
+            ->substr(1, 3)
+            ->value();
+echo $res; // "534"
+```

@@ -2,6 +2,7 @@
 namespace Dsheiko\Extras\Arrays\Underscore;
 
 use Dsheiko\Extras\Functions;
+use Dsheiko\Extras\Utils;
 
 /**
  * UNDERSCORE.JS INSPIRED METHODS
@@ -33,13 +34,13 @@ trait CollectionsTrait
      *
      * @param callable $behavior
      * @param array $array
-     * @param type $iteratee
-     * @param type $context
+     * @param mixed $iteratee
+     * @param obj $context - (optional)
      * @return array
      */
     protected static function group(callable $behavior, array $array, $iteratee, $context = null)
     {
-        $iteratee = static::cb($iteratee, $context);
+        $iteratee = Utils::iteratee($iteratee, $context);
         $result = [];
         static::each($array, function ($value, $index, $array) use (&$result, $behavior, $iteratee) {
             $key = $iteratee($value, $index, $array);
@@ -204,7 +205,7 @@ trait CollectionsTrait
      * @see http://underscorejs.org/#max
      *
      * @param array $array
-     * @param callable $iteratee
+     * @param mixed $iteratee
      * @param object $context
      * @return mixed
      */
@@ -213,7 +214,7 @@ trait CollectionsTrait
         if ($iteratee === null) {
             return \max($array);
         }
-        $iteratee = static::cb($iteratee, $context);
+        $iteratee = Utils::iteratee($iteratee, $context);
         $lastComputed = -\INF;
         $result = -\INF;
         static::each($array, function ($value, $inx, $array) use ($iteratee, &$lastComputed, &$result) {
@@ -231,7 +232,7 @@ trait CollectionsTrait
      * @see http://underscorejs.org/#min
      *
      * @param array $array
-     * @param callable $iteratee
+     * @param mixed $iteratee
      * @param object $context
      * @return mixed
      */
@@ -240,7 +241,7 @@ trait CollectionsTrait
         if ($iteratee === null) {
             return \min($array);
         }
-        $iteratee = static::cb($iteratee, $context);
+        $iteratee = Utils::iteratee($iteratee, $context);
         $lastComputed = \INF;
         $result = \INF;
         static::each($array, function ($value, $inx, $array) use ($iteratee, &$lastComputed, &$result) {
@@ -259,13 +260,13 @@ trait CollectionsTrait
      * @see http://underscorejs.org/#sortBy
      *
      * @param array $array
-     * @param callable|string $iteratee
+     * @param mixed $iteratee
      * @param object $context
      * @return array
      */
     public static function sortBy(array $array, $iteratee, $context = null): array
     {
-        $iteratee = static::cb($iteratee, $context);
+        $iteratee = Utils::iteratee($iteratee, $context);
 
         $map = static::map($array, function ($value, $index, $array) use ($iteratee) {
             return [

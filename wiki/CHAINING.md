@@ -76,6 +76,17 @@ $res = Chain::chain(new \ArrayObject([1,2,3))
         ->value(); // "[1,2,3]"
 ```
 
+### tap
+Underscore syntax for [then](#then)
+
+###### Parameters
+- `{callable} $callable` - then function
+
+###### Syntax
+```php
+{Set}::tap($function): Chain
+```
+
 ### value
 
 Extracts the value of a wrapped object.

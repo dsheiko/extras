@@ -67,6 +67,18 @@ describe("\\Dsheiko\\Extras\\Functions", function() {
 
     });
 
+    describe('::times', function() {
+
+        it("invokes closure N times", function() {
+            $counter = 0;
+            Functions::times(function($value) use(&$counter){
+                $counter += $value;
+            }, 5);
+            expect($counter)->to->equal(15);
+        });
+
+    });
+
     describe('::delay', function() {
 
         it("calls function with delay 1mss", function() {

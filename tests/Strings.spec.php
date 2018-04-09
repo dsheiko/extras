@@ -379,21 +379,6 @@ describe("\\Dsheiko\\Extras\\Strings", function() {
     });
 
 
-    describe('->uniqueId', function() {
-
-        it("returns a string", function(){
-            $res = Strings::uniqueId();
-            expect(\is_string($res))->to->be->ok;
-        });
-
-        it("returns string begining from prefix", function(){
-            $pref = "contact_";
-            $res = Strings::uniqueId($pref);
-            expect(Strings::startsWith($res, $pref))->to->be->ok;
-        });
-
-    });
-
 
 });
 

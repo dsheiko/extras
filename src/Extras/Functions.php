@@ -3,6 +3,7 @@ namespace Dsheiko\Extras;
 
 use Dsheiko\Extras\AbstractExtras;
 use Dsheiko\Extras\Arrays;
+use Dsheiko\Extras\Utils;
 use \Closure;
 
 /**
@@ -61,6 +62,23 @@ class Functions extends AbstractExtras
     }
 
     /**
+     * Invoke the given iteratee function n times. Each invocation of iteratee is called with an index argument.
+     * Produces an array of the returned values.
+     * @see http://underscorejs.org/#times
+     *
+     * @param callable $source
+     * @param int $n - (optional)
+     * @param object $context - (optional)
+     */
+    public static function times(callable $source, int $n = 1, $context = null)
+    {
+        $iteratee = Utils::iteratee($source, $context);
+        Arrays::each(\range(0, $n), function($inx) use($iteratee) {
+            $iteratee($inx);
+        });
+    }
+
+    /**
      * Returns a string representing the source code of the function.
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/toString
      *
@@ -81,7 +99,7 @@ class Functions extends AbstractExtras
      */
     public static function invoke(callable $source, array $args)
     {
-        return call_user_func_array($source, $args);
+        return \call_user_func_array($source, $args);
     }
 
 

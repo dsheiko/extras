@@ -55,28 +55,5 @@ class Any extends AbstractExtras
         return \is_null($source);
     }
 
-    /**
-     * Creates a function that returns the same value that is used as the argument of constant.
-     * @see http://underscorejs.org/#constant
-     *
-     * @param mixed $value
-     * @return mixed
-     */
-    public static function constant($value): callable
-    {
-        return function () use ($value) {
-            return $value;
-        };
-    }
-    
-    /**
-     * Returns undefined irrespective of the arguments passed to it.
-     * Useful as the default for optional callback arguments.
-     * @see http://underscorejs.org/#noop
-     *
-     * @param array ...$args (optional)
-     */
-    public static function noop(...$args)
-    {
-    }
+   
 }
