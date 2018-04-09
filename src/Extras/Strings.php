@@ -398,5 +398,4 @@ class Strings extends AbstractExtras
     {
         return \html_entity_decode($string);
     }
-
 }

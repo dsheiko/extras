@@ -189,12 +189,11 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Collections)", function() {
             expect($res[1]["name"])->to->equal("larry");
         });
 
-        it("sorts with iteratee", function() {
+        it("sorts when equal values", function() {
             $res = Arrays::sortBy([1, 1, 1, 1, 1, 1], function($a) {
-                    return \sin($a);
-                });
-                var_dump($res);
-            //expect($res)->to->equal([5, 4, 6, 3, 1, 2]);
+                return \sin($a);
+            });
+            expect($res)->to->equal([1, 1, 1, 1, 1, 1]);
         });
     });
 
@@ -229,6 +228,22 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Collections)", function() {
                     "three" => 3
             ]);
             expect($res)->to->equal(3);
+        });
+    });
+
+    describe("::contains", function() {
+
+        it("tests list", function() {
+            $res = Arrays::contains([1, 2, 3], 1);
+            expect($res)->to->be->ok;
+        });
+    });
+
+    describe("::toArray", function() {
+
+        it("converts", function() {
+            $res = Arrays::toArray(new \ArrayObject([1,2,3]));
+            expect($res)->to->equal([1,2,3]);
         });
     });
 });

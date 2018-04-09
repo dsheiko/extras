@@ -72,7 +72,6 @@ class Numbers extends AbstractExtras
     {
         $res = \floatval($source);
         return ((int)$source === 0 && (int)$res === 0) ? \NAN : $res;
-
     }
 
     /**

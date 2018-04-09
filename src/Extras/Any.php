@@ -54,6 +54,4 @@ class Any extends AbstractExtras
     {
         return \is_null($source);
     }
-
-   
 }

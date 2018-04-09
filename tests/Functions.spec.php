@@ -102,6 +102,11 @@ describe("\\Dsheiko\\Extras\\Functions", function() {
             expect($func())->to->equal(false);
         });
 
+        it("throttles for 0 ms", function() {
+            $func = Functions::throttle("FixtureCounter::increment", 0);
+            expect($func())->to->equal(1);
+        });
+
     });
 
     describe('::debounce', function() {
@@ -114,6 +119,11 @@ describe("\\Dsheiko\\Extras\\Functions", function() {
             usleep(20000);
             expect($func())->to->equal(1);
             expect($func())->to->equal(false);
+        });
+
+         it("debounces for 0 ms", function() {
+            $func = Functions::debounce("FixtureCounter::increment", 0);
+            expect($func())->to->equal(1);
         });
 
     });

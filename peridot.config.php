@@ -10,6 +10,6 @@ return function (EventEmitterInterface $emitter) {
     $coverage->register();
 
     $emitter->on('code-coverage.start', function (CodeCoverageReporter $reporter) {
-        $reporter->addDirectoryToWhitelist(__DIR__ . '/src');
+        $reporter->addDirectoryToWhitelist(__DIR__ . '/src/Extras');
     });
 };

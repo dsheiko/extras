@@ -17,6 +17,25 @@ describe("\\Dsheiko\\Extras\\Strings", function() {
 
     });
 
+    describe('::substring', function() {
+
+        it("extracts substring from given position", function() {
+            $res = Strings::substring("12345", 1);
+            expect($res)->to->equal("2345");
+        });
+
+        it("extracts substring with end index negative", function() {
+            $res = Strings::substring("12345", 1, -3);
+            expect($res)->to->equal("2");
+        });
+
+        it("extracts substring from given position and of given length", function() {
+            $res = Strings::substring("12345", 1, 3);
+            expect($res)->to->equal("23");
+        });
+
+    });
+
     describe('::trim', function() {
 
         it("strips string of whitespaces", function() {

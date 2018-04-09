@@ -73,7 +73,7 @@ class Functions extends AbstractExtras
     public static function times(callable $source, int $n = 1, $context = null)
     {
         $iteratee = Utils::iteratee($source, $context);
-        Arrays::each(\range(0, $n), function($inx) use($iteratee) {
+        Arrays::each(\range(0, $n), function ($inx) use ($iteratee) {
             $iteratee($inx);
         });
     }

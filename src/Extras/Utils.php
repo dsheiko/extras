@@ -2,6 +2,7 @@
 namespace Dsheiko\Extras;
 
 use Dsheiko\Extras\Arrays;
+
 /**
  * Class contains Underscore utilities
  */
@@ -89,7 +90,7 @@ class Utils
      * @param int $max - (optional)
      * @return type
      */
-    public static function random(int $min , int $max = null)
+    public static function random(int $min, int $max = null)
     {
         if ($max === null) {
             return \mt_rand(0, $min);

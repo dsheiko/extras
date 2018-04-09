@@ -192,6 +192,23 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Arrays)", function() {
 
     });
 
+    describe("::flattening", function() {
+
+        it("implement case #1", function() {
+            $method = reflectStaticMethod(Arrays::class, "flattening");
+            $res = $method([1, 2, 3], true, false, 4);
+            expect($res)->to->equal([]);
+        });
+
+        it("implement case #2", function() {
+            $method = reflectStaticMethod(Arrays::class, "flattening");
+            $res = $method([1, [2], 3], true, true);
+            expect($res[0])->to->equal(2);
+        });
+
+
+    });
+
     describe("::without", function() {
 
         it("removes specified values", function() {
