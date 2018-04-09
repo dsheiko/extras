@@ -188,6 +188,14 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Collections)", function() {
             expect($res[0]["name"])->to->equal("curly");
             expect($res[1]["name"])->to->equal("larry");
         });
+
+        it("sorts with iteratee", function() {
+            $res = Arrays::sortBy([1, 1, 1, 1, 1, 1], function($a) {
+                    return \sin($a);
+                });
+                var_dump($res);
+            //expect($res)->to->equal([5, 4, 6, 3, 1, 2]);
+        });
     });
 
     describe("::countBy", function() {

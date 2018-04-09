@@ -123,12 +123,6 @@ describe("\\Dsheiko\\Extras\\Chain", function() {
             expect($res)->to->equal(Booleans::class);
         });
 
-        it("guesses Boolean (false)", function() {
-            $method = reflectStaticMethod(Chain::class, "guessSet");
-            $res = $method(false);
-            expect($res)->to->equal(Booleans::class);
-        });
-
         it("guesses Other", function() {
             $method = reflectStaticMethod(Chain::class, "guessSet");
             $res = $method(\NAN);
