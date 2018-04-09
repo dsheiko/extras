@@ -39,7 +39,7 @@
     ]
   },
   "scripts": {
-    "test": "vendor/bin/peridot tests/",
+    "test": "vendor/bin/peridot tests/ -c peridot.config.php",
     "coverage": "./vendor/bin/peridot  tests/ -c peridot.config.php --reporter html-code-coverage"
   },
   "config": {
