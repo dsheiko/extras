@@ -21,5 +21,8 @@
     "PHP"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "gfm": "0.0.1"
+  }
 }

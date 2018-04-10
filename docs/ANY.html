@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>wiki/ANY.md</title>
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github1.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github2.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github3.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github4.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/highlight.css">
+</head>
+<body>
+<div id="any-content">
+<div id="any-readme" class="announce instapaper_body md">
+<span class="name">
+<span class="mini-icon mini-icon-readme"></span>
+wiki/ANY.md
+</span>
+<article class="markdown-body">
+<h1 id="any-any-extras">Any extras</h1>
+<h2 id="any-overview-example">Overview example</h2>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="keyword">use</span> \Dsheiko\Extras\Any;
+
+<span class="variable">$res</span> = Any::chain(<span class="keyword">new</span> \ArrayObject([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]))
+    -&gt;toArray() <span class="comment">// value is [1,2,3]</span>
+    -&gt;map(function(<span class="variable">$num</span>){ <span class="keyword">return</span> [ <span class="string">"num"</span> =&gt; <span class="variable">$num</span> ]; })
+    <span class="comment">// value is [[ "num" =&gt; 1, ..]]</span>
+    -&gt;reduce(function(<span class="variable">$carry</span>, <span class="variable">$arr</span>){
+        <span class="variable">$carry</span> .= <span class="variable">$arr</span>[<span class="string">"num"</span>];
+        <span class="keyword">return</span> <span class="variable">$carry</span>;
+
+    }, <span class="string">""</span>) <span class="comment">// value is "123"</span>
+    -&gt;replace(<span class="string">"/2/"</span>, <span class="string">""</span>) <span class="comment">// value is "13"</span>
+    -&gt;then(function(<span class="variable">$value</span>){
+      <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$value</span>)) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> \<span class="keyword">Exception</span>(<span class="string">"Empty value"</span>);
+      }
+      <span class="keyword">return</span> <span class="variable">$value</span>;
+    })
+    -&gt;value();
+<span class="keyword">echo</span> <span class="variable">$res</span>; <span class="comment">// "13"</span></code></pre>
+<h2 id="any-methods">Methods</h2>
+<ul>
+<li><a href="#isDate">isDate</a></li>
+<li><a href="#isError">isError</a></li>
+<li><a href="#isException">isException</a></li>
+<li><a href="#isNull">isNull</a></li>
+<li><a href="#chain">chain</a></li>
+</ul>
+<h3 id="any-isdate">isDate</h3>
+<p>Returns true if source is an instance of DateTime.</p>
+<h5 id="any-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $source</code> - value to check</li>
+</ul>
+<h6 id="any-syntax">Syntax</h6>
+<pre><code class="language-php"> isDate(<span class="variable">$source</span>): bool</code></pre>
+<h6 id="any-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Any::isDate(<span class="keyword">new</span> DateTime(<span class="string">'2011-01-01T15:03:01.012345Z'</span>)); <span class="comment">// true</span></code></pre>
+<h3 id="any-iserror">isError</h3>
+<p>Returns true if source is an Error</p>
+<h5 id="any-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $source</code> - value to check</li>
+</ul>
+<h6 id="any-syntax">Syntax</h6>
+<pre><code class="language-php"> isError(<span class="variable">$source</span>): bool</code></pre>
+<h6 id="any-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="keyword">try</span> {
+    <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"message"</span>);
+} <span class="keyword">catch</span> (\Error <span class="variable">$ex</span>) {
+    <span class="variable">$res</span> = Any::isError(<span class="variable">$ex</span>); <span class="comment">// true</span>
+}</code></pre>
+<h3 id="any-isexception">isException</h3>
+<p>Returns true if source is an Exception</p>
+<h5 id="any-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $source</code> - value to check</li>
+</ul>
+<h6 id="any-syntax">Syntax</h6>
+<pre><code class="language-php"> isException(<span class="variable">$source</span>): bool</code></pre>
+<h6 id="any-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="keyword">try</span> {
+    <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"message"</span>);
+} <span class="keyword">catch</span> (\<span class="keyword">Exception</span> <span class="variable">$ex</span>) {
+    <span class="variable">$res</span> = Any::isException(<span class="variable">$ex</span>); <span class="comment">// true</span>
+}</code></pre>
+<h3 id="any-isnull">isNull</h3>
+<p>Returns true if source is NULL</p>
+<h5 id="any-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $source</code> - value to check</li>
+</ul>
+<h6 id="any-syntax">Syntax</h6>
+<pre><code class="language-php"> isNull(<span class="variable">$source</span>): bool</code></pre>
+<h6 id="any-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+Any::isNull(<span class="keyword">null</span>); <span class="comment">// true</span></code></pre>
+<h3 id="any-chain">chain</h3>
+<p>Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.</p>
+<h5 id="any-parameters">Parameters</h5>
+<ul>
+<li><code>{string} $value</code> - source</li>
+</ul>
+<h6 id="any-syntax">Syntax</h6>
+<pre><code class="language-php"> chain(string <span class="variable">$value</span>)</code></pre>
+</article>
+</div>
+</div>
+</body></html>

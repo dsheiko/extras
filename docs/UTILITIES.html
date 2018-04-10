@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>wiki/UTILITIES.md</title>
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github1.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github2.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github3.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github4.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/highlight.css">
+</head>
+<body>
+<div id="utils-content">
+<div id="utils-readme" class="announce instapaper_body md">
+<span class="name">
+<span class="mini-icon mini-icon-readme"></span>
+wiki/UTILITIES.md
+</span>
+<article class="markdown-body">
+<h1 id="utils-dsheiko-extras-utils">Dsheiko\Extras\Utils</h1>
+<h2 id="utils-methods">Methods</h2>
+<ul>
+<li><a href="#identity">identity</a></li>
+<li><a href="#constant">constant</a></li>
+<li><a href="#noop">noop</a></li>
+<li><a href="#random">random</a></li>
+<li><a href="#iteratee">iteratee</a></li>
+<li><a href="#uniqueId">uniqueId</a></li>
+<li><a href="#now">now</a></li>
+</ul>
+<blockquote>
+<p>Methods <code>_.noConflict</code>, <code>_.mixin</code> and  <code>_.template</code> are not relevant in the context of PHP</p>
+<p>Methods <code>_.escape</code> and <code>_.unescape</code> belong to <code>Dsheiko\Extras\Strings</code></p>
+<p>Method <code>_.times</code> belongs to <code>Dsheiko\Extras\Functions</code></p>
+</blockquote>
+<h3 id="utils-identity">identity</h3>
+<p>Returns the same value that is used as the argument. In math: <code>f(x) = x</code>
+This function looks useless, but is used throughout Underscore as a default iteratee.</p>
+<ul>
+<li><a href="http://underscorejs.org/#identity" target="_blank">see also</a></li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> identity(): callable</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::identity();
+<span class="variable">$res</span>(<span class="number">42</span>); <span class="comment">// 42</span></code></pre>
+<h3 id="utils-constant">constant</h3>
+<p>Creates a function that returns the same value that is used as the argument of the method</p>
+<ul>
+<li><a href="http://underscorejs.org/#constant" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $value</code> - arbitrary argument</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> constant(<span class="variable">$value</span>): callable</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::constant(<span class="number">42</span>);
+<span class="variable">$res</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>); <span class="comment">// 42</span></code></pre>
+<h3 id="utils-noop">noop</h3>
+<p>Returns null irrespective of the arguments passed to it. Useful as the default for optional callback arguments.</p>
+<ul>
+<li><a href="http://underscorejs.org/#noop" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{array} ...$args</code> (optional)</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> noop(...<span class="variable">$args</span>)</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::noop(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); <span class="comment">// null</span></code></pre>
+<h3 id="utils-random">random</h3>
+<p>Returns a random integer between min and max, inclusive. If you only pass one argument, it will return a number between 0 and that number</p>
+<ul>
+<li><a href="http://underscorejs.org/#noop" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{int} $min</code></li>
+<li><code>{int} $max</code> (optional)</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> random(int <span class="variable">$min</span> , int <span class="variable">$max</span> = <span class="keyword">null</span>)</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::random(<span class="number">100</span>); <span class="comment">// 42</span>
+<span class="variable">$res</span> = Utils::random(<span class="number">5</span>, <span class="number">10</span>); <span class="comment">// 7</span></code></pre>
+<h3 id="utils-iteratee">iteratee</h3>
+<p>Generates a callback that can be applied to each element in a collection.</p>
+<ul>
+<li><a href="http://underscorejs.org/#iteratee" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $value</code></li>
+<li><code>{object} $context</code> (optional) context object to bind to</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> iteratee(<span class="variable">$value</span>, <span class="variable">$context</span> = <span class="keyword">null</span>): callable</code></pre>
+<h6 id="utils-example-1">Example #1</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="comment">// return identity() for null</span>
+<span class="variable">$res</span> = Utils::iteratee(<span class="keyword">null</span>);
+<span class="variable">$res</span>(<span class="number">1</span>); <span class="comment">// 1</span></code></pre>
+<h6 id="utils-example-2">Example #2</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="comment">// return matcher() for an array</span>
+<span class="variable">$macther</span> = Utils::iteratee([<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>]);
+<span class="variable">$res</span> = Arrays::find([[<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>]], <span class="variable">$macther</span>); <span class="comment">// ["foo" =&gt; "FOO"]</span></code></pre>
+<h6 id="utils-example-3">Example #3</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="comment">// return normalized callablefor a callable</span>
+<span class="variable">$res</span> = Utils::iteratee(function(){ <span class="keyword">return</span> <span class="number">42</span>; });
+<span class="variable">$res</span>(); <span class="comment">// 42</span></code></pre>
+<h6 id="utils-example-4">Example #4</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="comment">// bind callable for a context</span>
+<span class="variable">$obj</span> = (object)[<span class="string">"value"</span> =&gt; <span class="number">42</span>];
+<span class="variable">$res</span> = Utils::iteratee(function(){ <span class="keyword">return</span> <span class="variable">$this</span>-&gt;value; }, <span class="variable">$obj</span>);
+<span class="variable">$res</span>(); <span class="comment">// 42</span></code></pre>
+<h6 id="utils-example-5">Example #5</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="comment">// return property() for other types</span>
+<span class="variable">$res</span> = Utils::iteratee(<span class="string">"foo"</span>);
+<span class="variable">$res</span>([<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>]); <span class="comment">// "FOO"</span></code></pre>
+<h3 id="utils-uniqueid">uniqueId</h3>
+<p>Generate a globally-unique id for client-side models or DOM elements that need one. If prefix is passed, the id will be appended to it.</p>
+<ul>
+<li><a href="http://underscorejs.org/#uniqueId" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{string} $prefix</code> (optional)</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> uniqueId(string <span class="variable">$prefix</span> = <span class="keyword">null</span>): string</code></pre>
+<h6 id="utils-example-1">Example #1</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::uniqueId(); <span class="comment">// "5acb4ab426fc9"</span></code></pre>
+<h6 id="utils-example-2">Example #2</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::uniqueId(<span class="string">"contact_"</span>); <span class="comment">// "contact_5acb4ab427262"</span></code></pre>
+<h3 id="utils-result">result</h3>
+<p>If the value of the named property is a function then invoke it with the object as context; otherwise, return it. If a default value is provided and the property doesn&#39;t exist or is undefined then the default will be returned. If defaultValue is a function its result will be returned.</p>
+<ul>
+<li><a href="http://underscorejs.org/#result" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{array} $array</code> - source key-value array</li>
+<li><code>{string} $prop</code> - property name</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> result(<span class="keyword">array</span> <span class="variable">$array</span>, string <span class="variable">$prop</span>)</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$options</span> = [
+    <span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>,
+    <span class="string">"bar"</span> =&gt; function() {
+        <span class="keyword">return</span> <span class="string">"BAR"</span>;
+    },
+];
+<span class="keyword">echo</span> Utils::result(<span class="variable">$options</span>, <span class="string">"foo"</span>); <span class="comment">// "FOO"</span>
+<span class="keyword">echo</span> Utils::result(<span class="variable">$options</span>, <span class="string">"bar"</span>); <span class="comment">// "BAR"</span></code></pre>
+<h3 id="utils-now">now</h3>
+<p>Returns an integer timestamp for the current time</p>
+<ul>
+<li><a href="http://underscorejs.org/#now" target="_blank">see also</a></li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> now(): int</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="keyword">echo</span> Utils::now(); <span class="comment">// 1392066795351</span></code></pre>
+</article>
+</div>
+</div>
+</body></html>

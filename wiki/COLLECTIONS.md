@@ -1,4 +1,4 @@
-# Collection extras
+# Dsheiko\Extras\Collections
 
 Following types `iterable`, `ArrayObject`, `Iterator` belong to collections.
 Array extras like `::map`, `::reduce` do not make sense on a live collection,

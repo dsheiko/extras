@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>wiki/COLLECTIONS.md</title>
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github1.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github2.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github3.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/github4.css">
+<link type="text/css" rel="stylesheet" media="screen" href="gfm_res/highlight.css">
+</head>
+<body>
+<div id="collections-content">
+<div id="collections-readme" class="announce instapaper_body md">
+<span class="name">
+<span class="mini-icon mini-icon-readme"></span>
+wiki/COLLECTIONS.md
+</span>
+<article class="markdown-body">
+<h1 id="collections-dsheiko-extras-collections">Dsheiko\Extras\Collections</h1>
+<p>Following types <code>iterable</code>, <code>ArrayObject</code>, <code>Iterator</code> belong to collections.
+Array extras like <code>::map</code>, <code>::reduce</code> do not make sense on a live collection,
+one can rather convert the collection to an array (<code>::toArray</code>) and then apply array extras.</p>
+
+<h3 id="collections-chain">chain</h3>
+<p>Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.</p>
+<h5 id="collections-parameters">Parameters</h5>
+<ul>
+<li><code>{iterable|ArrayObject|Iterator} $collection</code> - source collection</li>
+</ul>
+<h6 id="collections-syntax">Syntax</h6>
+<pre><code class="language-php"> chain({iterable|ArrayObject|Iterator} <span class="variable">$collection</span>)</code></pre>
+<h6 id="collections-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = <span class="variable">$res</span> = Collections::chain(<span class="keyword">new</span> \ArrayObject([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]))
+            -&gt;toArray()
+            -&gt;value();
+<span class="keyword">echo</span> <span class="variable">$res</span>; <span class="comment">// "534"</span></code></pre>
+<h3 id="collections-each">each</h3>
+<p>Iterate over a list of elements, yielding each in turn to an $callable function</p>
+<ul>
+<li><a href="http://underscorejs.org/#each" target="_blank">see also</a>.</li>
+</ul>
+<h6 id="collections-parameters">Parameters</h6>
+<ul>
+<li><code>{iterable|ArrayObject|Iterator} $collection</code> - source collection</li>
+<li><code>{callable} $callable</code> - iteratee callback</li>
+</ul>
+<h6 id="collections-syntax">Syntax</h6>
+<pre><code class="language-php">each(<span class="variable">$collection</span>, callable <span class="variable">$callable</span>)</code></pre>
+<h6 id="collections-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$sum</span> = <span class="number">0</span>;
+<span class="variable">$obj</span> = <span class="keyword">new</span> \ArrayObject([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);
+Collections::each(<span class="variable">$obj</span>-&gt;getIterator(), <span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$i</span>)</span> <span class="title">use</span> <span class="params">(&amp;<span class="variable">$sum</span>)</span>{</span>
+    <span class="variable">$sum</span> += <span class="variable">$i</span>;
+});</code></pre>
+<h3 id="collections-toarray">toArray</h3>
+<p>Convert collectionb to an array</p>
+<h6 id="collections-parameters">Parameters</h6>
+<ul>
+<li><code>{iterable|ArrayObject|Iterator} $collection</code> - source collection</li>
+</ul>
+<h6 id="collections-syntax">Syntax</h6>
+<pre><code class="language-php">toArray(<span class="variable">$collection</span>)</code></pre>
+<h6 id="collections-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$sum</span> = <span class="number">0</span>;
+<span class="variable">$obj</span> = <span class="keyword">new</span> \ArrayObject([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);
+<span class="variable">$res</span> = Collections::toArray();</code></pre>
+</article>
+
+
+</div>
+</div>
+</body></html>

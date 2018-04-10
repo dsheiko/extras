@@ -1,4 +1,4 @@
-# Booleans extras
+# Dsheiko\Extras\Booleans
 
 ## Methods
 

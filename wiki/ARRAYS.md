@@ -1,4 +1,4 @@
-# Array extras
+# Dsheiko\Extras\Arrays
 
 ## Overview examples
 
@@ -143,7 +143,7 @@ $res = Arrays::chain([1, 2, 3])
 ## JavaScript-inspired methods
 
 
-### assign(array $array, ...$sources)
+### assign
 Copy the values of all properties from one or more target arrays to a target array.
 - [see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign).
 The method works pretty much like `array_merge` except it treats consistently associative arrays with numeric keys

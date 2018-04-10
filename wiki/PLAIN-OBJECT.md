@@ -1,4 +1,4 @@
-# Plain Object
+#  Dsheiko\Extras\Type\PlainObject
 
 Object representing an associative array similar to plain object in JavaScript
 

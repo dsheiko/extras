@@ -1,4 +1,4 @@
-# String extras
+# Dsheiko\Extras\Strings
 
 ## Overview example
 

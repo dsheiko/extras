@@ -1,4 +1,4 @@
-# Function extras
+# Dsheiko\Extras\Functions
 
 ## Methods
 

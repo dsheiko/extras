@@ -1,0 +1,10 @@
+gfm -g -s ./wiki/ -d ./docs/
+
+replace
+ id="
+ id="arrays-
+
+ ">see also</a>
+ " target="_blank">see also</a>
+
+remove ul (menu)
