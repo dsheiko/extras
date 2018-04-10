@@ -3,6 +3,7 @@ namespace Dsheiko\Extras\Arrays\Underscore;
 
 use Dsheiko\Extras\Functions;
 use Dsheiko\Extras\Utils;
+use Dsheiko\Extras\Type\PlainObject;
 
 /**
  * UNDERSCORE.JS INSPIRED METHODS
@@ -212,6 +213,7 @@ trait ObjectsTrait
     public static function matcher(array $attrs): callable
     {
         return function ($value) use ($attrs) {
+            $value = $value instanceof PlainObject ? $value->toArray() : $value;
             return static::isMatch($value, $attrs);
         };
     }

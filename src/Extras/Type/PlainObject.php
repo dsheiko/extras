@@ -60,6 +60,117 @@ class PlainObject
     }
 
     /**
+     * Alias of entries
+     *
+     * @return array
+     */
+    public function pairs(): array
+    {
+        return Arrays::entries($this->array);
+    }
+
+     /**
+     * Like map, but for objects. Transform the value of each property in turn.
+     * @see http://underscorejs.org/#mapObject
+     *
+     * @param callable $iteratee
+     * @param obj $context - (optional)
+     * @return PlainObject
+     */
+    public function mapObject(callable $iteratee, $context = null): PlainObject
+    {
+        return new self(Arrays::mapObject($this->array, $iteratee, $context));
+    }
+
+    /**
+     * Returns a copy of the object (here array) where the keys have become the values and the values the keys.
+     * For this to work, all of your object's values should be unique and string serializable.
+     * @see http://underscorejs.org/#invert
+     *
+     * @return PlainObject
+     */
+    public function invert(): PlainObject
+    {
+        return new self(Arrays::invert($this->array));
+    }
+
+     /**
+     * Replica of findIndex that throws when supplied array is not associative one
+     * @see http://underscorejs.org/#findKey
+     *
+     * @return array
+     */
+    public function findKey($iteratee = null, $context = null): string
+    {
+        return Arrays::findIndex($this->array, $iteratee, $context);
+    }
+
+    /**
+     * Return a copy of the object (here array), filtered to only have values for the whitelisted keys
+     * (or array of valid keys). Alternatively accepts a predicate indicating which keys to pick.
+     * @see http://underscorejs.org/#pick
+     *
+     * @param array ...$keys
+     * @return PlainObject
+     */
+    public function pick(...$keys): PlainObject
+    {
+        $args = \array_merge([$this->array], $keys);
+        $array = \call_user_func_array([Arrays::class, "pick"], $args);
+        return new self($array);
+    }
+
+    /**
+     * Return a copy of the object (here array), filtered to omit the blacklisted keys (or array of keys).
+     * Alternatively accepts a predicate indicating which keys to omit.
+     * @see http://underscorejs.org/#omit
+     *
+     * @param array ...$keys
+     * @return PlainObject
+     */
+    public function omit(...$keys): PlainObject
+    {
+        $args = \array_merge([$this->array], $keys);
+        $array = \call_user_func_array([Arrays::class, "omit"], $args);
+        return new self($array);
+    }
+
+    /**
+     * Fill in undefined properties in object (here array) with the first value
+     * present in the following list of defaults objects.
+     * @see http://underscorejs.org/#defaults
+     *
+     * @param array $defaults
+     * @return PlainObject
+     */
+    public function defaults(array $defaults): PlainObject
+    {
+         return new self(Arrays::defaults($this->array, $defaults));
+    }
+
+    /**
+     * Does the object contain the given key? Alias of hasOwnProperty
+     * @see http://underscorejs.org/#has
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function has(string $key): bool
+    {
+        return array_key_exists($key, $this->array);
+    }
+
+    /**
+     * Returns true if an enumerable object contains no values (no enumerable own-properties).
+     *
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return empty($this->array);
+    }
+
+    /**
      * Copy the values of all properties from one or more source arrays to a target array.
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
      *
@@ -97,7 +208,7 @@ class PlainObject
      */
     public function __get(string $prop)
     {
-        if (array_key_exists($prop, $this->array)) {
+        if (\array_key_exists($prop, $this->array)) {
             return $this->array[$prop];
         }
         return null;
@@ -111,6 +222,6 @@ class PlainObject
      */
     public function __isset(string $prop): bool
     {
-        return array_key_exists($prop, $this->array);
+        return \array_key_exists($prop, $this->array);
     }
 }
