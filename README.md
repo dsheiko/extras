@@ -6,9 +6,16 @@
 [![Build Status](https://travis-ci.org/dsheiko/extras.png)](https://travis-ci.org/dsheiko/extras)
 
 Collection of chainable high-order functions to abstract and manipulate PHP types.
-The library implements JavaScript and Underscore.js functions in PHP
+The library extends PHP types with JavaScript and Underscore.js methods
 
 > The packages takes its name from `Array Extras` referring to the array methods added in ES5 (JavaScript) to abstract generic array manipulation logic
+
+
+## Installation
+Require as a composer dependency:
+```bash
+composer require "dsheiko/extras"
+```
 
 ## Highlights
 - Fixing PHP:
@@ -17,7 +24,7 @@ The library implements JavaScript and Underscore.js functions in PHP
   - Methods are chainable
   - Data structure `PlainObject` similar to JavaScript plain object
   - Manipulation target (value) can always be as reference as well as type literal
-- Familiar syntax: JavaScript Array/Object/String methods, in addition extra methods in [Underscore.js](http://underscorejs.org/)/[Lodash](https://lodash.com/) syntax
+- Familiar syntax: JavaScript methods, in addition methods of [Underscore.js](http://underscorejs.org/)/[Lodash](https://lodash.com/)
 - Performance: package relies on PHP native methods; no `foreach` where a built-in specific function can be used
 
 ## Sets

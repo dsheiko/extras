@@ -199,7 +199,7 @@
 
     },
 
-    "Dsheiko\\Extras\\Type\PlainObject": {
+    "Dsheiko\\Extras\\Type\\PlainObject": {
       js: [
         "assign",
         "entries",
@@ -208,22 +208,61 @@
       ],
       _: [
 
-"keys",
-"values",
-"mapObject",
-"pairs",
-"invert",
-"findKey",
-"pick",
-"omit",
-"defaults",
-"has",
-"isEqual",
-"isEmpty",
-"toArray"
+        "keys",
+        "values",
+        "mapObject",
+        "pairs",
+        "invert",
+        "findKey",
+        "pick",
+        "omit",
+        "defaults",
+        "has",
+        "isEqual",
+        "isEmpty",
+        "toArray"
+      ]
+
+    },
+
+    "Dsheiko\\Extras\\Any": {
+
+      _: [
+        "isDate",
+        "isError",
+        "isException",
+        "isNull",
+        "chain"
+      ]
+
+    },
+
+    "Chaining": {
+
+      _: [
+        "chain",
+        "then",
+        "tap",
+        "value"
+      ]
+
+    },
+
+    "Dsheiko\\Extras\\Utils": {
+
+      _: [
+      "identity",
+      "constant",
+      "noop",
+      "random",
+      "iteratee",
+      "uniqueId",
+      "now"
       ]
 
     }
+
+
 
   };
 

@@ -4,6 +4,7 @@
 
 - [chain](#chain)
 - [then](#then)
+- [tap](#tap)
 - [value](#value)
 
 

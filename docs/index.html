@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dsheiko\Extras</title>
+    <title>Dsheiko\Extras - extends PHP with JavaScript and Underscore.js methods</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -131,11 +131,258 @@
 
       <div data-bind="menu" >
 
+
+
+        <a class="toc_title" href="#arrays-dsheiko-extras-arrays">Dsheiko\Extras\Arrays</a><a class="toc_subtitle">JavaScript methods</a>
+      <ul class="toc_section">
+<li>- <a href="#arrays-assign">assign</a></li>
+<li>- <a href="#arrays-concat">concat</a></li>
+<li>- <a href="#arrays-copywithin">copyWithin</a></li>
+<li>- <a href="#arrays-each">each</a></li>
+<li>- <a href="#arrays-entries">entries</a></li>
+<li>- <a href="#arrays-every">every</a></li>
+<li>- <a href="#arrays-fill">fill</a></li>
+<li>- <a href="#arrays-filter">filter</a></li>
+<li>- <a href="#arrays-find">find</a></li>
+<li>- <a href="#arrays-from">from</a></li>
+<li>- <a href="#arrays-hasownproperty">hasOwnProperty</a></li>
+<li>- <a href="#arrays-includes">includes</a></li>
+<li>- <a href="#arrays-indexof">indexOf</a></li>
+<li>- <a href="#arrays-is">is</a></li>
+<li>- <a href="#arrays-join">join</a></li>
+<li>- <a href="#arrays-keys">keys</a></li>
+<li>- <a href="#arrays-lastindexof">lastIndexOf</a></li>
+<li>- <a href="#arrays-map">map</a></li>
+<li>- <a href="#arrays-of">of</a></li>
+<li>- <a href="#arrays-pop">pop</a></li>
+<li>- <a href="#arrays-push">push</a></li>
+<li>- <a href="#arrays-reduceright">reduceRight</a></li>
+<li>- <a href="#arrays-reduce">reduce</a></li>
+<li>- <a href="#arrays-reverse">reverse</a></li>
+<li>- <a href="#arrays-shift">shift</a></li>
+<li>- <a href="#arrays-slice">slice</a></li>
+<li>- <a href="#arrays-some">some</a></li>
+<li>- <a href="#arrays-sort">sort</a></li>
+<li>- <a href="#arrays-splice">splice</a></li>
+<li>- <a href="#arrays-unshift">unshift</a></li>
+<li>- <a href="#arrays-values">values</a></li></ul><a class="toc_subtitle">Underscore.js methods</a>
+      <ul class="toc_section">
+<li>- <a href="#arrays-each">each</a></li>
+<li>- <a href="#arrays-map">map</a></li>
+<li>- <a href="#arrays-reduce">reduce</a></li>
+<li>- <a href="#arrays-reduceright">reduceRight</a></li>
+<li>- <a href="#arrays-find">find</a></li>
+<li>- <a href="#arrays-filter">filter</a></li>
+<li>- <a href="#arrays-where">where</a></li>
+<li>- <a href="#arrays-findwhere">findWhere</a></li>
+<li>- <a href="#arrays-reject">reject</a></li>
+<li>- <a href="#arrays-every">every</a></li>
+<li>- <a href="#arrays-some">some</a></li>
+<li>- <a href="#arrays-contains">contains</a></li>
+<li>- <a href="#arrays-invoke">invoke</a></li>
+<li>- <a href="#arrays-pluck">pluck</a></li>
+<li>- <a href="#arrays-max">max</a></li>
+<li>- <a href="#arrays-min">min</a></li>
+<li>- <a href="#arrays-sortby">sortBy</a></li>
+<li>- <a href="#arrays-groupby">groupBy</a></li>
+<li>- <a href="#arrays-indexby">indexBy</a></li>
+<li>- <a href="#arrays-countby">countBy</a></li>
+<li>- <a href="#arrays-shuffle">shuffle</a></li>
+<li>- <a href="#arrays-sample">sample</a></li>
+<li>- <a href="#arrays-toarray">toArray</a></li>
+<li>- <a href="#arrays-size">size</a></li>
+<li>- <a href="#arrays-partition">partition</a></li>
+<li>- <a href="#arrays-first">first</a></li>
+<li>- <a href="#arrays-initial">initial</a></li>
+<li>- <a href="#arrays-last">last</a></li>
+<li>- <a href="#arrays-rest">rest</a></li>
+<li>- <a href="#arrays-compact">compact</a></li>
+<li>- <a href="#arrays-flatten">flatten</a></li>
+<li>- <a href="#arrays-without">without</a></li>
+<li>- <a href="#arrays-union">union</a></li>
+<li>- <a href="#arrays-intersection">intersection</a></li>
+<li>- <a href="#arrays-difference">difference</a></li>
+<li>- <a href="#arrays-uniq">uniq</a></li>
+<li>- <a href="#arrays-zip">zip</a></li>
+<li>- <a href="#arrays-unzip">unzip</a></li>
+<li>- <a href="#arrays-object">object</a></li>
+<li>- <a href="#arrays-indexof">indexOf</a></li>
+<li>- <a href="#arrays-lastindexof">lastIndexOf</a></li>
+<li>- <a href="#arrays-sortedindex">sortedIndex</a></li>
+<li>- <a href="#arrays-findindex">findIndex</a></li>
+<li>- <a href="#arrays-findlastindex">findLastIndex</a></li>
+<li>- <a href="#arrays-range">range</a></li>
+<li>- <a href="#arrays-keys">keys</a></li>
+<li>- <a href="#arrays-allkeys">allKeys</a></li>
+<li>- <a href="#arrays-values">values</a></li>
+<li>- <a href="#arrays-mapobject">mapObject</a></li>
+<li>- <a href="#arrays-pairs">pairs</a></li>
+<li>- <a href="#arrays-invert">invert</a></li>
+<li>- <a href="#arrays-findkey">findKey</a></li>
+<li>- <a href="#arrays-extend">extend</a></li>
+<li>- <a href="#arrays-pick">pick</a></li>
+<li>- <a href="#arrays-omit">omit</a></li>
+<li>- <a href="#arrays-defaults">defaults</a></li>
+<li>- <a href="#arrays-tap">tap</a></li>
+<li>- <a href="#arrays-has">has</a></li>
+<li>- <a href="#arrays-property">property</a></li>
+<li>- <a href="#arrays-propertyof">propertyOf</a></li>
+<li>- <a href="#arrays-matcher">matcher</a></li>
+<li>- <a href="#arrays-isequal">isEqual</a></li>
+<li>- <a href="#arrays-ismatch">isMatch</a></li>
+<li>- <a href="#arrays-isempty">isEmpty</a></li>
+<li>- <a href="#arrays-isarray">isArray</a></li>
+<li>- <a href="#arrays-isobject">isObject</a></li></ul><a class="toc_title" href="#collections-dsheiko-extras-collections">Dsheiko\Extras\Collections</a><a class="toc_subtitle">Underscore.js methods</a>
+      <ul class="toc_section">
+<li>- <a href="#collections-chain">chain</a></li>
+<li>- <a href="#collections-each">each</a></li>
+<li>- <a href="#collections-toarray">toArray</a></li></ul><a class="toc_title" href="#functions-dsheiko-extras-functions">Dsheiko\Extras\Functions</a><a class="toc_subtitle">JavaScript methods</a>
+      <ul class="toc_section">
+<li>- <a href="#functions-apply">apply</a></li>
+<li>- <a href="#functions-bind">bind</a></li>
+<li>- <a href="#functions-call">call</a></li>
+<li>- <a href="#functions-tostring">toString</a></li></ul><a class="toc_subtitle">Underscore.js methods</a>
+      <ul class="toc_section">
+<li>- <a href="#functions-bind">bind</a></li>
+<li>- <a href="#functions-bindall">bindAll</a></li>
+<li>- <a href="#functions-partial">partial</a></li>
+<li>- <a href="#functions-memoize">memoize</a></li>
+<li>- <a href="#functions-delay">delay</a></li>
+<li>- <a href="#functions-throttle">throttle</a></li>
+<li>- <a href="#functions-debounce">debounce</a></li>
+<li>- <a href="#functions-once">once</a></li>
+<li>- <a href="#functions-after">after</a></li>
+<li>- <a href="#functions-before">before</a></li>
+<li>- <a href="#functions-wrap">wrap</a></li>
+<li>- <a href="#functions-negate">negate</a></li>
+<li>- <a href="#functions-compose">compose</a></li>
+<li>- <a href="#functions-times">times</a></li>
+<li>- <a href="#functions-chain">chain</a></li></ul><a class="toc_title" href="#strings-dsheiko-extras-strings">Dsheiko\Extras\Strings</a><a class="toc_subtitle">JavaScript methods</a>
+      <ul class="toc_section">
+<li>- <a href="#strings-charat">charAt</a></li>
+<li>- <a href="#strings-charcodeat">charCodeAt</a></li>
+<li>- <a href="#strings-concat">concat</a></li>
+<li>- <a href="#strings-endswith">endsWith</a></li>
+<li>- <a href="#strings-fromcharcode">fromCharCode</a></li>
+<li>- <a href="#strings-includes">includes</a></li>
+<li>- <a href="#strings-indexof">indexOf</a></li>
+<li>- <a href="#strings-lastindexof">lastIndexOf</a></li>
+<li>- <a href="#strings-localecompare">localeCompare</a></li>
+<li>- <a href="#strings-match">match</a></li>
+<li>- <a href="#strings-padend">padEnd</a></li>
+<li>- <a href="#strings-padstart">padStart</a></li>
+<li>- <a href="#strings-remove">remove</a></li>
+<li>- <a href="#strings-repeat">repeat</a></li>
+<li>- <a href="#strings-replace">replace</a></li>
+<li>- <a href="#strings-slice">slice</a></li>
+<li>- <a href="#strings-split">split</a></li>
+<li>- <a href="#strings-startswith">startsWith</a></li>
+<li>- <a href="#strings-substr">substr</a></li>
+<li>- <a href="#strings-substring">substring</a></li>
+<li>- <a href="#strings-tolowercase">toLowerCase</a></li>
+<li>- <a href="#strings-touppercase">toUpperCase</a></li>
+<li>- <a href="#strings-trim">trim</a></li></ul><a class="toc_subtitle">Underscore.js methods</a>
+      <ul class="toc_section">
+<li>- <a href="#strings-escape">escape</a></li>
+<li>- <a href="#strings-unescape">unescape</a></li>
+<li>- <a href="#strings-chain">chain</a></li></ul><a class="toc_title" href="#numbers-dsheiko-extras-numbers">Dsheiko\Extras\Numbers</a><a class="toc_subtitle">JavaScript methods</a>
+      <ul class="toc_section">
+<li>- <a href="#numbers-isfinite">isFinite</a></li>
+<li>- <a href="#numbers-isinteger">isInteger</a></li>
+<li>- <a href="#numbers-isnan">isNaN</a></li>
+<li>- <a href="#numbers-parsefloat">parseFloat</a></li>
+<li>- <a href="#numbers-parseint">parseInt</a></li>
+<li>- <a href="#numbers-tofixed">toFixed</a></li>
+<li>- <a href="#numbers-toprecision">toPrecision</a></li></ul><a class="toc_subtitle">Underscore.js methods</a>
+      <ul class="toc_section">
+<li>- <a href="#numbers-isnumber">isNumber</a></li>
+<li>- <a href="#numbers-chain">chain</a></li></ul><a class="toc_title" href="#booleans-dsheiko-extras-booleans">Dsheiko\Extras\Booleans</a><a class="toc_subtitle">Underscore.js methods</a>
+      <ul class="toc_section">
+<li>- <a href="#booleans-isboolean">isBoolean</a></li>
+<li>- <a href="#booleans-chain">chain</a></li></ul><a class="toc_title" href="#plainobject-dsheiko-extras-type-plainobject">Dsheiko\Extras\Type\PlainObject</a><a class="toc_subtitle">JavaScript methods</a>
+      <ul class="toc_section">
+<li>- <a href="#plainobject-assign">assign</a></li>
+<li>- <a href="#plainobject-entries">entries</a></li>
+<li>- <a href="#plainobject-keys">keys</a></li>
+<li>- <a href="#plainobject-values">values</a></li></ul><a class="toc_subtitle">Underscore.js methods</a>
+      <ul class="toc_section">
+<li>- <a href="#plainobject-keys">keys</a></li>
+<li>- <a href="#plainobject-values">values</a></li>
+<li>- <a href="#plainobject-mapobject">mapObject</a></li>
+<li>- <a href="#plainobject-pairs">pairs</a></li>
+<li>- <a href="#plainobject-invert">invert</a></li>
+<li>- <a href="#plainobject-findkey">findKey</a></li>
+<li>- <a href="#plainobject-pick">pick</a></li>
+<li>- <a href="#plainobject-omit">omit</a></li>
+<li>- <a href="#plainobject-defaults">defaults</a></li>
+<li>- <a href="#plainobject-has">has</a></li>
+<li>- <a href="#plainobject-isequal">isEqual</a></li>
+<li>- <a href="#plainobject-isempty">isEmpty</a></li>
+<li>- <a href="#plainobject-toarray">toArray</a></li></ul><a class="toc_title" href="#any-dsheiko-extras-any">Dsheiko\Extras\Any</a><a class="toc_subtitle">Underscore.js methods</a>
+      <ul class="toc_section">
+<li>- <a href="#any-isdate">isDate</a></li>
+<li>- <a href="#any-iserror">isError</a></li>
+<li>- <a href="#any-isexception">isException</a></li>
+<li>- <a href="#any-isnull">isNull</a></li>
+<li>- <a href="#any-chain">chain</a></li></ul><a class="toc_title" href="#chaining-chaining">Chaining</a><a class="toc_subtitle">Underscore.js methods</a>
+      <ul class="toc_section">
+<li>- <a href="#chaining-chain">chain</a></li>
+<li>- <a href="#chaining-then">then</a></li>
+<li>- <a href="#chaining-tap">tap</a></li>
+<li>- <a href="#chaining-value">value</a></li></ul><a class="toc_title" href="#utils-dsheiko-extras-utils">Dsheiko\Extras\Utils</a><a class="toc_subtitle">Underscore.js methods</a>
+      <ul class="toc_section">
+<li>- <a href="#utils-identity">identity</a></li>
+<li>- <a href="#utils-constant">constant</a></li>
+<li>- <a href="#utils-noop">noop</a></li>
+<li>- <a href="#utils-random">random</a></li>
+<li>- <a href="#utils-iteratee">iteratee</a></li>
+<li>- <a href="#utils-uniqueid">uniqueId</a></li>
+<li>- <a href="#utils-now">now</a></li></ul>
+
+
+
+
+
+
       </div>
 
     </aside>
 
     <main class="main" class="announce instapaper_body md">
+
+
+      <article>
+        <h1>Dsheiko\Extras</h1>
+          <p><code>Dsheiko\Extras</code> is a collection of chainable high-order functions to abstract and manipulate PHP types.
+              The library extends PHP types with JavaScript and Underscore.js methods</p>
+
+          <blockquote>
+          <p>The packages takes its name from <code>Array Extras</code> referring to the array methods added in ES5 (JavaScript) to abstract generic array manipulation logic</p>
+          </blockquote>
+
+          <h2 id="installation">Installation</h2>
+<p>Require as a composer dependency:</p>
+<pre><code class="language-bash">composer require <span class="string">"dsheiko/extras"</span></code></pre>
+
+          <h2 id="highlights">Highlights</h2>
+          <br />
+          <ul>
+          <li>Fixing PHP:<ul>
+          <li>Naming convention: all methods are <code>camelCase</code> styles vs PHP built-in functions in <code>lower_case</code></li>
+          <li>Consistent parameter order (<code>Chain::chain($target)-&gt;method(...$options)</code> or <code>&lt;Type&gt;::method($target, ...$options)</code>)</li>
+          <li>Methods are chainable</li>
+          <li>Data structure <code>PlainObject</code> similar to JavaScript plain object</li>
+          <li>Manipulation target (value) can always be as reference as well as type literal</li>
+          </ul>
+          </li>
+          <li>Familiar syntax: JavaScript methods, in addition methods of <a href="http://underscorejs.org/">Underscore.js</a>/<a href="https://lodash.com/">Lodash</a></li>
+          <li>Performance: package relies on PHP native methods; no <code>foreach</code> where a built-in specific function can be used</li>
+          </ul>
+
+          <p><a target="_blank" href="./wiki/extras-overview.png">
+          <img src="./extras-overview.png" alt="Overview"/>
+          </a></p>
+      </article>
 
       <article class="markdown-body">
 <h1 id="arrays-dsheiko-extras-arrays">Dsheiko\Extras\Arrays</h1>
@@ -2908,9 +3155,9 @@ using a specified separator string to determine where to make each split.</p>
 </article>
 
       <article class="markdown-body">
-<h1 id="typeplainobject-dsheiko-extras-type-plainobject">Dsheiko\Extras\Type\PlainObject</h1>
+<h1 id="plainobject-dsheiko-extras-type-plainobject">Dsheiko\Extras\Type\PlainObject</h1>
 <p>Object representing an associative array similar to plain object in JavaScript</p>
-<h2 id="typeplainobject-overview-example">Overview example</h2>
+<h2 id="plainobject-overview-example">Overview example</h2>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="keyword">use</span> Dsheiko\Extras\Type\PlainObject;
 
@@ -2919,20 +3166,20 @@ using a specified separator string to determine where to make each split.</p>
 <span class="keyword">echo</span> <span class="variable">$po</span>-&gt;foo; <span class="comment">// "FOO"</span>
 <span class="keyword">echo</span> <span class="variable">$po</span>-&gt;bar; <span class="comment">// "BAR"</span></code></pre>
 
-<h2 id="typeplainobject-javascript-inspired-methods">JavaScript-inspired methods</h2>
-<h3 id="typeplainobject-assign">assign</h3>
+<h2 id="plainobject-javascript-inspired-methods">JavaScript-inspired methods</h2>
+<h3 id="plainobject-assign">assign</h3>
 <p>Copy the values of all properties from one or more source arrays to a target array.</p>
 <ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank">see also</a></li>
 </ul>
-<h5 id="typeplainobject-parameters">Parameters</h5>
+<h5 id="plainobject-parameters">Parameters</h5>
 <ul>
 <li><code>{PlainObject} $target</code> - target object</li>
 <li><code>{array} ...$sources</code> - variadic list of source plain objects or arrays</li>
 </ul>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> assign(PlainObject <span class="variable">$target</span>, ...<span class="variable">$sources</span>): PlainObject</code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po1</span> = <span class="keyword">new</span> PlainObject([<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>]);
 <span class="variable">$po2</span> = <span class="keyword">new</span> PlainObject([<span class="string">"bar"</span> =&gt; <span class="string">"BAR"</span>]);
@@ -2941,59 +3188,59 @@ using a specified separator string to determine where to make each split.</p>
 <span class="keyword">echo</span> <span class="variable">$res</span>-&gt;bar; <span class="comment">// "BAR"</span>
 <span class="keyword">echo</span> <span class="variable">$po1</span>-&gt;foo; <span class="comment">// "FOO"</span>
 <span class="keyword">echo</span> <span class="variable">$po1</span>-&gt;bar; <span class="comment">// "BAR"</span></code></pre>
-<h3 id="typeplainobject-entries">entries</h3>
+<h3 id="plainobject-entries">entries</h3>
 <p>Return an array of a given object&#39;s own enumerable property [key, value] pairs</p>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> entries(): <span class="keyword">array</span></code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>, <span class="string">"bar"</span> =&gt; <span class="string">"BAR"</span>]);
 <span class="variable">$res</span> = <span class="variable">$po</span>-&gt;entries();
 var_dump(<span class="variable">$res</span>[<span class="number">0</span>]); <span class="comment">// ["foo", "FOO"]</span>
 var_dump(<span class="variable">$res</span>[<span class="number">1</span>]); <span class="comment">// ["bar", "BAR"]</span></code></pre>
-<h3 id="typeplainobject-keys">keys</h3>
+<h3 id="plainobject-keys">keys</h3>
 <p>Return all the keys or a subset of the keys of a plain object</p>
-<h5 id="typeplainobject-parameters">Parameters</h5>
+<h5 id="plainobject-parameters">Parameters</h5>
 <ul>
 <li><code>{string} $searchValue</code> - [OPTIONAL] substring to look for</li>
 </ul>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> keys(<span class="variable">$searchValue</span> = <span class="keyword">null</span>): <span class="keyword">array</span></code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>, <span class="string">"bar"</span> =&gt; <span class="string">"BAR"</span>]);
 <span class="variable">$res</span> = <span class="variable">$po</span>-&gt;keys(); <span class="comment">// ["foo", "bar"]</span></code></pre>
-<h3 id="typeplainobject-toarray">toArray</h3>
+<h3 id="plainobject-toarray">toArray</h3>
 <p>Transform back to array</p>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> toArray(): <span class="keyword">array</span></code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>, <span class="string">"bar"</span> =&gt; <span class="string">"BAR"</span>]);
 <span class="variable">$res</span> = <span class="variable">$po</span>-&gt;toArray();
 <span class="keyword">echo</span> is_array(<span class="variable">$res</span>); <span class="comment">// true</span></code></pre>
-<h3 id="typeplainobject-values">values</h3>
+<h3 id="plainobject-values">values</h3>
 <p>Return all the values of a plain object</p>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> values(): <span class="keyword">array</span></code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>, <span class="string">"bar"</span> =&gt; <span class="string">"BAR"</span>]);
 <span class="variable">$res</span> = <span class="variable">$po</span>-&gt;values(); <span class="comment">// ["FOO", "BAR"]</span></code></pre>
-<h2 id="typeplainobject-underscore-js-objects-methods">Underscore.js\Objects methods</h2>
-<h3 id="typeplainobject-mapobject">mapObject</h3>
+<h2 id="plainobject-underscore-js-objects-methods">Underscore.js\Objects methods</h2>
+<h3 id="plainobject-mapobject">mapObject</h3>
 <p>Like map, but for associative arrays. Transform the value of each property in turn.</p>
 <ul>
 <li><a href="http://underscorejs.org/#mapObject" target="_blank">see also</a>.</li>
 </ul>
-<h5 id="typeplainobject-parameters">Parameters</h5>
+<h5 id="plainobject-parameters">Parameters</h5>
 <ul>
 <li><code>{callable} $iteratee</code> - iteratee function</li>
 <li><code>{object} $context</code> - (optional) context object to bind to</li>
 </ul>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> mapObject(callable <span class="variable">$iteratee</span>, <span class="variable">$context</span> = <span class="keyword">null</span>): PlainObject</code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([
         <span class="string">"start"</span> =&gt; <span class="number">5</span>,
@@ -3002,25 +3249,25 @@ var_dump(<span class="variable">$res</span>[<span class="number">1</span>]); <sp
 <span class="variable">$res</span> = <span class="variable">$po</span>-&gt;mapObject(function(<span class="variable">$val</span>){
     <span class="keyword">return</span> <span class="variable">$val</span> + <span class="number">5</span>;
 }); <span class="comment">// PlainObject{ "start": 10, "end": 17 }</span></code></pre>
-<h3 id="typeplainobject-pairs">pairs</h3>
+<h3 id="plainobject-pairs">pairs</h3>
 <p>Convert an object into a list of [key, value] pairs. Alias of <a href="#entries">entries</a></p>
 <ul>
 <li><a href="http://underscorejs.org/#pairs" target="_blank">see also</a>.</li>
 </ul>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> pairs(): <span class="keyword">array</span></code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>, <span class="string">"bar"</span> =&gt; <span class="string">"BAR"</span>]);
 <span class="variable">$res</span> = <span class="variable">$po</span>-&gt;pairs(); <span class="comment">// [["foo", "FOO"], ["bar", "BAR"]]</span></code></pre>
-<h3 id="typeplainobject-invert">invert</h3>
+<h3 id="plainobject-invert">invert</h3>
 <p>Returns a copy of the object where the keys have become the values and the values the keys. For this to work, all of your object&#39;s values should be unique and string serializable.</p>
 <ul>
 <li><a href="http://underscorejs.org/#invert" target="_blank">see also</a>.</li>
 </ul>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> invert(): PlainObject</code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([
     <span class="string">"Moe"</span> =&gt; <span class="string">"Moses"</span>,
@@ -3031,19 +3278,19 @@ var_dump(<span class="variable">$res</span>[<span class="number">1</span>]); <sp
 <span class="keyword">echo</span> <span class="variable">$res</span>-&gt;Moses; <span class="comment">// "Moe"</span>
 <span class="keyword">echo</span> <span class="variable">$res</span>-&gt;Louis; <span class="comment">// "Larry"</span>
 <span class="keyword">echo</span> <span class="variable">$res</span>-&gt;Jerome; <span class="comment">// "Curly"</span></code></pre>
-<h3 id="typeplainobject-findkey">findKey</h3>
+<h3 id="plainobject-findkey">findKey</h3>
 <p>Similar to <a href="#findIndex">findIndex</a>, but for keys in objects. Returns the key where the predicate truth test passes or undefined</p>
 <ul>
 <li><a href="http://underscorejs.org/#findKey" target="_blank">see also</a>.</li>
 </ul>
-<h5 id="typeplainobject-parameters">Parameters</h5>
+<h5 id="plainobject-parameters">Parameters</h5>
 <ul>
 <li><code>{callable} $iteratee</code> - iteratee function</li>
 <li><code>{object} $context</code> - (optional) context object to bind to</li>
 </ul>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> findKey(<span class="variable">$iteratee</span> = <span class="keyword">null</span>, <span class="variable">$context</span> = <span class="keyword">null</span>): string</code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([
     <span class="string">"foo"</span> =&gt; [
@@ -3060,18 +3307,18 @@ var_dump(<span class="variable">$res</span>[<span class="number">1</span>]); <sp
     ],
 ]);
 <span class="variable">$res</span> = <span class="variable">$po</span>-&gt;findKey([ <span class="string">"name"</span> =&gt; <span class="string">"Ted"</span> ]); <span class="comment">// "foo"</span></code></pre>
-<h3 id="typeplainobject-pick">pick</h3>
+<h3 id="plainobject-pick">pick</h3>
 <p>Return a copy of the object, filtered to only have values for the whitelisted keys (or array of valid keys). Alternatively accepts a predicate indicating which keys to pick.</p>
 <ul>
 <li><a href="http://underscorejs.org/#pick" target="_blank">see also</a>.</li>
 </ul>
-<h5 id="typeplainobject-parameters">Parameters</h5>
+<h5 id="plainobject-parameters">Parameters</h5>
 <ul>
 <li><code>{array} ...$keys</code> - keys or iteratee function</li>
 </ul>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> pick(...<span class="variable">$keys</span>): PlainObject</code></pre>
-<h6 id="typeplainobject-example-1">Example #1</h6>
+<h6 id="plainobject-example-1">Example #1</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([
     <span class="string">'name'</span> =&gt; <span class="string">'moe'</span>,
@@ -3080,7 +3327,7 @@ var_dump(<span class="variable">$res</span>[<span class="number">1</span>]); <sp
 ]);
 <span class="variable">$res</span> = <span class="variable">$po</span>-&gt;pick(<span class="string">'name'</span>, <span class="string">'age'</span>);
 <span class="comment">// PlainObject{ 'name': 'moe', 'age': 50 }</span></code></pre>
-<h6 id="typeplainobject-example-2">Example #2</h6>
+<h6 id="plainobject-example-2">Example #2</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([
     <span class="string">'name'</span> =&gt; <span class="string">'moe'</span>,
@@ -3092,18 +3339,18 @@ var_dump(<span class="variable">$res</span>[<span class="number">1</span>]); <sp
     <span class="keyword">return</span> is_int(<span class="variable">$value</span>);
 });
 <span class="comment">// PlainObject{ 'age': 50 }</span></code></pre>
-<h3 id="typeplainobject-omit">omit</h3>
+<h3 id="plainobject-omit">omit</h3>
 <p>Return a copy of the object, filtered to omit the blacklisted keys (or array of keys). Alternatively accepts a predicate indicating which keys to omit.</p>
 <ul>
 <li><a href="http://underscorejs.org/#omit" target="_blank">see also</a>.</li>
 </ul>
-<h5 id="typeplainobject-parameters">Parameters</h5>
+<h5 id="plainobject-parameters">Parameters</h5>
 <ul>
 <li><code>{array} ...$keys</code> - keys or iteratee function</li>
 </ul>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> omit(...<span class="variable">$keys</span>): PlainObject</code></pre>
-<h6 id="typeplainobject-example-1">Example #1</h6>
+<h6 id="plainobject-example-1">Example #1</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([
     <span class="string">'name'</span> =&gt; <span class="string">'moe'</span>,
@@ -3113,7 +3360,7 @@ var_dump(<span class="variable">$res</span>[<span class="number">1</span>]); <sp
 
 <span class="variable">$res</span> = <span class="variable">$po</span>-&gt;omit(<span class="string">'userid'</span>);
 <span class="comment">// PlainObject{ 'name': 'moe', 'age': 50 }</span></code></pre>
-<h6 id="typeplainobject-example-2">Example #2</h6>
+<h6 id="plainobject-example-2">Example #2</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([
     <span class="string">'name'</span> =&gt; <span class="string">'moe'</span>,
@@ -3125,18 +3372,18 @@ var_dump(<span class="variable">$res</span>[<span class="number">1</span>]); <sp
     <span class="keyword">return</span> is_int(<span class="variable">$value</span>);
 });
 <span class="comment">// PlainObject{ 'name': 'moe', 'userid': 'moe1' }</span></code></pre>
-<h3 id="typeplainobject-defaults">defaults</h3>
+<h3 id="plainobject-defaults">defaults</h3>
 <p>Fill in undefined properties in object with the first value present in the following list of defaults objects.</p>
 <ul>
 <li><a href="http://underscorejs.org/#defaults" target="_blank">see also</a>.</li>
 </ul>
-<h5 id="typeplainobject-parameters">Parameters</h5>
+<h5 id="plainobject-parameters">Parameters</h5>
 <ul>
 <li><code>{array} $defaults</code> - key-value array of defaults</li>
 </ul>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> defaults(<span class="keyword">array</span> <span class="variable">$defaults</span>): PlainObject</code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([
     <span class="string">"flavor"</span> =&gt; <span class="string">"chocolate"</span>
@@ -3146,36 +3393,349 @@ var_dump(<span class="variable">$res</span>[<span class="number">1</span>]); <sp
      <span class="string">"sprinkles"</span> =&gt; <span class="string">"lots"</span>,
 ]);
 <span class="comment">// PlainObject{ "flavor": "chocolate", "sprinkles": "lots" }</span></code></pre>
-<h3 id="typeplainobject-has">has</h3>
+<h3 id="plainobject-has">has</h3>
 <p>Does the object contain the given key? Identical to object.hasOwnProperty(key), but uses a safe reference to the hasOwnProperty function, in case it&#39;s been overridden accidentally.</p>
 <ul>
 <li><a href="http://underscorejs.org/#has" target="_blank">see also</a>.</li>
 </ul>
-<h5 id="typeplainobject-parameters">Parameters</h5>
+<h5 id="plainobject-parameters">Parameters</h5>
 <ul>
 <li><code>{string} $key</code> - key to look for</li>
 </ul>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> has(string <span class="variable">$key</span>): bool</code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([
      <span class="string">"flavor"</span> =&gt; <span class="string">"vanilla"</span>,
      <span class="string">"sprinkles"</span> =&gt; <span class="string">"lots"</span>,
 ]);
 <span class="variable">$res</span> = <span class="variable">$po</span>-&gt;has(<span class="string">"flavor"</span>); <span class="comment">// true</span></code></pre>
-<h3 id="typeplainobject-isempty">isEmpty</h3>
+<h3 id="plainobject-isempty">isEmpty</h3>
 <p>Returns true if an enumerable object contains no values (no enumerable own-properties).</p>
 <ul>
 <li><a href="http://underscorejs.org/#isEmpty" target="_blank">see also</a>.</li>
 </ul>
-<h6 id="typeplainobject-syntax">Syntax</h6>
+<h6 id="plainobject-syntax">Syntax</h6>
 <pre><code class="language-php"> isEmpty(): bool</code></pre>
-<h6 id="typeplainobject-example">Example</h6>
+<h6 id="plainobject-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$po</span> = <span class="keyword">new</span> PlainObject([]);
 
 <span class="variable">$res</span> = Arrays::isEmpty(<span class="variable">$po</span>); <span class="comment">// true</span></code></pre>
+</article>
+
+      <article class="markdown-body">
+<h1 id="any-any-extras">Any extras</h1>
+<h2 id="any-overview-example">Overview example</h2>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="keyword">use</span> \Dsheiko\Extras\Any;
+
+<span class="variable">$res</span> = Any::chain(<span class="keyword">new</span> \ArrayObject([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]))
+    -&gt;toArray() <span class="comment">// value is [1,2,3]</span>
+    -&gt;map(function(<span class="variable">$num</span>){ <span class="keyword">return</span> [ <span class="string">"num"</span> =&gt; <span class="variable">$num</span> ]; })
+    <span class="comment">// value is [[ "num" =&gt; 1, ..]]</span>
+    -&gt;reduce(function(<span class="variable">$carry</span>, <span class="variable">$arr</span>){
+        <span class="variable">$carry</span> .= <span class="variable">$arr</span>[<span class="string">"num"</span>];
+        <span class="keyword">return</span> <span class="variable">$carry</span>;
+
+    }, <span class="string">""</span>) <span class="comment">// value is "123"</span>
+    -&gt;replace(<span class="string">"/2/"</span>, <span class="string">""</span>) <span class="comment">// value is "13"</span>
+    -&gt;then(function(<span class="variable">$value</span>){
+      <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$value</span>)) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> \<span class="keyword">Exception</span>(<span class="string">"Empty value"</span>);
+      }
+      <span class="keyword">return</span> <span class="variable">$value</span>;
+    })
+    -&gt;value();
+<span class="keyword">echo</span> <span class="variable">$res</span>; <span class="comment">// "13"</span></code></pre>
+
+<h3 id="any-isdate">isDate</h3>
+<p>Returns true if source is an instance of DateTime.</p>
+<h5 id="any-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $source</code> - value to check</li>
+</ul>
+<h6 id="any-syntax">Syntax</h6>
+<pre><code class="language-php"> isDate(<span class="variable">$source</span>): bool</code></pre>
+<h6 id="any-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Any::isDate(<span class="keyword">new</span> DateTime(<span class="string">'2011-01-01T15:03:01.012345Z'</span>)); <span class="comment">// true</span></code></pre>
+<h3 id="any-iserror">isError</h3>
+<p>Returns true if source is an Error</p>
+<h5 id="any-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $source</code> - value to check</li>
+</ul>
+<h6 id="any-syntax">Syntax</h6>
+<pre><code class="language-php"> isError(<span class="variable">$source</span>): bool</code></pre>
+<h6 id="any-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="keyword">try</span> {
+    <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"message"</span>);
+} <span class="keyword">catch</span> (\Error <span class="variable">$ex</span>) {
+    <span class="variable">$res</span> = Any::isError(<span class="variable">$ex</span>); <span class="comment">// true</span>
+}</code></pre>
+<h3 id="any-isexception">isException</h3>
+<p>Returns true if source is an Exception</p>
+<h5 id="any-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $source</code> - value to check</li>
+</ul>
+<h6 id="any-syntax">Syntax</h6>
+<pre><code class="language-php"> isException(<span class="variable">$source</span>): bool</code></pre>
+<h6 id="any-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="keyword">try</span> {
+    <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"message"</span>);
+} <span class="keyword">catch</span> (\<span class="keyword">Exception</span> <span class="variable">$ex</span>) {
+    <span class="variable">$res</span> = Any::isException(<span class="variable">$ex</span>); <span class="comment">// true</span>
+}</code></pre>
+<h3 id="any-isnull">isNull</h3>
+<p>Returns true if source is NULL</p>
+<h5 id="any-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $source</code> - value to check</li>
+</ul>
+<h6 id="any-syntax">Syntax</h6>
+<pre><code class="language-php"> isNull(<span class="variable">$source</span>): bool</code></pre>
+<h6 id="any-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+Any::isNull(<span class="keyword">null</span>); <span class="comment">// true</span></code></pre>
+<h3 id="any-chain">chain</h3>
+<p>Returns a wrapped object. Calling methods on this object will continue to return wrapped objects until value is called.</p>
+<h5 id="any-parameters">Parameters</h5>
+<ul>
+<li><code>{string} $value</code> - source</li>
+</ul>
+<h6 id="any-syntax">Syntax</h6>
+<pre><code class="language-php"> chain(string <span class="variable">$value</span>)</code></pre>
+</article>
+
+      <article class="markdown-body">
+<h1  id="chaining-chaining">Chaining</h1>
+
+<h3  id="chaining-chain">chain</h3>
+<ul>
+<li>alias: <code>Any::chain</code></li>
+</ul>
+<p>Iterate over a list of elements, yielding each in turn to an $callable function</p>
+<ul>
+<li><a href="http://underscorejs.org/#each" target="_blank">see also</a>.</li>
+</ul>
+<h6  id="chaining-parameters">Parameters</h6>
+<ul>
+<li><code>{mixed} $value</code> - manipulation target</li>
+</ul>
+<h6  id="chaining-syntax">Syntax</h6>
+<pre><code class="language-php">{Set}::chain(<span class="variable">$target</span>): Chain</code></pre>
+<h6  id="chaining-example-1">Example #1</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="keyword">use</span> Dsheiko\Extras\Chain;
+
+<span class="comment">// Chain of calls</span>
+<span class="variable">$res</span> = Chain::chain([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="comment">// same as Arrays::chain([1, 2, 3])</span>
+    -&gt;map(function(<span class="variable">$num</span>){ <span class="keyword">return</span> <span class="variable">$num</span> + <span class="number">1</span>; })
+    -&gt;filter(function(<span class="variable">$num</span>){ <span class="keyword">return</span> <span class="variable">$num</span> &gt; <span class="number">1</span>; })
+    -&gt;reduce(function(<span class="variable">$carry</span>, <span class="variable">$num</span>){ <span class="keyword">return</span> <span class="variable">$carry</span> + <span class="variable">$num</span>; }, <span class="number">0</span>)
+    -&gt;value(); <span class="comment">// 9</span></code></pre>
+<h6  id="chaining-example-2">Example #2</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="keyword">use</span> Dsheiko\Extras\Chain;
+
+<span class="class"><span class="keyword">class</span> <span class="title">MapObject</span>
+{</span>
+    <span class="keyword">public</span> <span class="variable">$foo</span> = <span class="string">"FOO"</span>;
+    <span class="keyword">public</span> <span class="variable">$bar</span> = <span class="string">"BAR"</span>;
+}
+
+<span class="variable">$res</span> = Chain::chain(<span class="keyword">new</span> MapObject)
+  -&gt;keys()
+  -&gt;value(); <span class="comment">// ["foo", "bar"]</span></code></pre>
+<h3  id="chaining-then">then</h3>
+<p>Binds a then (transformer) function to the chain</p>
+<h6  id="chaining-parameters">Parameters</h6>
+<ul>
+<li><code>{callable} $callable</code> - then function</li>
+</ul>
+<h6  id="chaining-syntax">Syntax</h6>
+<pre><code class="language-php">{Set}::then(<span class="variable">$function</span>): Chain</code></pre>
+<h6  id="chaining-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="keyword">use</span> Dsheiko\Extras\Chain;
+
+<span class="variable">$res</span> = Chain::chain(<span class="keyword">new</span> \ArrayObject([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>))
+        <span class="comment">// same as Collections::chain(new \ArrayObject([1,2,3])</span>
+        -&gt;toArray()
+        -&gt;then(<span class="string">"json_encode"</span>)
+        -&gt;value(); <span class="comment">// "[1,2,3]"</span></code></pre>
+<h3  id="chaining-tap">tap</h3>
+<p>Underscore syntax for <a href="#then">then</a></p>
+<h6  id="chaining-parameters">Parameters</h6>
+<ul>
+<li><code>{callable} $callable</code> - then function</li>
+</ul>
+<h6  id="chaining-syntax">Syntax</h6>
+<pre><code class="language-php">{Set}::tap(<span class="variable">$function</span>): Chain</code></pre>
+<h3  id="chaining-value">value</h3>
+<p>Extracts the value of a wrapped object.</p>
+<p>#</p>
+<h6  id="chaining-syntax">Syntax</h6>
+<pre><code class="language-php"><span class="variable">$chain</span>::value()</code></pre>
+</article>
+
+      <article class="markdown-body">
+<h1 id="utils-dsheiko-extras-utils">Dsheiko\Extras\Utils</h1>
+
+<blockquote>
+<p>Methods <code>_.noConflict</code>, <code>_.mixin</code> and  <code>_.template</code> are not relevant in the context of PHP</p>
+<p>Methods <code>_.escape</code> and <code>_.unescape</code> belong to <code>Dsheiko\Extras\Strings</code></p>
+<p>Method <code>_.times</code> belongs to <code>Dsheiko\Extras\Functions</code></p>
+</blockquote>
+<h3 id="utils-identity">identity</h3>
+<p>Returns the same value that is used as the argument. In math: <code>f(x) = x</code>
+This function looks useless, but is used throughout Underscore as a default iteratee.</p>
+<ul>
+<li><a href="http://underscorejs.org/#identity" target="_blank">see also</a></li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> identity(): callable</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::identity();
+<span class="variable">$res</span>(<span class="number">42</span>); <span class="comment">// 42</span></code></pre>
+<h3 id="utils-constant">constant</h3>
+<p>Creates a function that returns the same value that is used as the argument of the method</p>
+<ul>
+<li><a href="http://underscorejs.org/#constant" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $value</code> - arbitrary argument</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> constant(<span class="variable">$value</span>): callable</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::constant(<span class="number">42</span>);
+<span class="variable">$res</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>); <span class="comment">// 42</span></code></pre>
+<h3 id="utils-noop">noop</h3>
+<p>Returns null irrespective of the arguments passed to it. Useful as the default for optional callback arguments.</p>
+<ul>
+<li><a href="http://underscorejs.org/#noop" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{array} ...$args</code> (optional)</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> noop(...<span class="variable">$args</span>)</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::noop(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); <span class="comment">// null</span></code></pre>
+<h3 id="utils-random">random</h3>
+<p>Returns a random integer between min and max, inclusive. If you only pass one argument, it will return a number between 0 and that number</p>
+<ul>
+<li><a href="http://underscorejs.org/#noop" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{int} $min</code></li>
+<li><code>{int} $max</code> (optional)</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> random(int <span class="variable">$min</span> , int <span class="variable">$max</span> = <span class="keyword">null</span>)</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::random(<span class="number">100</span>); <span class="comment">// 42</span>
+<span class="variable">$res</span> = Utils::random(<span class="number">5</span>, <span class="number">10</span>); <span class="comment">// 7</span></code></pre>
+<h3 id="utils-iteratee">iteratee</h3>
+<p>Generates a callback that can be applied to each element in a collection.</p>
+<ul>
+<li><a href="http://underscorejs.org/#iteratee" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{mixed} $value</code></li>
+<li><code>{object} $context</code> (optional) context object to bind to</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> iteratee(<span class="variable">$value</span>, <span class="variable">$context</span> = <span class="keyword">null</span>): callable</code></pre>
+<h6 id="utils-example-1">Example #1</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="comment">// return identity() for null</span>
+<span class="variable">$res</span> = Utils::iteratee(<span class="keyword">null</span>);
+<span class="variable">$res</span>(<span class="number">1</span>); <span class="comment">// 1</span></code></pre>
+<h6 id="utils-example-2">Example #2</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="comment">// return matcher() for an array</span>
+<span class="variable">$macther</span> = Utils::iteratee([<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>]);
+<span class="variable">$res</span> = Arrays::find([[<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>]], <span class="variable">$macther</span>); <span class="comment">// ["foo" =&gt; "FOO"]</span></code></pre>
+<h6 id="utils-example-3">Example #3</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="comment">// return normalized callablefor a callable</span>
+<span class="variable">$res</span> = Utils::iteratee(function(){ <span class="keyword">return</span> <span class="number">42</span>; });
+<span class="variable">$res</span>(); <span class="comment">// 42</span></code></pre>
+<h6 id="utils-example-4">Example #4</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="comment">// bind callable for a context</span>
+<span class="variable">$obj</span> = (object)[<span class="string">"value"</span> =&gt; <span class="number">42</span>];
+<span class="variable">$res</span> = Utils::iteratee(function(){ <span class="keyword">return</span> <span class="variable">$this</span>-&gt;value; }, <span class="variable">$obj</span>);
+<span class="variable">$res</span>(); <span class="comment">// 42</span></code></pre>
+<h6 id="utils-example-5">Example #5</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="comment">// return property() for other types</span>
+<span class="variable">$res</span> = Utils::iteratee(<span class="string">"foo"</span>);
+<span class="variable">$res</span>([<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>]); <span class="comment">// "FOO"</span></code></pre>
+<h3 id="utils-uniqueid">uniqueId</h3>
+<p>Generate a globally-unique id for client-side models or DOM elements that need one. If prefix is passed, the id will be appended to it.</p>
+<ul>
+<li><a href="http://underscorejs.org/#uniqueId" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{string} $prefix</code> (optional)</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> uniqueId(string <span class="variable">$prefix</span> = <span class="keyword">null</span>): string</code></pre>
+<h6 id="utils-example-1">Example #1</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::uniqueId(); <span class="comment">// "5acb4ab426fc9"</span></code></pre>
+<h6 id="utils-example-2">Example #2</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$res</span> = Utils::uniqueId(<span class="string">"contact_"</span>); <span class="comment">// "contact_5acb4ab427262"</span></code></pre>
+<h3 id="utils-result">result</h3>
+<p>If the value of the named property is a function then invoke it with the object as context; otherwise, return it. If a default value is provided and the property doesn&#39;t exist or is undefined then the default will be returned. If defaultValue is a function its result will be returned.</p>
+<ul>
+<li><a href="http://underscorejs.org/#result" target="_blank">see also</a></li>
+</ul>
+<h5 id="utils-parameters">Parameters</h5>
+<ul>
+<li><code>{array} $array</code> - source key-value array</li>
+<li><code>{string} $prop</code> - property name</li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> result(<span class="keyword">array</span> <span class="variable">$array</span>, string <span class="variable">$prop</span>)</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="variable">$options</span> = [
+    <span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>,
+    <span class="string">"bar"</span> =&gt; function() {
+        <span class="keyword">return</span> <span class="string">"BAR"</span>;
+    },
+];
+<span class="keyword">echo</span> Utils::result(<span class="variable">$options</span>, <span class="string">"foo"</span>); <span class="comment">// "FOO"</span>
+<span class="keyword">echo</span> Utils::result(<span class="variable">$options</span>, <span class="string">"bar"</span>); <span class="comment">// "BAR"</span></code></pre>
+<h3 id="utils-now">now</h3>
+<p>Returns an integer timestamp for the current time</p>
+<ul>
+<li><a href="http://underscorejs.org/#now" target="_blank">see also</a></li>
+</ul>
+<h6 id="utils-syntax">Syntax</h6>
+<pre><code class="language-php"> now(): int</code></pre>
+<h6 id="utils-example">Example</h6>
+<pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
+<span class="keyword">echo</span> Utils::now(); <span class="comment">// 1392066795351</span></code></pre>
 </article>
 
     </main>

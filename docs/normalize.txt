@@ -8,3 +8,18 @@ replace
  " target="_blank">see also</a>
 
 remove ul (menu)
+
+
+run JavaScript:
+
+console.clear();
+console.log(`isDate
+isError
+isException
+isNull
+chainy`
+  .split("\n")
+  .reduce((carry, item) => {
+ return carry + `
+"${item}",`;
+}, ""));
