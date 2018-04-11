@@ -591,7 +591,7 @@ Arrays::each([<span class="number">1</span>, <span class="number">2</span>, <spa
 <h5 id="arrays-parameters">Parameters</h5>
 <ul>
 <li><code>{array} $array</code> - source array</li>
-<li><code>{mixed} $mixed</code> - predicate callback</li>
+<li><code>{callable} $predicate</code> - predicate callback</li>
 </ul>
 <h6 id="arrays-callback-arguments">Callback arguments</h6>
 <ul>
@@ -600,7 +600,7 @@ Arrays::each([<span class="number">1</span>, <span class="number">2</span>, <spa
 <li><code>{array} $array</code> - source array</li>
 </ul>
 <h6 id="arrays-syntax">Syntax</h6>
-<pre><code class="language-php"> filter(<span class="keyword">array</span> <span class="variable">$array</span>, mixed <span class="variable">$mixed</span>): <span class="keyword">array</span></code></pre>
+<pre><code class="language-php"> filter(<span class="keyword">array</span> <span class="variable">$array</span>, callable <span class="variable">$predicate</span>): <span class="keyword">array</span></code></pre>
 <h6 id="arrays-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$array</span> = Arrays::filter([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], function(<span class="variable">$num</span>){ <span class="keyword">return</span> <span class="variable">$num</span> &gt; <span class="number">1</span>; });</code></pre>
@@ -612,7 +612,7 @@ Arrays::each([<span class="number">1</span>, <span class="number">2</span>, <spa
 <h5 id="arrays-parameters">Parameters</h5>
 <ul>
 <li><code>{array} $array</code> - source array</li>
-<li><code>{mixed} $mixed</code> - predicate callback</li>
+<li><code>{callable} $predicate</code> - predicate callback</li>
 </ul>
 <h6 id="arrays-callback-arguments">Callback arguments</h6>
 <ul>
@@ -621,7 +621,7 @@ Arrays::each([<span class="number">1</span>, <span class="number">2</span>, <spa
 <li><code>{array} $array</code> - source array</li>
 </ul>
 <h6 id="arrays-syntax">Syntax</h6>
-<pre><code class="language-php"> find(<span class="keyword">array</span> <span class="variable">$array</span>, mixed <span class="variable">$mixed</span>): mixed</code></pre>
+<pre><code class="language-php"> find(<span class="keyword">array</span> <span class="variable">$array</span>, callable <span class="variable">$predicate</span>)</code></pre>
 <h6 id="arrays-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$value</span> = Arrays::find([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], function(<span class="variable">$num</span>){ <span class="keyword">return</span> <span class="variable">$num</span> &gt; <span class="number">1</span>; });</code></pre>
@@ -725,7 +725,7 @@ Arrays::each([<span class="number">1</span>, <span class="number">2</span>, <spa
 <li><code>{mixed} $separator</code> - (optional) Specifies a mixed to separate each pair of adjacent elements of the array. The separator is converted to a mixed if necessary. If omitted, the array elements are separated with a comma (&quot;,&quot;).</li>
 </ul>
 <h6 id="arrays-syntax">Syntax</h6>
-<pre><code class="language-php"> join(<span class="keyword">array</span> <span class="variable">$array</span>, mixed <span class="variable">$separator</span> = <span class="string">","</span>): mixed</code></pre>
+<pre><code class="language-php"> join(<span class="keyword">array</span> <span class="variable">$array</span>, mixed <span class="variable">$separator</span> = <span class="string">","</span>)</code></pre>
 <h6 id="arrays-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$res</span> = Arrays::join([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], <span class="string">":"</span>); <span class="comment">// "1:2:3"</span></code></pre>
@@ -807,7 +807,7 @@ Arrays::each([<span class="number">1</span>, <span class="number">2</span>, <spa
 <li><code>{array} ...$args</code> - elements of which to create the array</li>
 </ul>
 <h6 id="arrays-syntax">Syntax</h6>
-<pre><code class="language-php"> <span class="function"><span class="keyword">function</span> <span class="title">of</span><span class="params">(...<span class="variable">$args</span>)</span>: <span class="title">array</span></code></pre>
+<pre><code class="language-php"> <span class="function"><span class="title">of</span><span class="params">(...<span class="variable">$args</span>)</span>: <span class="title">array</span></code></pre>
 <h6 id="arrays-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
  <span class="variable">$res</span> = Arrays::of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>); <span class="comment">// [1, 2, 3]</span></code></pre>
@@ -860,7 +860,7 @@ Arrays::each([<span class="number">1</span>, <span class="number">2</span>, <spa
 <li><code>{array} $array</code> - source array</li>
 </ul>
 <h6 id="arrays-syntax">Syntax</h6>
-<pre><code class="language-php"> reduceRight(<span class="keyword">array</span> <span class="variable">$array</span>, mixed <span class="variable">$mixed</span>, <span class="variable">$initial</span> = <span class="keyword">null</span>): mixed</code></pre>
+<pre><code class="language-php"> reduceRight(<span class="keyword">array</span> <span class="variable">$array</span>, mixed <span class="variable">$mixed</span>, <span class="variable">$initial</span> = <span class="keyword">null</span>)</code></pre>
 <h6 id="arrays-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$res</span> = Arrays::reduceRight([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], function(<span class="keyword">array</span> <span class="variable">$carry</span>, int <span class="variable">$num</span>){
@@ -886,7 +886,7 @@ Arrays::each([<span class="number">1</span>, <span class="number">2</span>, <spa
 <li><code>{array} $array</code> - source array</li>
 </ul>
 <h6 id="arrays-syntax">Syntax</h6>
-<pre><code class="language-php"> reduce(<span class="keyword">array</span> <span class="variable">$array</span>, mixed <span class="variable">$mixed</span>, <span class="variable">$initial</span> = <span class="keyword">null</span>): mixed</code></pre>
+<pre><code class="language-php"> reduce(<span class="keyword">array</span> <span class="variable">$array</span>, mixed <span class="variable">$mixed</span>, <span class="variable">$initial</span> = <span class="keyword">null</span>)</code></pre>
 <h6 id="arrays-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$sum</span> = Arrays::reduce([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$carry</span>, <span class="variable">$num</span>)</span> {</span> <span class="keyword">return</span> <span class="variable">$carry</span> + <span class="variable">$num</span>; }, <span class="number">0</span>);

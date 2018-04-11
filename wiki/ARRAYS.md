@@ -315,7 +315,7 @@ Look through each value in the list, returning an array of all the values that p
 
 ##### Parameters
 - `{array} $array` - source array
-- `{mixed} $mixed` - predicate callback
+- `{callable} $predicate` - predicate callback
 
 ###### Callback arguments
 - `{mixed} $value` - element value
@@ -324,7 +324,7 @@ Look through each value in the list, returning an array of all the values that p
 
 ###### Syntax
 ```php
- filter(array $array, mixed $mixed): array
+ filter(array $array, callable $predicate): array
 ```
 
 ###### Example
@@ -339,7 +339,7 @@ Look through each value in the list, returning the first one that passes a truth
 
 ##### Parameters
 - `{array} $array` - source array
-- `{mixed} $mixed` - predicate callback
+- `{callable} $predicate` - predicate callback
 
 ###### Callback arguments
 - `{mixed} $value` - element value
@@ -348,7 +348,7 @@ Look through each value in the list, returning the first one that passes a truth
 
 ###### Syntax
 ```php
- find(array $array, mixed $mixed): mixed
+ find(array $array, callable $predicate)
 ```
 
 ###### Example
@@ -477,7 +477,7 @@ Join all elements of an array into a mixed and returns this mixed.
 
 ###### Syntax
 ```php
- join(array $array, mixed $separator = ","): mixed
+ join(array $array, mixed $separator = ",")
 ```
 
 ###### Example
@@ -576,7 +576,7 @@ Create a new array with a variable number of arguments, regardless of number or 
 
 ###### Syntax
 ```php
- function of(...$args): array
+ of(...$args): array
 ```
 
 ###### Example
@@ -640,7 +640,7 @@ The right-associative version of reduce.
 
 ###### Syntax
 ```php
- reduceRight(array $array, mixed $mixed, $initial = null): mixed
+ reduceRight(array $array, mixed $mixed, $initial = null)
 ```
 
 ###### Example
@@ -670,7 +670,7 @@ Boil down a list of values into a single value.
 
 ###### Syntax
 ```php
- reduce(array $array, mixed $mixed, $initial = null): mixed
+ reduce(array $array, mixed $mixed, $initial = null)
 ```
 
 ###### Example
@@ -902,29 +902,8 @@ pairs listed in properties.
 
 ```php
 <?php
-$src = [
-    [
-        "foo" => "FOO",
-        "bar" => "BAR",
-        "baz" => "BAZ",
-    ],
-    [
-        "bar" => "BAR",
-        "baz" => "BAZ",
-    ],
-    [
-        "baz" => "BAZ",
-    ]
-];
-$res = Arrays::findWhere($src, [
-    "foo" => "FOO",
-    "bar" => "BAR",
-]);
-//    [
-//        "foo" => "FOO",
-//        "bar" => "BAR",
-//        "baz" => "BAZ",
-//    ]
+$res = Arrays::findWhere([ [ "foo" => "FOO", "bar" => "BAR" ], [ "baz" => "BAZ" ] ], [ "foo" => "FOO" ]);
+// [ "foo" => "FOO", "bar" => "BAR" ]
 ```
 
 ### reject
