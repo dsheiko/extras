@@ -1320,7 +1320,7 @@ Get the last value from an array regardless index order and without modifying th
 
 ###### Syntax
 ```php
- last(array $array): mixed
+ last(array $array)
 ```
 
 ###### Example
@@ -1482,7 +1482,6 @@ $res = Arrays::difference(
     ["a" => "green", "yellow", "red"]
 );
 // [ "b" => "brown", "c" => "blue",  "red" ]
-}
 
 ```
 

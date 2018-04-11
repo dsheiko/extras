@@ -1378,7 +1378,7 @@ Then it returns $defaultValue (when <code>$defaultValue</code> is a mixed then t
 <li><code>{mixed} $defaultValue</code> - (optional) scalar or mixed</li>
 </ul>
 <h6 id="arrays-syntax">Syntax</h6>
-<pre><code class="language-php"> first(<span class="keyword">array</span> <span class="variable">$array</span>, <span class="variable">$defaultValue</span> = <span class="keyword">null</span>): mixed</code></pre>
+<pre><code class="language-php"> first(<span class="keyword">array</span> <span class="variable">$array</span>, <span class="variable">$defaultValue</span> = <span class="keyword">null</span>)</code></pre>
 <h6 id="arrays-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$element</span> = Arrays::first([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);
@@ -1541,7 +1541,7 @@ in order, that are present in one or more of the arrays.</p>
     [<span class="string">"a"</span> =&gt; <span class="string">"green"</span>, <span class="string">"yellow"</span>, <span class="string">"red"</span>]
 );
 <span class="comment">// [ "b" =&gt; "brown", "c" =&gt; "blue",  "red" ]</span>
-}</code></pre>
+</code></pre>
 <h3 id="arrays-uniq">uniq</h3>
 <p>Produces a duplicate-free version of the array</p>
 <ul>
@@ -2235,7 +2235,7 @@ with a given sequence of arguments preceding any provided when the new function 
 <li><code>{object} $context</code> - new $this</li>
 </ul>
 <h6 id="functions-syntax">Syntax</h6>
-<pre><code class="language-php">bind(mixed <span class="variable">$source</span>, <span class="variable">$context</span> = <span class="keyword">null</span>): mixed</code></pre>
+<pre><code class="language-php">bind(mixed <span class="variable">$source</span>, <span class="variable">$context</span> = <span class="keyword">null</span>)</code></pre>
 <h6 id="functions-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$obj</span> = Arrays::object([<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>]);
@@ -2270,7 +2270,7 @@ with a given sequence of arguments preceding any provided when the new function 
 <li><code>{mixed} $source</code> - source mixed</li>
 </ul>
 <h6 id="functions-syntax">Syntax</h6>
-<pre><code class="language-php">toString(mixed <span class="variable">$source</span>): mixed</code></pre>
+<pre><code class="language-php">toString(mixed <span class="variable">$source</span>)</code></pre>
 <h6 id="functions-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="keyword">echo</span> Functions::toString(<span class="string">"strlen"</span>);</code></pre>
@@ -2322,7 +2322,7 @@ Functions::bindAll(<span class="variable">$foo</span>, <span class="string">"inc
 <li><code>{array} $boundArgs</code> - arguments to bind</li>
 </ul>
 <h6 id="functions-syntax">Syntax</h6>
-<pre><code class="language-php"> partial(mixed <span class="variable">$source</span>, ...<span class="variable">$boundArgs</span>): mixed</code></pre>
+<pre><code class="language-php"> partial(mixed <span class="variable">$source</span>, ...<span class="variable">$boundArgs</span>)</code></pre>
 <h6 id="functions-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$subtract</span> = function(<span class="variable">$a</span>, <span class="variable">$b</span>) { <span class="keyword">return</span> <span class="variable">$b</span> - <span class="variable">$a</span>; };
@@ -2340,7 +2340,7 @@ If passed an optional hashFunction</p>
 <li><code>{mixed} $hasher</code> - (optional) hash generator</li>
 </ul>
 <h6 id="functions-syntax">Syntax</h6>
-<pre><code class="language-php">memoize(<span class="variable">$source</span>, <span class="variable">$hasher</span> = <span class="keyword">null</span>): mixed</code></pre>
+<pre><code class="language-php">memoize(<span class="variable">$source</span>, <span class="variable">$hasher</span> = <span class="keyword">null</span>)</code></pre>
 <h6 id="functions-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$counter</span> = Functions::memoize(<span class="string">"fixtureCounter::increment"</span>);
@@ -2433,7 +2433,7 @@ and then check it later.</p>
 <li><code>{mixed} $source</code> - source function</li>
 </ul>
 <h6 id="functions-syntax">Syntax</h6>
-<pre><code class="language-php"> once(mixed <span class="variable">$source</span>): mixed</code></pre>
+<pre><code class="language-php"> once(mixed <span class="variable">$source</span>)</code></pre>
 <h6 id="functions-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="function"><span class="keyword">function</span> <span class="title">increment</span><span class="params">()</span>
@@ -2457,7 +2457,7 @@ asynchronous responses, where you want to be sure that all the async calls have 
 <li><code>{int} $count</code> - count</li>
 </ul>
 <h6 id="functions-syntax">Syntax</h6>
-<pre><code class="language-php"> after(mixed <span class="variable">$source</span>, int <span class="variable">$count</span>): mixed</code></pre>
+<pre><code class="language-php"> after(mixed <span class="variable">$source</span>, int <span class="variable">$count</span>)</code></pre>
 <h6 id="functions-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="function"><span class="keyword">function</span> <span class="title">increment</span><span class="params">()</span>
@@ -2481,7 +2481,7 @@ The result of the last function call is memoized and returned when count has bee
 <li><code>{int} $count</code> - count</li>
 </ul>
 <h6 id="functions-syntax">Syntax</h6>
-<pre><code class="language-php"> before(mixed <span class="variable">$source</span>, int <span class="variable">$count</span>): mixed</code></pre>
+<pre><code class="language-php"> before(mixed <span class="variable">$source</span>, int <span class="variable">$count</span>)</code></pre>
 <h6 id="functions-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="function"><span class="keyword">function</span> <span class="title">increment</span><span class="params">()</span>
@@ -2527,7 +2527,7 @@ This allows the transforming function to execute code before and after the funct
 <li><code>{mixed} $source</code> - source function</li>
 </ul>
 <h6 id="functions-syntax">Syntax</h6>
-<pre><code class="language-php">negate(mixed <span class="variable">$source</span>): mixed</code></pre>
+<pre><code class="language-php">negate(mixed <span class="variable">$source</span>)</code></pre>
 <h6 id="functions-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$func</span> = Functions::negate(function(){ <span class="keyword">return</span> <span class="keyword">false</span>; });
@@ -2544,7 +2544,7 @@ composing the functions <code>f()</code>, <code>g()</code>, and <code>h()</code>
 <li><code>{array} $functions</code> - list of mixeds to compose</li>
 </ul>
 <h6 id="functions-syntax">Syntax</h6>
-<pre><code class="language-php"> compose(...<span class="variable">$functions</span>): mixed</code></pre>
+<pre><code class="language-php"> compose(...<span class="variable">$functions</span>)</code></pre>
 <h6 id="functions-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$greet</span> = function(mixed <span class="variable">$name</span>){ <span class="keyword">return</span> <span class="string">"hi: "</span> . <span class="variable">$name</span>; };
@@ -2577,7 +2577,7 @@ Functions::times(function(<span class="variable">$value</span>) <span class="key
 <li><code>{mixed} $value</code> - source mixed</li>
 </ul>
 <h6 id="functions-syntax">Syntax</h6>
-<pre><code class="language-php"> chain(mixed <span class="variable">$value</span>): Strings</code></pre>
+<pre><code class="language-php"> chain(mixed <span class="variable">$value</span>): Functions</code></pre>
 <h6 id="functions-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
 <span class="variable">$res</span> = Strings::chain( <span class="string">" 12345 "</span> )

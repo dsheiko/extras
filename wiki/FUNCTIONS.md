@@ -65,7 +65,7 @@ with a given sequence of arguments preceding any provided when the new function 
 
 ###### Syntax
 ```php
-bind(mixed $source, $context = null): mixed
+bind(mixed $source, $context = null)
 ```
 
 ###### Example
@@ -112,7 +112,7 @@ Returns a mixed representing the source code of the function.
 
 ###### Syntax
 ```php
-toString(mixed $source): mixed
+toString(mixed $source)
 ```
 
 ###### Example
@@ -178,7 +178,7 @@ Partially apply a function by filling in any number of its arguments
 
 ###### Syntax
 ```php
- partial(mixed $source, ...$boundArgs): mixed
+ partial(mixed $source, ...$boundArgs)
 ```
 
 ###### Example
@@ -201,7 +201,7 @@ If passed an optional hashFunction
 
 ###### Syntax
 ```php
-memoize($source, $hasher = null): mixed
+memoize($source, $hasher = null)
 ```
 
 ###### Example
@@ -315,7 +315,7 @@ and then check it later.
 
 ###### Syntax
 ```php
- once(mixed $source): mixed
+ once(mixed $source)
 ```
 
 ###### Example
@@ -344,7 +344,7 @@ asynchronous responses, where you want to be sure that all the async calls have 
 
 ###### Syntax
 ```php
- after(mixed $source, int $count): mixed
+ after(mixed $source, int $count)
 ```
 
 ###### Example
@@ -373,7 +373,7 @@ The result of the last function call is memoized and returned when count has bee
 
 ###### Syntax
 ```php
- before(mixed $source, int $count): mixed
+ before(mixed $source, int $count)
 ```
 
 ###### Example
@@ -431,7 +431,7 @@ Returns a new negated version of the predicate function.
 
 ###### Syntax
 ```php
-negate(mixed $source): mixed
+negate(mixed $source)
 ```
 
 ###### Example
@@ -453,7 +453,7 @@ composing the functions `f()`, `g()`, and `h()` produces `f(g(h()))`.
 
 ###### Syntax
 ```php
- compose(...$functions): mixed
+ compose(...$functions)
 ```
 
 ###### Example
@@ -498,7 +498,7 @@ Returns a wrapped object. Calling methods on this object will continue to return
 
 ###### Syntax
 ```php
- chain(mixed $value): Strings
+ chain(mixed $value): Functions
 ```
 
 ###### Example

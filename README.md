@@ -40,6 +40,9 @@ composer require "dsheiko/extras"
 - [Chaining](./wiki/CHAINING.md)
 - [Utilities](./wiki/UTILITIES.md)
 
+## Download
+[Dsheiko\Extras Cheatsheet](https://raw.githubusercontent.com/dsheiko/extras/master/wiki/cheatsheet-extras.pdf)
+
 ## Overview
 ![Overview](./wiki/extras-overview.png?r=1)
 
