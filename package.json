@@ -1,6 +1,6 @@
 {
   "name": "extras",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Collection of chainable high-order functions to abstract and manipulate PHP types",
   "scripts": {
     "update": "composer dump-autoload",
