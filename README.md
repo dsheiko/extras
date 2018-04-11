@@ -41,7 +41,7 @@ composer require "dsheiko/extras"
 - [Utilities](./wiki/UTILITIES.md)
 
 ## Overview
-![Overview](./wiki/extras-overview.png)
+![Overview](./wiki/extras-overview.png?r=1)
 
 ## Examples
 
