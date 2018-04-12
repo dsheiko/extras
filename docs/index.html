@@ -1047,8 +1047,16 @@ from begin to end (end not included). The original array will not be modified.</
 <pre><code class="language-php"> where(<span class="keyword">array</span> <span class="variable">$array</span>, <span class="keyword">array</span> <span class="variable">$conditions</span>): <span class="keyword">array</span></code></pre>
 <h6 id="arrays-example">Example</h6>
 <pre><code class="language-php"><span class="preprocessor">&lt;?php</span>
-<span class="variable">$arr</span> = [<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>, <span class="string">"bar"</span> =&gt; <span class="string">"BAR"</span>, <span class="string">"baz"</span> =&gt; <span class="string">"BAZ"</span>];
-<span class="variable">$res</span> = Arrays::where(<span class="variable">$arr</span>, [<span class="string">"foo"</span> =&gt; <span class="string">"FOO"</span>, <span class="string">"bar"</span> =&gt; <span class="string">"BAR"</span>]); <span class="comment">// ["foo", "bar"]</span></code></pre>
+<span class="variable">$listOfPlays</span> = [
+    [<span class="string">"title"</span> =&gt; <span class="string">"Cymbeline"</span>, <span class="string">"author"</span> =&gt; <span class="string">"Shakespeare"</span>, <span class="string">"year"</span> =&gt; <span class="number">1611</span>],
+    [<span class="string">"title"</span> =&gt; <span class="string">"The Tempest"</span>, <span class="string">"author"</span> =&gt; <span class="string">"Shakespeare"</span>, <span class="string">"year"</span> =&gt; <span class="number">1611</span>],
+    [<span class="string">"title"</span> =&gt; <span class="string">"Hamlet"</span>, <span class="string">"author"</span> =&gt; <span class="string">"Shakespeare"</span>, <span class="string">"year"</span> =&gt; <span class="number">1603</span>]
+];
+<span class="variable">$res</span> = Arrays::where(<span class="variable">$listOfPlays</span>, [<span class="string">"author"</span> =&gt; <span class="string">"Shakespeare"</span>, <span class="string">"year"</span> =&gt; <span class="number">1611</span>]);
+<span class="comment">// [</span>
+<span class="comment">//    ["title" =&gt; "Cymbeline", "author" =&gt; "Shakespeare", "year" =&gt; 1611],</span>
+<span class="comment">//    ["title" =&gt; "The Tempest", "author" =&gt; "Shakespeare", "year" =&gt; 1611],</span>
+<span class="comment">// ]</span></code></pre>
 <h3 id="arrays-findwhere">findWhere</h3>
 <p>Looks through the list and returns the first value that matches all of the key-value
 pairs listed in properties.</p>

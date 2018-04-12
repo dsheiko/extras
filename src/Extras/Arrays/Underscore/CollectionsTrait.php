@@ -25,7 +25,8 @@ trait CollectionsTrait
      */
     public static function where(array $array, array $conditions): array
     {
-        return array_intersect_assoc($array, $conditions);
+        $matcher = static::matcher($conditions);
+        return static::filter($array, $matcher);
     }
 
 

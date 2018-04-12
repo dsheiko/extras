@@ -880,8 +880,16 @@ Look through each value in the list, returning an array of all the values that c
 
 ```php
 <?php
-$arr = ["foo" => "FOO", "bar" => "BAR", "baz" => "BAZ"];
-$res = Arrays::where($arr, ["foo" => "FOO", "bar" => "BAR"]); // ["foo", "bar"]
+$listOfPlays = [
+    ["title" => "Cymbeline", "author" => "Shakespeare", "year" => 1611],
+    ["title" => "The Tempest", "author" => "Shakespeare", "year" => 1611],
+    ["title" => "Hamlet", "author" => "Shakespeare", "year" => 1603]
+];
+$res = Arrays::where($listOfPlays, ["author" => "Shakespeare", "year" => 1611]);
+// [
+//    ["title" => "Cymbeline", "author" => "Shakespeare", "year" => 1611],
+//    ["title" => "The Tempest", "author" => "Shakespeare", "year" => 1611],
+// ]
 ```
 
 ### findWhere

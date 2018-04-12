@@ -35,14 +35,20 @@ describe("\\Dsheiko\\Extras\\Arrays (Underscore\Collections)", function() {
     describe("::where", function() {
 
         it("returns elements compling callback condition", function() {
-            $arr = ["foo" => "FOO", "bar" => "BAR", "baz" => "BAZ"];
-            $res = Arrays::where($arr, ["foo" => "FOO", "bar" => "BAR"]);
-            expect(implode(",", array_keys($res)))->to->equal("foo,bar");
+            $arr = [
+                ["title" => "Cymbeline", "author" => "Shakespeare", "year" => 1611],
+                ["title" => "The Tempest", "author" => "Shakespeare", "year" => 1611],
+                ["title" => "Hamlet", "author" => "Shakespeare", "year" => 1603]
+            ];
+            $res = Arrays::where($arr, ["author" => "Shakespeare", "year" => 1611]);
+            expect($res[0])->to->equal(["title" => "Cymbeline", "author" => "Shakespeare", "year" => 1611]);
+            expect($res[1])->to->equal(["title" => "The Tempest", "author" => "Shakespeare", "year" => 1611]);
+            expect(count($res))->to->equal(2);
         });
 
-        it("returns still an array when matches found", function() {
-            $arr = ["foo" => "FOO", "bar" => "BAR", "baz" => "BAZ"];
-            $res = Arrays::where($arr, ["foo" => "BAR"]);
+        it("not falling on empty array", function() {
+            $arr = [];
+            $res = Arrays::where($arr, ["author" => "Shakespeare", "year" => 1611]);
             expect($res)->to->be->a("array");
         });
     });
