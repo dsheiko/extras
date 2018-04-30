@@ -35,6 +35,11 @@ describe("\\Dsheiko\\Extras\\Arrays (JavaScript)", function() {
             expect(ArraysTest::mockCallable())->to->equal(6);
         });
 
+        it("does not fall on ArgumentCountError", function() {
+            Arrays::each(["1","2","3"], "trim");
+            expect(ArraysTest::mockCallable())->to->equal(6);
+        });
+
     });
 
     describe("::map", function() {
@@ -42,6 +47,11 @@ describe("\\Dsheiko\\Extras\\Arrays (JavaScript)", function() {
         it("produces a new array of values by running transformation callback on each element of source array", function() {
             $res = Arrays::map([1,2,3], function($num){ return $num + 1; });
             expect(implode(",", $res))->to->equal("2,3,4");
+        });
+
+         it("does not fall on ArgumentCountError", function() {
+            $res = Arrays::map([" 1 ","  2  "," 3  "], "trim");
+            expect($res)->to->equal(["1","2","3"]);
         });
 
     });

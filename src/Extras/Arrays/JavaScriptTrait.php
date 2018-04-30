@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Dsheiko\Extras\Arrays;
 
 use Dsheiko\Extras\Type\PlainObject;
@@ -26,7 +27,11 @@ trait JavaScriptTrait
     public static function each(array $array, callable $callable)
     {
         \array_walk($array, function ($value, $inx) use ($array, $callable) {
-            $callable($value, $inx, $array);
+            try {
+                $callable($value, $inx, $array);
+            } catch (\ArgumentCountError $e) {
+                $callable($value);
+            }
         });
     }
 
@@ -42,7 +47,11 @@ trait JavaScriptTrait
     {
         $inx = 0;
         return \array_map(function ($value) use ($array, $callable, &$inx) {
-            return $callable($value, $inx++, $array);
+            try {
+                return $callable($value, $inx++, $array);
+            } catch (\ArgumentCountError $e) {
+                return $callable($value);
+            }
         }, $array);
     }
 
@@ -59,7 +68,11 @@ trait JavaScriptTrait
     {
         $inx = 0;
         return \array_reduce($array, function ($carry, $value) use ($array, $callable, &$inx) {
-            return $callable($carry, $value, $inx++, $array);
+            try {
+                return $callable($carry, $value, $inx++, $array);
+            } catch (\ArgumentCountError $e) {
+                return $callable($carry, $value);
+            }
         }, $initial);
     }
 
@@ -76,7 +89,11 @@ trait JavaScriptTrait
     {
         $inx = 0;
         return \array_reduce(\array_reverse($array), function ($carry, $value) use ($array, $callable, &$inx) {
-            return $callable($carry, $value, $inx++, $array);
+            try {
+                return $callable($carry, $value, $inx++, $array);
+            } catch (\ArgumentCountError $e) {
+                return $callable($carry, $value);
+            }
         }, $initial);
     }
 
@@ -94,7 +111,11 @@ trait JavaScriptTrait
         $matches =  ($callable === null) ?
             \array_filter($array) :
             \array_filter($array, function ($value) use ($array, $callable, &$inx) {
-                return $callable($value, $inx++, $array);
+                try {
+                    return $callable($value, $inx++, $array);
+                } catch (\ArgumentCountError $e) {
+                    return $callable($value);
+                }
             }, \ARRAY_FILTER_USE_BOTH);
         return \array_values($matches);
     }
