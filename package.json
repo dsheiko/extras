@@ -14,11 +14,18 @@
     "postversion": "git push && git push --tags"
   },
   "keywords": [
-    "underscore",
-    "lodash",
-    "utilities",
-    "library",
-    "PHP"
+    "utility",
+    "PHP",
+    "type-manipulation",
+    "functional-programming",
+    "chainable",
+    "array-utils",
+    "data-structures",
+    "map-filter-reduce",
+    "fluent-interface",
+    "javascript-style",
+    "performance-optimizations",
+    "high-order-functions"
   ],
   "author": "",
   "license": "MIT",
