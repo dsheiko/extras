@@ -5,8 +5,7 @@
 [![License](https://poser.pugx.org/dsheiko/extras/license)](https://packagist.org/packages/dsheiko/extras)
 [![Build Status](https://travis-ci.org/dsheiko/extras.png)](https://travis-ci.org/dsheiko/extras)
 
-Collection of chainable high-order functions to abstract and manipulate PHP types.
-The library extends PHP types with JavaScript and Underscore.js methods
+The `extras` repository is a collection of chainable, high-order utility functions designed to extend PHP's type manipulation capabilities, offering a JavaScript-style development experience. It introduces methods inspired by JavaScript's array manipulation functions, such as map, filter, and reduce, while improving PHP's method naming conventions and consistency. This package supports diverse PHP types, including arrays, objects, and functions, while providing a fluent, chainable interface to work with data structures efficiently. It helps developers apply JavaScript-like syntax and methods to PHP with performance optimizations.
 
 > The packages takes its name from `Array Extras` referring to the array methods added in ES5 (JavaScript) to abstract generic array manipulation logic
 
